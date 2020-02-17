@@ -10,16 +10,19 @@
 
 class search {
 
+  protected $sql = array(
+    'idvoie'=>'SELECT id_voie, nom_complet, type_num FROM( SELECT id_voie, type_num, nom_complet, ST_Distance(ST_geomfromtext($1, $2),geom) as dist
+          FROM adresse.voie
+          WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;',
+    'classique' => 'SELECT adresse.calcul_num_adr(ST_geomfromtext($1,$2))',
+    'metrique' => 'SELECT adresse.calcul_num_metrique(ST_geomfromtext($1,$2))'
+  );
+
   protected function getSql($option) {
-        $sql = array();
-
-        $sql['idvoie'] = 'SELECT type_num FROM( SELECT type_num, nom_complet, ST_Distance(ST_geomfromtext($1, $2),geom) as dist
-              FROM adresse.voie
-              WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;';
-
-        $sql['classique'] = 'SELECT adresse.calcul_num_adr(ST_geomfromtext($1,$2))';
-
-        return $sql[$option];
+      if(isset($this->sql[$option])){
+        return $this->sql[$option];
+      }
+      return Null;
     }
 
   function query( $sql, $filterParams, $profile='adresse' ) {
