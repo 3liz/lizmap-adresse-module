@@ -8,7 +8,7 @@
 * @license    All rights reserved
 */
 
-class defaultCtrl extends jController {
+class serviceCtrl extends jController {
 
   function index(){
     $rep = $this->getResponse('json');
@@ -66,7 +66,7 @@ class defaultCtrl extends jController {
 
     $autocomplete = jClasses::getService('adresse~search');
     try {
-        $result = $autocomplete->getData( $repository, $project, 'point_adresse', $geom, $srid, $option);
+        $result = $autocomplete->getData( $repository, $project, $layer->name, $geom, $srid, $option);
     } catch (Exception $e) {
         $result = Null;
     }
