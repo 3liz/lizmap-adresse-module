@@ -19,6 +19,11 @@ class adresseListener extends jEventListener{
         return;
         }
 
+        $vlayer = $p->findLayerByName('voie');
+        if (!$vlayer) {
+        return;
+        }
+
        $js = array();
        $jscode = array();
        $css = array();
@@ -29,8 +34,13 @@ class adresseListener extends jEventListener{
        $adresseConfig['point_adresse']['id'] = $layer->id;
        $adresseConfig['point_adresse']['name'] = $layer->name;
 
+       $adresseConfig['voie'] = array();
+       $adresseConfig['voie']['id'] = $vlayer->id;
+       $adresseConfig['voie']['name'] = $vlayer->name;
+
        $adresseConfig['urls'] = array();
-       $adresseConfig['urls']['getVoie'] = jUrl::get('adresse~service:index');
+       $adresseConfig['urls']['getVoie'] = jUrl::get('adresse~service:select');
+       $adresseConfig['urls']['update'] = jUrl::get('adresse~service:update');
 
        $bp = jApp::config()->urlengine['basePath'];
 
