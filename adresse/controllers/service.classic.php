@@ -54,6 +54,12 @@ class serviceCtrl extends jController {
         return $rep;
     }
 
+    if (!$p->checkAcl()) {
+        $rep->data = array('status'=>'error', 'message'=>jLocale::get('view~default.repository.access.denied'));
+
+        return $rep;
+    }
+
     // vérifier que le projet contient la couche point_adresse
 
     $layer = $p->findLayerByName('point_adresse');
@@ -110,6 +116,12 @@ class serviceCtrl extends jController {
     $p = lizmap::getProject($repository.'~'.$project);
     if( !$p ){
         $rep->data = array('status'=>'error', 'message'=>'A problem occured while loading project with Lizmap');
+        return $rep;
+    }
+
+    if (!$p->checkAcl()) {
+        $rep->data = array('status'=>'error', 'message'=>jLocale::get('view~default.repository.access.denied'));
+
         return $rep;
     }
 

@@ -1,7 +1,7 @@
 <?php
 /**
 * @package   lizmap
-* @subpackage cadastre
+* @subpackage adresse
 * @author    Pierre DRILLIN
 * @copyright 2020 3liz
 * @link      http://3liz.com
