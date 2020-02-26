@@ -1,0 +1,24 @@
+{
+    "name": "lizmap/lizmap-adresse-module",
+    "type": "jelix-module",
+    "description": "Jelix module for Lizmap, which adds tools to manage addresses",
+    "keywords": ["module", "jelix", "lizmap", "adresse"],
+    "homepage": "http://3liz.com",
+    "license": "Mozilla Public License 2.0 (MPL 2.0)",
+    "authors": [
+        {
+            "name": "Pierre DRILLIN",
+            "email": "pdrillin@3liz.com"
+        }
+    ],
+    "require": {
+    },
+    "minimum-stability": "stable",
+    "extra" : {
+        "jelix" : {
+            "modules": [
+                "adresse/"
+            ]
+        }
+    }
+}
