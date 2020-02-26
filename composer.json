@@ -4,7 +4,7 @@
     "description": "Jelix module for Lizmap, which adds tools to manage addresses",
     "keywords": ["module", "jelix", "lizmap", "adresse"],
     "homepage": "http://3liz.com",
-    "license": "Mozilla Public License 2.0 (MPL 2.0)",
+    "license": "MPL-2.0",
     "authors": [
         {
             "name": "Pierre DRILLIN",
