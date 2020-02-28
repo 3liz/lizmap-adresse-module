@@ -1,4 +1,10 @@
 --
+-- CREATE SCHEMA
+--
+
+CREATE SCHEMA IF NOT EXISTS adresse; 
+
+--
 -- CREATE TABLE
 --
 
@@ -6,7 +12,7 @@
 
 CREATE TABLE adresse.commune
 (
-    id_com integer NOT NULL DEFAULT nextval('adresse.commune_id_com_seq'::regclass),
+    id_com serial NOT NULL,
     commune_nom text COLLATE pg_catalog."default",
     insee_code character(5) COLLATE pg_catalog."default",
     statut_com text COLLATE pg_catalog."default",
@@ -36,7 +42,7 @@ TABLESPACE pg_default;
 
 CREATE TABLE adresse.commune_deleguee
 (
-    id_com_del integer NOT NULL DEFAULT nextval('adresse.commune_deleguee_id_com_del_seq'::regclass),
+    id_com_del serial NOT NULL,
     commune_deleguee_nom text COLLATE pg_catalog."default",
     insee_code character(5) COLLATE pg_catalog."default",
     nom_referent_deleguee text COLLATE pg_catalog."default",
@@ -54,7 +60,7 @@ TABLESPACE pg_default;
 
 CREATE TABLE adresse.voie
 (
-    id_voie integer NOT NULL DEFAULT nextval('adresse.voie_id_voie_seq'::regclass),
+    id_voie serial NOT NULL,
     typologie text COLLATE pg_catalog."default",
     nom text COLLATE pg_catalog."default",
     nom_complet text COLLATE pg_catalog."default",
@@ -83,7 +89,7 @@ TABLESPACE pg_default;
 
 CREATE TABLE adresse.parcelle
 (
-    fid integer NOT NULL DEFAULT nextval('adresse.parcelle_fid_seq'::regclass),
+    fid serial NOT NULL,
     id character varying COLLATE pg_catalog."default",
     commune character varying COLLATE pg_catalog."default",
     prefixe character varying COLLATE pg_catalog."default",
@@ -105,7 +111,7 @@ TABLESPACE pg_default;
 
 CREATE TABLE adresse.point_adresse
 (
-    id_point integer NOT NULL DEFAULT nextval('adresse.point_adresse_id_point_seq'::regclass),
+    id_point serial NOT NULL,
     numero integer NOT NULL,
     suffixe text COLLATE pg_catalog."default",
     adresse_complete text COLLATE pg_catalog."default",
@@ -168,7 +174,7 @@ TABLESPACE pg_default;
 
 CREATE TABLE adresse.document
 (
-    id_doc integer NOT NULL DEFAULT nextval('adresse.document_id_doc_seq'::regclass),
+    id_doc serial NOT NULL,
     nom_doc text COLLATE pg_catalog."default",
     date_doc character(5) COLLATE pg_catalog."default",
     type_document text COLLATE pg_catalog."default",
