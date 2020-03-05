@@ -9,23 +9,19 @@
 
 var lizAdresse = function() {
 lizMap.events.on({
-
    'lizmapeditiongeometryupdated': function(e){
      if (e.layerId == adresseConfig['point_adresse']['id']) {
-       var form = undefined;
-       var gColumn = undefined;
-       var sColumn = undefined;
-       var vColumn = undefined;
+       var form = $('#edition-form-container form');
+       var nColumn = form.find('input[name="numero"]');
+       var sColumn = form.find('input[name="suffixe"]');
+       var vColumn = form.find('select[name="id_voie"]');
        var option = undefined;
        var val = undefined;
        var num = "";
        var suffixe = '';
-       form = $('#edition-form-container form');
-       nColumn = form.find('input[name="numero"]');
-       sColumn = form.find('input[name="suffixe"]');
-       vColumn = form.find('select[name="id_voie"]');
        var voie = '';
        option = 'idvoie';
+       console.log('ok');
        var options = {
                       repository: lizUrls.params.repository,
                       project: lizUrls.params.project,
@@ -49,8 +45,8 @@ lizMap.events.on({
                        options,
                        function( data, status, xhr ) {
                            if(data){
-                               nColumn.val(data[0]['num']);
-                               sColumn.val(data[0]['suffixe']);
+                             nColumn.val(data[0]['num']);
+                             sColumn.val(data[0]['suffixe']);
                            }
                        }
                    );
@@ -111,6 +107,18 @@ lizMap.events.on({
                   }
              }
     });
+  },
+  'lizmapeditionformdisplayed':function(e) {
+    var login = adresseConfig['user'];
+    var form = $('#edition-form-container form');
+    var cColumn = form.find('input[name="createur"]');
+    var mColumn = form.find('input[name="modificateur"]');
+    if (form.find('input[name="liz_featureId"]').val()== ''){
+      cColumn.val(adresseConfig['user']);
+      mColumn.val(adresseConfig['user']);
+    }else{
+      mColumn.val(adresseConfig['user']);
+    }
   }
 });
  return {};

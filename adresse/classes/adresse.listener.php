@@ -64,12 +64,20 @@ class adresseListener extends jEventListener{
             }
         }
 
+       $juser = jAuth::getUserSession();
+       if(!$juser){
+         $user_login = '';
+       }else{
+         $user_login = $juser->login;
+       }
 
        $js = array();
        $jscode = array();
        $css = array();
 
        $adresseConfig = array();
+
+       $adresseConfig['user'] = $user_login;
 
        $adresseConfig['point_adresse'] = array();
        $adresseConfig['point_adresse']['id'] = $layer->getId();

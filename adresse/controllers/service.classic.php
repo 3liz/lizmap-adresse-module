@@ -77,7 +77,7 @@ class serviceCtrl extends jController {
 
     $autocomplete = jClasses::getService('adresse~search');
     try {
-        $result = $autocomplete->getData( $repository, $project, $layer->name, $geom, $srid, $option);
+        $result = $autocomplete->getData( $repository, $project, $l->name, $geom, $srid, $option);
     } catch (Exception $e) {
         $result = Null;
     }
@@ -147,7 +147,7 @@ class serviceCtrl extends jController {
 
     $autocomplete = jClasses::getService('adresse~update');
     try {
-        $result = $autocomplete->apply( $repository, $project, $layer->name, $id, $option);
+        $result = $autocomplete->apply( $repository, $project, $l->name, $id, $option);
     } catch (Exception $e) {
         $result = Null;
     }
