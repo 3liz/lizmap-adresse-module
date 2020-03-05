@@ -20,17 +20,50 @@ class adresseListener extends jEventListener{
              return;
         }
 
+        if(!jAcl2::check('lizmap.tools.edition.use', $repository)) {
+          return;
+        }
+
         // vérifier que le projet contient la couche point_adresse
 
-        $layer = $p->findLayerByName('point_adresse');
-        if (!$layer) {
-        return;
+        $l = $p->findLayerByName('point_adresse');
+        $vl = $p->findLayerByName('voie');
+        if(!$l){
+          return;
         }
 
-        $vlayer = $p->findLayerByName('voie');
-        if (!$vlayer) {
-        return;
+        $layer = $p->getLayer($l->id);
+        if (!$layer->isEditable()){
+          return;
         }
+
+
+        if (!$vl){
+          return;
+        }
+
+        $vlayer = $p->getLayer($vl->id);
+        if (!$vlayer->isEditable()){
+          return;
+        }
+
+        $dLayer = $layer->getEditionCapabilities();
+        $eLayer = $vlayer->getEditionCapabilities();
+
+       // Check if user groups intersects groups allowed by project editor
+       // If user is admin, no need to check for given groups
+       if (jAuth::isConnected() and !jAcl2::check('lizmap.admin.repositories.delete') and property_exists($eLayer, 'acl') and $eLayer->acl) {
+            // Check if configured groups white list and authenticated user groups list intersects
+            $editionGroups = $eLayer->acl;
+            $editionGroups = array_map('trim', explode(',', $editionGroups));
+            if (is_array($editionGroups) and count($editionGroups) > 0) {
+                $userGroups = jAcl2DbUserGroup::getGroups();
+                if (!array_intersect($editionGroups, $userGroups)) {
+                    return;
+                }
+            }
+        }
+
 
        $js = array();
        $jscode = array();
@@ -39,12 +72,12 @@ class adresseListener extends jEventListener{
        $adresseConfig = array();
 
        $adresseConfig['point_adresse'] = array();
-       $adresseConfig['point_adresse']['id'] = $layer->id;
-       $adresseConfig['point_adresse']['name'] = $layer->name;
+       $adresseConfig['point_adresse']['id'] = $layer->getId();
+       $adresseConfig['point_adresse']['name'] = $layer->getName();
 
        $adresseConfig['voie'] = array();
-       $adresseConfig['voie']['id'] = $vlayer->id;
-       $adresseConfig['voie']['name'] = $vlayer->name;
+       $adresseConfig['voie']['id'] = $vlayer->getId();
+       $adresseConfig['voie']['name'] = $vlayer->getName();
 
        $adresseConfig['urls'] = array();
        $adresseConfig['urls']['getVoie'] = jUrl::get('adresse~service:select');

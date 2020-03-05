@@ -62,9 +62,14 @@ class serviceCtrl extends jController {
 
     // vérifier que le projet contient la couche point_adresse
 
-    $layer = $p->findLayerByName('point_adresse');
-    if(!$layer){
-      $rep->data = array('status'=>'error', 'message'=>'Layer point_adresse does not exist');
+    $l = $p->findLayerByName('point_adresse');
+    if(!$l){
+      $rep->data = array('status'=>'error', 'message'=>'Layer '.$l->name.' does not exist');
+      return $rep;
+    }
+    $layer = $p->getLayer($l->id);
+    if (!$layer->isEditable()) {
+      $rep->data = array('status'=>'error', 'message'=>'Layer '.$l->name.' is not Editable');
       return $rep;
     }
 
@@ -102,7 +107,7 @@ class serviceCtrl extends jController {
     }
 
     if(!$id){
-      $rep->data = array('status'=>'error', 'message'=>'Geometry not find');
+      $rep->data = array('status'=>'error', 'message'=>'Id not find');
       return $rep;
     }
 
@@ -127,9 +132,14 @@ class serviceCtrl extends jController {
 
     // vérifier que le projet contient la couche point_adresse
 
-    $layer = $p->findLayerByName('voie');
-    if(!$layer){
-      $rep->data = array('status'=>'error', 'message'=>'Layer point_adresse does not exist');
+    $l = $p->findLayerByName('voie');
+    if(!$l){
+      $rep->data = array('status'=>'error', 'message'=>'Layer '.$l->name.' does not exist');
+      return $rep;
+    }
+    $layer = $p->getLayer($l->id);
+    if (!$layer->isEditable()) {
+      $rep->data = array('status'=>'error', 'message'=>'Layer '.$l->name.' is not Editable');
       return $rep;
     }
 
