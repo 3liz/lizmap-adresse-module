@@ -30,29 +30,31 @@ lizMap.events.on({
                       opt: option
                   };
        var url = adresseConfig['urls']['getVoie'];
-       $.getJSON(
-           url,
-           options,
-           function( data, status, xhr ) {
-               if(data){
-                   option = data[0]['type_num'].toLowerCase();
-                   options['opt'] = option;
-                   voie = data[0]['id_voie'];
-                   vColumn.val(voie);
-                   vColumn.change();
-                   $.getJSON(
-                       url,
-                       options,
-                       function( data, status, xhr ) {
-                           if(data){
-                             nColumn.val(data[0]['num']);
-                             sColumn.val(data[0]['suffixe']);
-                           }
-                       }
-                   );
-               }
-           }
-       );
+       if (form.find('input[name="liz_featureId"]').val()== ''){
+         $.getJSON(
+             url,
+             options,
+             function( data, status, xhr ) {
+                 if(data){
+                     option = data[0]['type_num'].toLowerCase();
+                     options['opt'] = option;
+                     voie = data[0]['id_voie'];
+                     vColumn.val(voie);
+                     vColumn.change();
+                     $.getJSON(
+                         url,
+                         options,
+                         function( data, status, xhr ) {
+                             if(data){
+                               nColumn.val(data[0]['num']);
+                               sColumn.val(data[0]['suffixe']);
+                             }
+                         }
+                     );
+                 }
+             }
+         );
+       }
      }
   },
   'lizmappopupdisplayed':function(e){
