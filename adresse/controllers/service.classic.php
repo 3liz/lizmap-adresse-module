@@ -152,14 +152,17 @@ class serviceCtrl extends jController {
         $result = Null;
     }
     $message='';
+    $typeRes='';
 
     if($result){
       $message = 'Update exécuté avec succès';
+      $typeRes = 'success';
     }else{
       $message = 'Error lors de l\'update';
+      $typeRes = 'error';
     }
 
-    $rep->data = array('success' => ''.$result, 'message' => $message);
+    $rep->data = array('success' => ''.$result, 'type'=>$typeRes, 'message' => $message);
     return $rep;
   }
 }

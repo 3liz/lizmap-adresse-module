@@ -8,7 +8,27 @@
 */
 
 var lizAdresse = function() {
-lizMap.events.on({
+  var adresseMessageTimeoutId = null;
+  function cleanAdresseMessage() {
+          var $AdresseMessage = $('#lizmap-adresse-message');
+          if ( $AdresseMessage.length != 0 ) {
+              $AdresseMessage.remove();
+          }
+          adresseMessageTimeoutId = null;
+  }
+  function addAdresseMessage(aMessage, aType, aClose){
+    if ( adresseMessageTimeoutId ) {
+        window.clearTimeout(adresseMessageTimeoutId);
+        adresseMessageTimeoutId = null;
+    }
+    var $AdresseMessage = $('#lizmap-adresse-message');
+    if ( $AdresseMessage.length != 0 ) {
+        $AdresseMessage.remove();
+    }
+    lizMap.addMessage(aMessage, aType, aClose).attr('id','lizmap-adresse-message');
+    adresseMessageTimeoutId = window.setTimeout(cleanAdresseMessage, 5000);
+  }
+  lizMap.events.on({
    'lizmapeditiongeometryupdated': function(e){
      if (e.layerId == adresseConfig['point_adresse']['id']) {
        var form = $('#edition-form-container form');
@@ -21,7 +41,6 @@ lizMap.events.on({
        var suffixe = '';
        var voie = '';
        option = 'idvoie';
-       console.log('ok');
        var options = {
                       repository: lizUrls.params.repository,
                       project: lizUrls.params.project,
@@ -92,15 +111,18 @@ lizMap.events.on({
                     btn.click(function(e) {
                       var featId = self.val();
                       var leid = featId.split('.');
-                      alert(leid[1]);
                       options['id'] = leid[1];
-                      console.log(options);
                       $.getJSON(
                         url,
                         options,
                         function(data,status,xhr){
                           if(data){
-                              alert(data['message']);
+                            if(data['type'] == 'success'){
+                              addAdresseMessage(data['message'],'info',true);
+                              $('#dock-close').click();
+                            }else{
+                              addAdresseMessage(data['message'],'error',true);
+                            }
                           }
                         }
                       );
@@ -122,6 +144,6 @@ lizMap.events.on({
       mColumn.val(adresseConfig['user']);
     }
   }
-});
+ });
  return {};
 }();
