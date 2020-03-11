@@ -33,7 +33,7 @@ var lizAdresse = function() {
      if (e.layerId == adresseConfig['point_adresse']['id']) {
        var form = $('#edition-form-container form');
        var nColumn = form.find('input[name="numero"]');
-       var sColumn = form.find('input[name="suffixe"]');
+       var sColumn = form.find('select[name="suffixe"]');
        var vColumn = form.find('select[name="id_voie"]');
        var option = undefined;
        var val = undefined;
@@ -67,6 +67,7 @@ var lizAdresse = function() {
                              if(data){
                                nColumn.val(data[0]['num']);
                                sColumn.val(data[0]['suffixe']);
+                               sColumn.change();
                              }
                          }
                      );
