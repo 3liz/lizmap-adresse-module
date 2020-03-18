@@ -48,7 +48,7 @@ var lizAdresse = function() {
                       srid: e.srid,
                       opt: option
                   };
-       var url = adresseConfig['urls']['getVoie'];
+       var url = adresseConfig['urls']['select'];
        if (form.find('input[name="liz_featureId"]').val()== ''){
          $.getJSON(
              url,

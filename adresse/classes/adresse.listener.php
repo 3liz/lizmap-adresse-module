@@ -94,7 +94,8 @@ class adresseListener extends jEventListener{
        $bp = jApp::config()->urlengine['basePath'];
 
        $js = array(
-          jUrl::get('jelix~www:getfile', array('targetmodule'=>'adresse', 'file'=>'adresse.js'))
+          jUrl::get('jelix~www:getfile', array('targetmodule'=>'adresse', 'file'=>'adresse.js')),
+          jUrl::get('jelix~www:getfile', array('targetmodule'=>'adresse', 'file'=>'export_bal.js'))
        );
 
        $jscode = array(
