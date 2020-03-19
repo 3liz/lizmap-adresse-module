@@ -91,17 +91,17 @@ var lizAdresse = function() {
 
                   if (layerName == adresseConfig['voie']['name'] ){
                     var btnBar = self.next('span.popupButtonBar');
+                    if ( btnBar.length == 0 ) {
+                        var eHtml = '<span class="popupButtonBar"></span></br>';
+                        self.after(eHtml);
+                        btnBar = self.next('span.popupButtonBar');
+                    }
                     var btn = $('<button></button>');
                     btn.addClass("btn btn-mini");
                     var icon = $('<i></i>');
                     icon.addClass('icon-refresh');
                     btn.append(icon);
-                    if ( btnBar.length != 0 ) {
-                        btnBar.append(btn);
-                    } else {
-                        var eHtml = '<span class="popupButtonBar">' + btn + '</span></br>';
-                        self.after(eHtml);
-                    }
+                    btnBar.append(btn);
                     var url = adresseConfig['urls']['update'];
                     var options = {
                                    repository: lizUrls.params.repository,
