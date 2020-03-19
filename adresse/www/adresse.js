@@ -97,7 +97,7 @@ var lizAdresse = function() {
                         btnBar = self.next('span.popupButtonBar');
                     }
                     var btn = $('<button></button>');
-                    btn.addClass("btn btn-mini");
+                    btn.addClass("btn btn-mini popup-adresse-reverse");
                     var icon = $('<i></i>');
                     icon.addClass('icon-refresh');
                     btn.append(icon);
