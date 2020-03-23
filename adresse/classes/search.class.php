@@ -15,7 +15,8 @@ class search {
           FROM adresse.voie
           WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;',
     'classique' => 'SELECT * FROM adresse.calcul_num_adr(ST_geomfromtext($1,$2))',
-    'metrique' => 'SELECT * FROM adresse.calcul_num_metrique(ST_geomfromtext($1,$2))'
+    'metrique' => 'SELECT * FROM adresse.calcul_num_metrique(ST_geomfromtext($1,$2))',
+    'export' => 'SELECT cle_interop, uid_adresse, voie_nom FROM adresse.export_bal WHERE code_insee = $1'
   );
 
   protected function getSql($option) {
@@ -41,15 +42,11 @@ class search {
   * @param srid Cordiante system identifier
   */
 
-  function getData($repository, $project, $layer, $geom, $srid, $option) {
+  function getData($repository, $project, $layer, $filterParams, $option) {
 
         $profile = adresseProfile::get($repository, $project, $layer);
         $this->repository = $repository;
         $this->project = $project;
-
-        $filterParams = array();
-        $filterParams[] = $geom;
-        $filterParams[] = $srid;
 
         // Run query
         $sql = $this->getSql($option);

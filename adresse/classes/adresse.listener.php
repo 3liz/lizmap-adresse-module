@@ -88,8 +88,9 @@ class adresseListener extends jEventListener{
        $adresseConfig['voie']['name'] = $vlayer->getName();
 
        $adresseConfig['urls'] = array();
-       $adresseConfig['urls']['getVoie'] = jUrl::get('adresse~service:select');
+       $adresseConfig['urls']['select'] = jUrl::get('adresse~service:select');
        $adresseConfig['urls']['update'] = jUrl::get('adresse~service:update');
+       $adresseConfig['urls']['export'] = jUrl::get('adresse~service:export');
 
        $bp = jApp::config()->urlengine['basePath'];
 

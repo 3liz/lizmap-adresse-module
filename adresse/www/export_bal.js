@@ -59,6 +59,25 @@ function initBalView(activateGpxOnStartup) {
   });
   $('#export_bal').click(function(){
     console.log('ok');
-    lizMap.exportVectorLayer('point_adresse', 'CSV', false);
+    var insee = cColumn.val();
+    console.log(insee);
+    var option = 'export';
+    var options = {
+                   repository: lizUrls.params.repository,
+                   project: lizUrls.params.project,
+                   insee: insee,
+                   opt: option
+               };
+    var url = adresseConfig['urls']['export'];
+    $.getJSON(
+        url,
+        options,
+        function( data, status, xhr ) {
+            if(data){
+              console.log(typeof data);
+              console.log(data);
+            }
+        }
+    );
   });
 }
