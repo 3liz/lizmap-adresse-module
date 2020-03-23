@@ -69,14 +69,12 @@ function initBalView(activateGpxOnStartup) {
                    opt: option
                };
     var url = adresseConfig['urls']['export'];
-    $.getJSON(
+    $.get(
         url,
         options,
         function( data, status, xhr ) {
-            if(data){
-              console.log(typeof data);
-              console.log(data);
-            }
+          console.log(typeof data);
+          console.log(data);
         }
     );
   });

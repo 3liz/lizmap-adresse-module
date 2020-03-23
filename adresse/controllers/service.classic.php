@@ -86,7 +86,7 @@ class serviceCtrl extends jController {
         $result = Null;
     }
 
-    $rep->data = $result;
+    $rep->data = $result->fetchAll();
     return $rep;
   }
 
@@ -241,8 +241,13 @@ class serviceCtrl extends jController {
 
     $fileName = tempnam($tempPath, 'exportbal-');
 
-    $leBal->exportCSV($fileName, $result);
-
+    if($result != Null){
+      $leBal->exportCSV($fileName, $result);
+    }else {
+      $rep = $this->getResponse('json');
+      $rep->data = array('status'=>'error', 'message'=>'Aucun résultat trouvé');
+      return $rep;
+    }
     $resp = $this->getResponse('binary');
 
     $resp->deleteFileAfterSending = true;
