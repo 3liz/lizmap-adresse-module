@@ -31,7 +31,7 @@ class search {
       $resultset = $cnx->prepare( $sql );
 
       $resultset->execute( $filterParams );
-      return $resultset->fetchAll();
+      return $resultset;
   }
 
   /**
