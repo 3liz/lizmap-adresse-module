@@ -243,6 +243,7 @@ class serviceCtrl extends jController {
 
     if($result != Null){
       $leBal->exportCSV($fileName, $result);
+
     }else {
       $rep = $this->getResponse('json');
       $rep->data = array('status'=>'error', 'message'=>'Aucun résultat trouvé');
