@@ -16,7 +16,7 @@ class search {
           WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;',
     'classique' => 'SELECT * FROM adresse.calcul_num_adr(ST_geomfromtext($1,$2))',
     'metrique' => 'SELECT * FROM adresse.calcul_num_metrique(ST_geomfromtext($1,$2))',
-    'export' => 'SELECT cle_interop, uid_adresse, voie_nom FROM adresse.export_bal WHERE code_insee = $1'
+    'export' => 'SELECT cle_interop, uid_adresse, voie_nom, numero, suffixe, commune_nom, position,x, y, long, lat, source, date_derniere_maj FROM adresse.export_bal WHERE code_insee = $1'
   );
 
   protected function getSql($option) {
