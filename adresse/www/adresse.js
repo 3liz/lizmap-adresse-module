@@ -49,7 +49,6 @@ var lizAdresse = function() {
                       opt: option
                   };
        var url = adresseConfig['urls']['select'];
-       console.log(url);
        if (form.find('input[name="liz_featureId"]').val()== ''){
          $.getJSON(
              url,

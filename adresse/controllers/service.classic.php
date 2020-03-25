@@ -179,32 +179,28 @@ class serviceCtrl extends jController {
     $insee = $this->param('insee');
     $option = $this->param('opt');
 
+    $rep = $this->getResponse('json');
     if(!$project){
-      $rep = $this->getResponse('json');
       $rep->data = array('status'=>'error', 'message'=>'Project not find');
       return $rep;
     }
 
     if(!$repository){
-      $rep = $this->getResponse('json');
       $rep->data = array('status'=>'error', 'message'=>'Repository not find');
       return $rep;
     }
 
     if(!$insee){
-      $rep = $this->getResponse('json');
       $rep->data = array('status'=>'error', 'message'=>'Code insee not find');
       return $rep;
     }
     if(!preg_match($test, $insee)){
-      $rep = $this->getResponse('json');
       $rep->data = array('status'=>'error', 'message'=>'Code insee not avaible');
       return;
     }
     $filterParams[] = $insee;
 
     if(!$option){
-      $rep = $this->getResponse('json');
       $rep->data = array('status'=>'error', 'message'=>'Option not find');
       return $rep;
     }
@@ -213,13 +209,11 @@ class serviceCtrl extends jController {
 
     $p = lizmap::getProject($repository.'~'.$project);
     if( !$p ){
-      $rep = $this->getResponse('json');
         $rep->data = array('status'=>'error', 'message'=>'A problem occured while loading project with Lizmap');
         return $rep;
     }
 
     if (!$p->checkAcl()) {
-      $rep = $this->getResponse('json');
         $rep->data = array('status'=>'error', 'message'=>jLocale::get('view~default.repository.access.denied'));
         return $rep;
     }
@@ -245,19 +239,18 @@ class serviceCtrl extends jController {
       $leBal->exportCSV($fileName, $result);
 
     }else {
-      $rep = $this->getResponse('json');
       $rep->data = array('status'=>'error', 'message'=>'Aucun résultat trouvé');
       return $rep;
     }
-    $resp = $this->getResponse('binary');
+    $rep = $this->getResponse('binary');
 
-    $resp->deleteFileAfterSending = true;
-    $resp->fileName = $fileName;
-    $resp->outputFileName = 'nom-sympa-pour-lutilisateur.csv';
-    $resp->mimeType = 'text/csv';
-    $resp->doDownload = true; // true si tu veux que l'utilisateur ait une boite de dialogue "sauver sous"
+    $rep->deleteFileAfterSending = true;
+    $rep->fileName = $fileName;
+    $rep->outputFileName = 'nom-sympa-pour-lutilisateur.csv';
+    $rep->mimeType = 'text/csv';
+    $rep->doDownload = true; // true si tu veux que l'utilisateur ait une boite de dialogue "sauver sous"
 
-    return $resp;
+    return $rep;
 
   }
 }
