@@ -250,7 +250,7 @@ class serviceCtrl extends jController {
 
     $rep->deleteFileAfterSending = true;
     $rep->fileName = $fileName;
-    $rep->outputFileName = date(ymd).'_bal_'.$insee.'.sql';
+    $rep->outputFileName = date(ymd).'_bal_'.$insee.'.csv';
     $rep->mimeType = 'text/csv';
     $rep->doDownload = true; // true si tu veux que l'utilisateur ait une boite de dialogue "sauver sous"
 
