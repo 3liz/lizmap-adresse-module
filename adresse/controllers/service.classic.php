@@ -220,7 +220,11 @@ class serviceCtrl extends jController {
 
     // vérifier que le projet contient la couche point_adresse
 
-    // demander la voie éditable à proximité de la geom
+    $l = $p->findLayerByName('point_adresse');
+    if(!$l){
+      $rep->data = array('status'=>'error', 'message'=>'Layer '.$l->name.' does not exist');
+      return $rep;
+    }
 
     $autocomplete = jClasses::getService('adresse~search');
     try {
@@ -246,7 +250,7 @@ class serviceCtrl extends jController {
 
     $rep->deleteFileAfterSending = true;
     $rep->fileName = $fileName;
-    $rep->outputFileName = 'nom-sympa-pour-lutilisateur.csv';
+    $rep->outputFileName = date(ymd).'_bal_'.$insee.'.sql';
     $rep->mimeType = 'text/csv';
     $rep->doDownload = true; // true si tu veux que l'utilisateur ait une boite de dialogue "sauver sous"
 
