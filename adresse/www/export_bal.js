@@ -50,11 +50,8 @@ function initBalView(activateGpxOnStartup) {
       if ( !data.features )
         data = JSON.parse(data);
       var features = data.features;
-      console.log(typeof features);
-      console.log(features[0]);
       for (var i = 0; i < features.length; i++) {
         cColumn.append(new Option(features[i]['properties']['commune_nom'], features[i]['properties']['insee_code']));
-        console.log(features[i]['properties']);
       }
   });
   $('#export_bal').click(function(){
