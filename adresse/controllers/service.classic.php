@@ -195,7 +195,7 @@ class serviceCtrl extends jController {
       return $rep;
     }
     if(!preg_match($test, $insee)){
-      $rep->data = array('status'=>'error', 'message'=>'Code insee not avaible');
+      $rep->data = array('status'=>'error', 'message'=>'Code insee not available');
       return;
     }
     $filterParams[] = $insee;
