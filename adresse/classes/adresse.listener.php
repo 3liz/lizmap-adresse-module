@@ -24,7 +24,7 @@ class adresseListener extends jEventListener{
           return;
         }
 
-        // vérifier que le projet contient la couche point_adresse
+        // vérifier que le projet contient la couche point_adresse et la couche voie
 
         $l = $p->findLayerByName('point_adresse');
         $vl = $p->findLayerByName('voie');
@@ -94,10 +94,14 @@ class adresseListener extends jEventListener{
 
        $bp = jApp::config()->urlengine['basePath'];
 
-       $js = array(
-          jUrl::get('jelix~www:getfile', array('targetmodule'=>'adresse', 'file'=>'adresse.js')),
-          jUrl::get('jelix~www:getfile', array('targetmodule'=>'adresse', 'file'=>'export_bal.js'))
-       );
+       $js[] = jUrl::get('jelix~www:getfile', array('targetmodule'=>'adresse', 'file'=>'adresse.js'));
+
+       $cl = $p->findLayerByName('vue_com');
+       if(!$cl){
+
+       }else{
+         $js[] = jUrl::get('jelix~www:getfile', array('targetmodule'=>'adresse', 'file'=>'export_bal.js'));
+       }
 
        $jscode = array(
                 'var adresseConfig = ' . json_encode($adresseConfig)
