@@ -181,17 +181,17 @@ class serviceCtrl extends jController {
 
     $rep = $this->getResponse('json');
     if(!$project){
-      $rep->data = array('status'=>'error', 'message'=>'Project not find');
+      $rep->data = array('status'=>'error', 'message'=>'Project not found');
       return $rep;
     }
 
     if(!$repository){
-      $rep->data = array('status'=>'error', 'message'=>'Repository not find');
+      $rep->data = array('status'=>'error', 'message'=>'Repository not found');
       return $rep;
     }
 
     if(!$insee){
-      $rep->data = array('status'=>'error', 'message'=>'Code insee not find');
+      $rep->data = array('status'=>'error', 'message'=>'Code insee not found');
       return $rep;
     }
     if(!preg_match($test, $insee)){
@@ -201,7 +201,7 @@ class serviceCtrl extends jController {
     $filterParams[] = $insee;
 
     if(!$option){
-      $rep->data = array('status'=>'error', 'message'=>'Option not find');
+      $rep->data = array('status'=>'error', 'message'=>'Option not found');
       return $rep;
     }
 
