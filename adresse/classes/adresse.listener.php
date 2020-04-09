@@ -94,13 +94,11 @@ class adresseListener extends jEventListener{
 
        $bp = jApp::config()->urlengine['basePath'];
 
+       $js = array();
        $js[] = jUrl::get('jelix~www:getfile', array('targetmodule'=>'adresse', 'file'=>'adresse.js'));
 
-       $cl = $p->findLayerByName('vue_com');
-       if(!$cl){
-
-       }else{
-         $js[] = jUrl::get('jelix~www:getfile', array('targetmodule'=>'adresse', 'file'=>'export_bal.js'));
+       if($p->findLayerByName('vue_com')){
+           $js[] = jUrl::get('jelix~www:getfile', array('targetmodule'=>'adresse', 'file'=>'export_bal.js'));
        }
 
        $jscode = array(
