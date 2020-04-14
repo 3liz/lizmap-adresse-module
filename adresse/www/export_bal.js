@@ -56,12 +56,10 @@ function initBalView(activateGpxOnStartup) {
   });
   $('#export_bal').click(function(){
     var insee = cColumn.val();
-    var option = 'export';
     var options = {
                    repository: lizUrls.params.repository,
                    project: lizUrls.params.project,
-                   insee: insee,
-                   opt: option
+                   insee: insee
                };
     var url = adresseConfig['urls']['export'];
     downloadFile(url, options);
