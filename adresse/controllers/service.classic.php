@@ -177,7 +177,7 @@ class serviceCtrl extends jController {
     $project = $this->param('project');
     $repository = $this->param('repository');
     $insee = $this->param('insee');
-    $option = $this->param('opt');
+    $option = 'export';
 
     $rep = $this->getResponse('json');
     if(!$project){
