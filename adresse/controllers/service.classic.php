@@ -134,16 +134,27 @@ class serviceCtrl extends jController {
         return $rep;
     }
 
-    // vérifier que le projet contient la couche point_adresse
+    // vérifier que le projet contient la couche voie et  point_adresse
 
     $l = $p->findLayerByName('voie');
     if(!$l){
-      $rep->data = array('status'=>'error', 'message'=>'Layer '.$l->name.' does not exist');
+      $rep->data = array('status'=>'error', 'message'=>'Layer voie does not exist');
       return $rep;
     }
     $layer = $p->getLayer($l->id);
     if (!$layer->isEditable()) {
       $rep->data = array('status'=>'error', 'message'=>'Layer '.$l->name.' is not Editable');
+      return $rep;
+    }
+
+    $pl = $p->findLayerByName('point_adresse');
+    if(!$pl){
+      $rep->data = array('status'=>'error', 'message'=>'Layer point_adresse does not exist');
+      return $rep;
+    }
+    $player = $p->getLayer($pl->id);
+    if (!$player->isEditable()) {
+      $rep->data = array('status'=>'error', 'message'=>'Layer '.$pl->name.' is not Editable');
       return $rep;
     }
 
