@@ -156,7 +156,6 @@ var lizAdresse = function() {
                           if(data){
                             if(data['type'] == 'success'){
                               addAdresseMessage(data['message'],'info',true);
-                              redrawPointAdresseLayer();
                               $('#dock-close').click();
                             }else{
                               addAdresseMessage(data['message'],'error',true);
