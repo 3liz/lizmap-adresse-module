@@ -28,6 +28,11 @@ var lizAdresse = function() {
     lizMap.addMessage(aMessage, aType, aClose).attr('id','lizmap-adresse-message');
     adresseMessageTimeoutId = window.setTimeout(cleanAdresseMessage, 5000);
   }
+  function redrawPointAdresseLayer(){
+    var point_adresse_layer = lizMap.map.getLayersByName('point_adresse');
+    var pLayer = point_adresse_layer[0];
+    pLayer.redraw();
+  }
   lizMap.events.on({
    'lizmapeditiongeometryupdated': function(e){
      if (e.layerId == adresseConfig['point_adresse']['id']) {
@@ -151,6 +156,7 @@ var lizAdresse = function() {
                           if(data){
                             if(data['type'] == 'success'){
                               addAdresseMessage(data['message'],'info',true);
+                              redrawPointAdresseLayer();
                               $('#dock-close').click();
                             }else{
                               addAdresseMessage(data['message'],'error',true);
@@ -174,6 +180,17 @@ var lizAdresse = function() {
       mColumn.val(adresseConfig['user']);
     }else{
       mColumn.val(adresseConfig['user']);
+    }
+  },
+  'lizmapeditionfeaturemodified':function(e){
+    var layerId = e.layerId;
+    var getLayerConfig = lizMap.getLayerConfigById( layerId );
+    if( getLayerConfig ) {
+        var layerConfig = getLayerConfig[1];
+        var layerName = getLayerConfig[0];
+        if(layerName == adresseConfig['voie']['name']){
+          redrawPointAdresseLayer();
+        }
     }
   }
  });
