@@ -12,6 +12,7 @@ class update {
 
   protected $sql = array(
     'reverse'=>'UPDATE adresse.voie SET geom = ST_REVERSE(geom), sens = NOT sens WHERE id_voie = %s::integer;',
+    'new_reverse'=>'UPDATE adresse.voie SET geom = ST_REVERSE(geom), sens_numerotation = NOT sens_numerotation WHERE id_voie = %s::integer;',
     'validation' =>'UPDATE adresse.point_adresse SET a_valider = NOT a_valider WHERE id_point = %s::integer;'
   );
 

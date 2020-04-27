@@ -159,7 +159,17 @@ class serviceCtrl extends jController {
     }
 
     // demander la voie éditable à proximité de la geom
-
+    $version = '';
+    if($option == 'reverse'){
+      $autocomplete = jClasses::getService('adresse~search');
+      $result = $autocomplete->getData( $repository, $project, $l->name, $filterParams = array(), 'version');
+      $result = $result->fetchAll();
+      $result = (array)$result[0];
+      $version = $result['me_version'];
+      if(version_compare($version, '0.2.8', '>=')){
+        $option = 'new_reverse';
+      }
+    }
     $autocomplete = jClasses::getService('adresse~update');
     try {
         $result = $autocomplete->apply( $repository, $project, $l->name, $id, $option);
