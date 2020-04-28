@@ -28,6 +28,11 @@ var lizAdresse = function() {
     lizMap.addMessage(aMessage, aType, aClose).attr('id','lizmap-adresse-message');
     adresseMessageTimeoutId = window.setTimeout(cleanAdresseMessage, 5000);
   }
+  function redrawPointAdresseLayer(){
+    var point_adresse_layer = lizMap.map.getLayersByName('point_adresse');
+    var pLayer = point_adresse_layer[0];
+    pLayer.redraw();
+  }
   lizMap.events.on({
    'lizmapeditiongeometryupdated': function(e){
      if (e.layerId == adresseConfig['point_adresse']['id']) {
@@ -88,26 +93,57 @@ var lizAdresse = function() {
               if( getLayerConfig ) {
                   var layerConfig = getLayerConfig[1];
                   var layerName = getLayerConfig[0];
+                  var btnBar = self.next('span.popupButtonBar');
+                  if ( btnBar.length == 0 ) {
+                      var eHtml = '<span class="popupButtonBar"></span></br>';
+                      self.after(eHtml);
+                      btnBar = self.next('span.popupButtonBar');
+                  }
+                  var btn = $('<button></button>');
+                  btn.addClass("btn btn-mini popup-adresse-reverse");
+                  var icon = $('<i></i>');
+                  var url = adresseConfig['urls']['update'];
 
                   if (layerName == adresseConfig['voie']['name'] ){
-                    var btnBar = self.next('span.popupButtonBar');
-                    if ( btnBar.length == 0 ) {
-                        var eHtml = '<span class="popupButtonBar"></span></br>';
-                        self.after(eHtml);
-                        btnBar = self.next('span.popupButtonBar');
-                    }
-                    var btn = $('<button></button>');
-                    btn.addClass("btn btn-mini popup-adresse-reverse");
-                    var icon = $('<i></i>');
                     icon.addClass('icon-refresh');
                     btn.append(icon);
                     btnBar.append(btn);
-                    var url = adresseConfig['urls']['update'];
                     var options = {
                                    repository: lizUrls.params.repository,
                                    project: lizUrls.params.project,
                                    id: '',
                                    opt: 'reverse'
+                               };
+                    btn.click(function(e) {
+                      var featId = self.val();
+                      var leid = featId.split('.');
+                      options['id'] = leid[1];
+                      $.getJSON(
+                        url,
+                        options,
+                        function(data,status,xhr){
+                          if(data){
+                            if(data['type'] == 'success'){
+                              addAdresseMessage(data['message'],'info',true);
+                              $('#dock-close').click();
+                            }else{
+                              addAdresseMessage(data['message'],'error',true);
+                            }
+                          }
+                        }
+                      );
+                    });
+
+                  }
+                  if (layerName == adresseConfig['point_adresse']['name'] ){
+                    icon.addClass('icon-thumbs-up');
+                    btn.append(icon);
+                    btnBar.append(btn);
+                    var options = {
+                                   repository: lizUrls.params.repository,
+                                   project: lizUrls.params.project,
+                                   id: '',
+                                   opt: 'validation'
                                };
                     btn.click(function(e) {
                       var featId = self.val();
@@ -143,6 +179,17 @@ var lizAdresse = function() {
       mColumn.val(adresseConfig['user']);
     }else{
       mColumn.val(adresseConfig['user']);
+    }
+  },
+  'lizmapeditionfeaturemodified':function(e){
+    var layerId = e.layerId;
+    var getLayerConfig = lizMap.getLayerConfigById( layerId );
+    if( getLayerConfig ) {
+        var layerConfig = getLayerConfig[1];
+        var layerName = getLayerConfig[0];
+        if(layerName == adresseConfig['voie']['name']){
+          redrawPointAdresseLayer();
+        }
     }
   }
  });

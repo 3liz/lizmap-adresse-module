@@ -134,11 +134,11 @@ class serviceCtrl extends jController {
         return $rep;
     }
 
-    // vérifier que le projet contient la couche point_adresse
+    // vérifier que le projet contient la couche voie et  point_adresse
 
     $l = $p->findLayerByName('voie');
     if(!$l){
-      $rep->data = array('status'=>'error', 'message'=>'Layer '.$l->name.' does not exist');
+      $rep->data = array('status'=>'error', 'message'=>'Layer voie does not exist');
       return $rep;
     }
     $layer = $p->getLayer($l->id);
@@ -147,8 +147,29 @@ class serviceCtrl extends jController {
       return $rep;
     }
 
-    // demander la voie éditable à proximité de la geom
+    $pl = $p->findLayerByName('point_adresse');
+    if(!$pl){
+      $rep->data = array('status'=>'error', 'message'=>'Layer point_adresse does not exist');
+      return $rep;
+    }
+    $player = $p->getLayer($pl->id);
+    if (!$player->isEditable()) {
+      $rep->data = array('status'=>'error', 'message'=>'Layer '.$pl->name.' is not Editable');
+      return $rep;
+    }
 
+    // demander la voie éditable à proximité de la geom
+    $version = '';
+    if($option == 'reverse'){
+      $autocomplete = jClasses::getService('adresse~search');
+      $result = $autocomplete->getData( $repository, $project, $l->name, $filterParams = array(), 'version');
+      $result = $result->fetchAll();
+      $result = (array)$result[0];
+      $version = $result['me_version'];
+      if(version_compare($version, '0.2.8', '>=')){
+        $option = 'new_reverse';
+      }
+    }
     $autocomplete = jClasses::getService('adresse~update');
     try {
         $result = $autocomplete->apply( $repository, $project, $l->name, $id, $option);
