@@ -16,8 +16,10 @@ class search {
           WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;',
     'classique' => 'SELECT * FROM adresse.calcul_num_adr(ST_geomfromtext($1,$2))',
     'metrique' => 'SELECT * FROM adresse.calcul_num_metrique(ST_geomfromtext($1,$2))',
-    'export' => 'SELECT cle_interop, uid_adresse, voie_nom, numero, suffixe, commune_nom, position,x, y, long, lat, source, date_derniere_maj FROM adresse.export_bal WHERE code_insee = $1',
-    'version'=> 'SELECT me_version FROM adresse.metadata'
+    'bal' => 'SELECT cle_interop, uid_adresse, voie_nom, numero, suffixe, commune_nom, position,x, y, long, lat, source, date_derniere_maj FROM adresse.export_bal WHERE code_insee = $1',
+    'version'=> 'SELECT me_version FROM adresse.metadata',
+    'voie_delib'=>'SELECT v.nom_complet FROM adresse.voie v, adresse.appartenir_com a, adresse.commune c WHERE c.id_com = a.id_com AND v.id_voie = a.id_voie AND c.insee_code = $1::text AND v.delib = true',
+    'commune'=> 'SELECT c.commune_nom, COUNT(v.id_voie) as nbVoie FROM adresse.commune c, adresse.voie v WHERE c.insee_code = $1::text AND ST_intersects(c.geom, v.geom) AND v.delib = true group by c.commune_nom'
   );
 
   protected function getSql($option) {

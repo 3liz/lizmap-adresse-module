@@ -29,7 +29,8 @@ function addBalDock(){
     html+= ' <select name="liste-com">';
     html+= ' </select>';
     html+= '</div>'
-    html+= '<button id="export_bal">Exporter</button>'
+    html+= '<button id="export_bal">Exporter</button><br><br>'
+    html+= '<button id="delib_voie">Exporter voie à délibérer</button>'
 
     // Add Lizmap minidock
     lizMap.addDock(
@@ -54,14 +55,26 @@ function initBalView(activateGpxOnStartup) {
         cColumn.append(new Option(features[i]['properties']['commune_nom'], features[i]['properties']['insee_code']));
       }
   });
+  var url = adresseConfig['urls']['export'];
+  var options = {
+      repository: lizUrls.params.repository,
+      project: lizUrls.params.project,
+      insee: undefined,
+      opt: ''
+  };
   $('#export_bal').click(function(){
     var insee = cColumn.val();
-    var options = {
-                   repository: lizUrls.params.repository,
-                   project: lizUrls.params.project,
-                   insee: insee
-               };
-    var url = adresseConfig['urls']['export'];
+    var leOpt = 'bal';
+    options['insee'] = insee;
+    options['opt'] = leOpt;
+    downloadFile(url, options);
+  });
+
+  $('#delib_voie').click(function(){
+    var insee = cColumn.val();
+    var leOpt = 'voie_delib';
+    options['insee'] = insee;
+    options['opt'] = leOpt;
     downloadFile(url, options);
   });
 }
