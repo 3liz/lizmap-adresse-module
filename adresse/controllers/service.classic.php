@@ -202,7 +202,6 @@ class serviceCtrl extends jController {
 
     $rep = $this->getResponse('json');
     if(!$project){
-      jLog::log($project, 'error');
       $rep->data = array('status'=>'error', 'message'=>'Project not found');
       return $rep;
     }
