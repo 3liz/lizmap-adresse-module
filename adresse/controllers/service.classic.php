@@ -202,6 +202,7 @@ class serviceCtrl extends jController {
 
     $rep = $this->getResponse('json');
     if(!$project){
+      jLog::log($project, 'error');
       $rep->data = array('status'=>'error', 'message'=>'Project not found');
       return $rep;
     }
@@ -267,8 +268,9 @@ class serviceCtrl extends jController {
         $leDoc->exportBal($fileName, $result);
         $name = date(ymd).'_bal_'.$insee.'.csv';
       }elseif ($option == 'voie_delib') {
+        $com = $autocomplete->getData( $repository, $project, 'point_adresse', $filterParams, 'commune');
         $fileName = tempnam($tempPath, 'voieADelib-');
-        $leDoc->exportVoieADelib($fileName, $result, $insee);
+        $leDoc->exportVoieADelib($fileName, $repository, $project, $result, $com);
         $name = 'Voie_A_Delibérer_'.$insee.'.csv';
       }
 

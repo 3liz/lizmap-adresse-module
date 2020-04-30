@@ -2,7 +2,7 @@ lizMap.events.on({
 
     'uicreated': function(e) {
         // Activate GPX manager tool when the map loads
-        var activateBalOnStartup = true;
+        var activateDocOnStartup = false;
 
         // File format based on extension
         var gpxFileFormat = new OpenLayers.Format.GPX();
@@ -12,11 +12,11 @@ lizMap.events.on({
         addBalDock();
 
         // Activate tools
-        initBalView(activateBalOnStartup);
+        initBalView(activateDocOnStartup);
     },
     'minidockclosed': function(e) {
-        if ( e.id == 'bal-export' ) {
-            $("#bal_none_toggle").click();
+        if ( e.id == 'export-documents' ) {
+            $("#doc_none_toggle").click();
         }
     }
 });
@@ -29,12 +29,12 @@ function addBalDock(){
     html+= ' <select name="liste-com">';
     html+= ' </select>';
     html+= '</div>'
-    html+= '<button id="export_bal">Exporter</button><br><br>'
-    html+= '<button id="delib_voie">Exporter voie à délibérer</button>'
+    html+= '<button id="export_bal">Exporter</button><br><br>';
+    html+= '<button id="delib_voie">Exporter voie à délibérer</button>';
 
     // Add Lizmap minidock
     lizMap.addDock(
-        'bal-export',
+        'export-documents',
         'Export d\'adresse au format BAL',
         'minidock',
         html,
@@ -42,7 +42,7 @@ function addBalDock(){
     );
 }
 
-function initBalView(activateGpxOnStartup) {
+function initBalView(activateDocOnStartup) {
   var form = $('#bal_form_container');
   var cColumn = form.find('select[name="liste-com"]');
   var getFeatureUrlData = lizMap.getVectorLayerWfsUrl( 'vue_com', null, null, 'none' );

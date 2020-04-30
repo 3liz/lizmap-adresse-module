@@ -18,14 +18,12 @@ class exportDoc{
     fclose($fp);
   }
 
-  function exportVoieADelib($fileName, $result, $insee){
+  function exportVoieADelib($fileName, $repository, $project, $result, $com){
     $fp = fopen($fileName, 'w');
     $list = array();
-    $autocomplete = jClasses::getService('adresse~search');
-    $com = $autocomplete->getData( $repository, $project, 'point_adresse', $filterParams, 'commune');
-    $nom = $com->commune_nom;
-    $nb = $com->nbVoie;
-    fputcsv($fp, array($nom. ' '.$insee. ' '. $nb), ';');
+    foreach ($com as $value) {
+      fputcsv($fp, array($value->cnom. ' '.$value->cinsee. ' '. $value->nbVoie), ';');
+    }
     foreach ($result as $value) {
       fputcsv($fp, array($value->nom_complet), ';');
     }

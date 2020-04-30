@@ -63,6 +63,7 @@ var lizAdresse = function() {
                      option = data[0]['type_num'].toLowerCase();
                      options['opt'] = option;
                      voie = data[0]['id_voie'];
+                     console.log(voie);
                      vColumn.val(voie);
                      vColumn.change();
                      $.getJSON(
