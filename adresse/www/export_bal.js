@@ -15,7 +15,7 @@ lizMap.events.on({
         initBalView(activateDocOnStartup);
     },
     'minidockclosed': function(e) {
-        if ( e.id == 'export-documents' ) {
+        if ( e.id == 'adresse-exports' ) {
             $("#doc_none_toggle").click();
         }
     }
@@ -34,7 +34,7 @@ function addBalDock(){
 
     // Add Lizmap minidock
     lizMap.addDock(
-        'export-documents',
+        'adresse-exports',
         'Gestion des documents',
         'minidock',
         html,
