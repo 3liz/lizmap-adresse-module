@@ -198,7 +198,7 @@ class serviceCtrl extends jController {
     $project = $this->param('project');
     $repository = $this->param('repository');
     $insee = $this->param('insee');
-    $option = 'export';
+    $option = $this->param('opt');
 
     $rep = $this->getResponse('json');
     if(!$project){
@@ -253,15 +253,25 @@ class serviceCtrl extends jController {
     } catch (Exception $e) {
         $result = Null;
     }
-    $leBal = jClasses::getService('adresse~exportBal');
+    $leDoc = jClasses::getService('adresse~exportDoc');
     $tempPath = jApp::tempPath('export');
 
     jFile::createDir($tempPath);
 
-    $fileName = tempnam($tempPath, 'exportbal-');
+    $fileName = '';
+    $name = '';
 
     if($result != Null){
-      $leBal->exportCSV($fileName, $result);
+      if ($option == 'bal'){
+        $fileName = tempnam($tempPath, 'exportbal-');
+        $leDoc->exportBal($fileName, $result);
+        $name = date(ymd).'_bal_'.$insee.'.csv';
+      }elseif ($option == 'voie_delib') {
+        $com = $autocomplete->getData( $repository, $project, 'point_adresse', $filterParams, 'commune');
+        $fileName = tempnam($tempPath, 'voieADelib-');
+        $leDoc->exportVoieADelib($fileName, $repository, $project, $result, $com);
+        $name = 'Voie_A_Delibérer_'.$insee.'.csv';
+      }
 
     }else {
       $rep->data = array('status'=>'error', 'message'=>'Aucun résultat trouvé');
@@ -271,7 +281,7 @@ class serviceCtrl extends jController {
 
     $rep->deleteFileAfterSending = true;
     $rep->fileName = $fileName;
-    $rep->outputFileName = date(ymd).'_bal_'.$insee.'.csv';
+    $rep->outputFileName = $name;
     $rep->mimeType = 'text/csv';
     $rep->doDownload = true; // true si tu veux que l'utilisateur ait une boite de dialogue "sauver sous"
 

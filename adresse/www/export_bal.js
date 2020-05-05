@@ -2,7 +2,7 @@ lizMap.events.on({
 
     'uicreated': function(e) {
         // Activate GPX manager tool when the map loads
-        var activateBalOnStartup = true;
+        var activateDocOnStartup = false;
 
         // File format based on extension
         var gpxFileFormat = new OpenLayers.Format.GPX();
@@ -12,11 +12,11 @@ lizMap.events.on({
         addBalDock();
 
         // Activate tools
-        initBalView(activateBalOnStartup);
+        initBalView(activateDocOnStartup);
     },
     'minidockclosed': function(e) {
-        if ( e.id == 'bal-export' ) {
-            $("#bal_none_toggle").click();
+        if ( e.id == 'adresse-exports' ) {
+            $("#doc_none_toggle").click();
         }
     }
 });
@@ -29,19 +29,20 @@ function addBalDock(){
     html+= ' <select name="liste-com">';
     html+= ' </select>';
     html+= '</div>'
-    html+= '<button id="export_bal">Exporter</button>'
+    html+= '<button id="export_bal">Exporter</button><br><br>';
+    html+= '<button id="delib_voie">Exporter voie à délibérer</button>';
 
     // Add Lizmap minidock
     lizMap.addDock(
-        'bal-export',
-        'Export d\'adresse au format BAL',
+        'adresse-exports',
+        'Gestion des documents',
         'minidock',
         html,
         'icon-road'
     );
 }
 
-function initBalView(activateGpxOnStartup) {
+function initBalView(activateDocOnStartup) {
   var form = $('#bal_form_container');
   var cColumn = form.find('select[name="liste-com"]');
   var getFeatureUrlData = lizMap.getVectorLayerWfsUrl( 'vue_com', null, null, 'none' );
@@ -54,14 +55,26 @@ function initBalView(activateGpxOnStartup) {
         cColumn.append(new Option(features[i]['properties']['commune_nom'], features[i]['properties']['insee_code']));
       }
   });
+  var url = adresseConfig['urls']['export'];
+  var options = {
+      repository: lizUrls.params.repository,
+      project: lizUrls.params.project,
+      insee: undefined,
+      opt: ''
+  };
   $('#export_bal').click(function(){
     var insee = cColumn.val();
-    var options = {
-                   repository: lizUrls.params.repository,
-                   project: lizUrls.params.project,
-                   insee: insee
-               };
-    var url = adresseConfig['urls']['export'];
+    var leOpt = 'bal';
+    options['insee'] = insee;
+    options['opt'] = leOpt;
+    downloadFile(url, options);
+  });
+
+  $('#delib_voie').click(function(){
+    var insee = cColumn.val();
+    var leOpt = 'voie_delib';
+    options['insee'] = insee;
+    options['opt'] = leOpt;
     downloadFile(url, options);
   });
 }
