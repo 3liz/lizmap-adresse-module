@@ -35,7 +35,7 @@ function addBalDock(){
     // Add Lizmap minidock
     lizMap.addDock(
         'export-documents',
-        'Export d\'adresse au format BAL',
+        'Gestion des documents',
         'minidock',
         html,
         'icon-road'
