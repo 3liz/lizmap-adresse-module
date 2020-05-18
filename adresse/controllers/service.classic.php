@@ -279,14 +279,14 @@ class serviceCtrl extends jController {
         $fileName = tempnam($tempPath, 'exportbal-');
         $data = $autocomplete->getData( $repository, $project, 'point_adresse', $filterParams, 'bal');
         $leDoc->exportBal($fileName, $data);
-        $name = 'exportSNA.zip';
+        $name = date(ymd).'_export_SNA_'.$insee.'.zip';
       }
 
     }else {
       $rep->data = array('status'=>'error', 'message'=>'Aucun résultat trouvé');
       return $rep;
     }
-    $folder = jApp::tempPath('Délibérations');
+    $folder = jApp::tempPath('Deliberations');
     $rep = $this->getResponse($type);
     $repo = lizmap::getRepository($repository);  // c'est peut être déjà fait dans ton contrôleur, à toi de voir
     $cheminRepo = $repo->getPath();

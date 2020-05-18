@@ -31,8 +31,8 @@ function addBalDock(){
     html+= '</div>'
     html+= '<button id="export_bal">Export BAL</button><br><br>';
     html+= '<button id="delib_voie">Exporter voies à délibérer</button><br><br>';
-    html+= '<label><input type="checkbox" id="derniereDelib" name="derniereDelib" checked>Dernière délibération</label>';
     html+= '<button id="export_sna">Export SNA</button>';
+    html+= '<label><input type="checkbox" id="derniereDelib" name="derniereDelib" checked>Dernière délibération</label>';
 
     // Add Lizmap minidock
     lizMap.addDock(
