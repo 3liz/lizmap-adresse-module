@@ -271,12 +271,12 @@ class serviceCtrl extends jController {
       }elseif ($option == 'voie_delib') {
         $type = 'binary';
         $com = $autocomplete->getData( $repository, $project, 'point_adresse', $filterParams, 'commune');
-        $fileName = tempnam($tempPath, 'voieADelib-'.$insee.'-'.time());
+        $fileName = tempnam($tempPath, 'voieADelib-');
         $leDoc->exportVoieADelib($fileName, $repository, $project, $result, $com);
         $name = 'Voie_A_Delibérer_'.$insee.'.csv';
       }else{
         $type = 'zip';
-        $fileName = tempnam($tempPath, 'exportbal-.$insee.'-'.time()');
+        $fileName = tempnam($tempPath, 'exportbal-';
         $data = $autocomplete->getData( $repository, $project, 'point_adresse', $filterParams, 'bal');
         $leDoc->exportBal($fileName, $data);
         $name = date(ymd).'_export_SNA_'.$insee.'.zip';
