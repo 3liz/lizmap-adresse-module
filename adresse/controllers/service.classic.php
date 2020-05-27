@@ -265,7 +265,7 @@ class serviceCtrl extends jController {
     if($result != Null){
       if ($option == 'bal'){
         $type = 'binary';
-        $fileName = tempnam($tempPath, 'exportbal-'.$insee.'-'.time());
+        $fileName = tempnam($tempPath, 'exportbal-';
         $leDoc->exportBal($fileName, $result);
         $name = date(ymd).'_bal_'.$insee.'.csv';
       }elseif ($option == 'voie_delib') {
