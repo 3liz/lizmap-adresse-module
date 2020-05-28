@@ -260,32 +260,54 @@ class serviceCtrl extends jController {
 
     $fileName = '';
     $name = '';
+    $type = '';
 
     if($result != Null){
       if ($option == 'bal'){
+        $type = 'binary';
         $fileName = tempnam($tempPath, 'exportbal-');
         $leDoc->exportBal($fileName, $result);
         $name = date(ymd).'_bal_'.$insee.'.csv';
       }elseif ($option == 'voie_delib') {
+        $type = 'binary';
         $com = $autocomplete->getData( $repository, $project, 'point_adresse', $filterParams, 'commune');
         $fileName = tempnam($tempPath, 'voieADelib-');
         $leDoc->exportVoieADelib($fileName, $repository, $project, $result, $com);
         $name = 'Voie_A_Delibérer_'.$insee.'.csv';
+      }else{
+        $type = 'zip';
+        $fileName = tempnam($tempPath, 'exportbal-');
+        $data = $autocomplete->getData( $repository, $project, 'point_adresse', $filterParams, 'bal');
+        $leDoc->exportBal($fileName, $data);
+        $name = date(ymd).'_export_SNA_'.$insee.'.zip';
       }
 
     }else {
       $rep->data = array('status'=>'error', 'message'=>'Aucun résultat trouvé');
       return $rep;
     }
-    $rep = $this->getResponse('binary');
-
-    $rep->deleteFileAfterSending = true;
-    $rep->fileName = $fileName;
-    $rep->outputFileName = $name;
-    $rep->mimeType = 'text/csv';
-    $rep->doDownload = true; // true si tu veux que l'utilisateur ait une boite de dialogue "sauver sous"
+    $folder = jApp::tempPath('Deliberations');
+    $rep = $this->getResponse($type);
+    $repo = lizmap::getRepository($repository);  // c'est peut être déjà fait dans ton contrôleur, à toi de voir
+    $cheminRepo = $repo->getPath();
+    if($type == 'zip') {
+      $rep->zipFilename = $name;
+      $fileBalName = date(ymd).'_bal_'.$insee.'.csv';
+      $rep->content->addFile($fileName, $fileBalName);
+      //$rep->content->addDir($folder.'/', 'Délibérations', true);
+      foreach ($result as $value) {
+        $rep->content->addFile($cheminRepo.$value->lien, 'Deliberations/'.$value->nom_doc);
+      }
+    }elseif($type == 'binary') {
+      $rep->deleteFileAfterSending = true;
+      $rep->fileName = $fileName;
+      $rep->outputFileName = $name;
+      $rep->mimeType = 'text/csv';
+      $rep->doDownload = true;
+    }
 
     return $rep;
 
   }
+
 }

@@ -29,8 +29,10 @@ function addBalDock(){
     html+= ' <select name="liste-com">';
     html+= ' </select>';
     html+= '</div>'
-    html+= '<button id="export_bal">Exporter</button><br><br>';
-    html+= '<button id="delib_voie">Exporter voie à délibérer</button>';
+    html+= '<button id="export_bal">Export BAL</button><br><br>';
+    html+= '<button id="delib_voie">Exporter voies à délibérer</button><br><br>';
+    html+= '<button id="export_sna">Export SNA</button>';
+    html+= '<label><input type="checkbox" id="derniereDelib" name="derniereDelib" checked>Dernière délibération</label>';
 
     // Add Lizmap minidock
     lizMap.addDock(
@@ -73,6 +75,19 @@ function initBalView(activateDocOnStartup) {
   $('#delib_voie').click(function(){
     var insee = cColumn.val();
     var leOpt = 'voie_delib';
+    options['insee'] = insee;
+    options['opt'] = leOpt;
+    downloadFile(url, options);
+  });
+
+  $('#export_sna').click(function(){
+    var insee = cColumn.val();
+    var leOpt = undefined;
+    if (document.getElementById('derniereDelib').checked){
+      leOpt = 'zip1';
+    }else{
+      leOpt = 'zipAll';
+    }
     options['insee'] = insee;
     options['opt'] = leOpt;
     downloadFile(url, options);
