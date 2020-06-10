@@ -118,6 +118,7 @@ var lizAdresse = function() {
                       var featId = self.val();
                       var leid = featId.split('.');
                       options['id'] = leid[1];
+                      if(confirm('Êtes-vous sûr de vouloir inverser la géométrie de la voie ?')){
                       $.getJSON(
                         url,
                         options,
@@ -132,6 +133,7 @@ var lizAdresse = function() {
                           }
                         }
                       );
+                    }
                     });
 
                   }
