@@ -134,6 +134,7 @@ var lizAdresse = function() {
                           }
                         );
                       }
+                      return false;
                     });
 
                   }
