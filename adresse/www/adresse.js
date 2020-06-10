@@ -119,21 +119,21 @@ var lizAdresse = function() {
                       var leid = featId.split('.');
                       options['id'] = leid[1];
                       if(confirm('Êtes-vous sûr de vouloir inverser la géométrie de la voie ?')){
-                      $.getJSON(
-                        url,
-                        options,
-                        function(data,status,xhr){
-                          if(data){
-                            if(data['type'] == 'success'){
-                              addAdresseMessage(data['message'],'info',true);
-                              $('#dock-close').click();
-                            }else{
-                              addAdresseMessage(data['message'],'error',true);
+                        $.getJSON(
+                          url,
+                          options,
+                          function(data,status,xhr){
+                            if(data){
+                              if(data['type'] == 'success'){
+                                addAdresseMessage(data['message'],'info',true);
+                                $('#dock-close').click();
+                              }else{
+                                addAdresseMessage(data['message'],'error',true);
+                              }
                             }
                           }
-                        }
-                      );
-                    }
+                        );
+                      }
                     });
 
                   }
