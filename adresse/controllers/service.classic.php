@@ -165,11 +165,6 @@ class serviceCtrl extends jController {
     $result = $result->fetchAll();
     $result = (array)$result[0];
     $version = $result['me_version'];
-    if($option == 'reverse'){
-      if(version_compare($version, '0.2.8', '>=')){
-        $option = 'new_reverse';
-      }
-    }
     if($option == 'validation'){
       if(version_compare($version, '0.3.0', '>=')){
         $option = 'new_validation';
