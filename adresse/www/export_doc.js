@@ -1,23 +1,11 @@
 lizMap.events.on({
 
     'uicreated': function(e) {
-        // Activate GPX manager tool when the map loads
-        var activateDocOnStartup = false;
-
-        // File format based on extension
-        var gpxFileFormat = new OpenLayers.Format.GPX();
-        var gpxFileExt = 'ext';
-
         // Add Dock
         addBalDock();
 
         // Activate tools
-        initBalView(activateDocOnStartup);
-    },
-    'minidockclosed': function(e) {
-        if ( e.id == 'adresse-exports' ) {
-            $("#doc_none_toggle").click();
-        }
+        initBalView();
     }
 });
 
@@ -44,7 +32,7 @@ function addBalDock(){
     );
 }
 
-function initBalView(activateDocOnStartup) {
+function initBalView() {
   var form = $('#bal_form_container');
   var cColumn = form.find('select[name="liste-com"]');
   var getFeatureUrlData = lizMap.getVectorLayerWfsUrl( 'vue_com', null, null, 'none' );
