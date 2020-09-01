@@ -101,6 +101,10 @@ class adresseListener extends jEventListener{
            $js[] = jUrl::get('jelix~www:getfile', array('targetmodule'=>'adresse', 'file'=>'export_doc.js'));
        }
 
+       if($p->findLayerByName('vue_certificat')){
+           $js[] = jUrl::get('jelix~www:getfile', array('targetmodule'=>'adresse', 'file'=>'certif_doc.js'));
+       }
+
        $jscode = array(
                 'var adresseConfig = ' . json_encode($adresseConfig)
        );

@@ -22,7 +22,7 @@ class exportDoc{
     $fp = fopen($fileName, 'w');
     $list = array();
     foreach ($com as $value) {
-      fputcsv($fp, array($value->cnom. ' '.$value->cinsee. ' '. $value->nbid), ';');
+      fputcsv($fp, array($value->cnom. ' - '.$value->cinsee. ' - Nombre de Voies : '. $value->nbid), ';');
     }
     foreach ($result as $value) {
       fputcsv($fp, array($value->nom_complet), ';');
