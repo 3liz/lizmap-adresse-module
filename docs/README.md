@@ -45,7 +45,7 @@ est censé générer un numéro pair. Il n'y a pas d'adresse présente à droite
 
 ## Export de document
 
-Comme on le voit ci-dessous le module ajoute un mini-dock, il est représenté dans le menu par une icône de 
+Comme on le voit ci-dessous, le module ajoute un mini-dock. Il est représenté dans le menu par une icône de 
 route (dernier élément du menu). Sur ce dock on y trouve un menu de téléchargement des documents pour la 
 gestion des voie et adresse. Il y a:
 * l'export BAL qui est un export CSV des adresses au format BAL;
