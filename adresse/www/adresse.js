@@ -178,11 +178,17 @@ var lizAdresse = function() {
     var cColumn = form.find('input[name="createur"]');
     var mColumn = form.find('input[name="modificateur"]');
     if (form.find('input[name="liz_featureId"]').val()== ''){
-      cColumn.val(adresseConfig['user']);
-      mColumn.val(adresseConfig['user']);
+      var cSelect = $('<select class="jforms-ctrl-menulist" name="createur" size="1"></select>');
+      cSelect.attr('id', cColumn.attr('id'));
+      cSelect.append('<option selected="selected">'+login+'</option>');
+      cColumn.replaceWith(cSelect);
     }else{
-      mColumn.val(adresseConfig['user']);
+      cColumn.attr('disabled', 'disabled');
     }
+    var mSelect = $('<select class="jforms-ctrl-menulist" name="modificateur" size="1"></select>');
+    mSelect.attr('id', mColumn.attr('id'));
+    mSelect.append('<option selected="selected">'+login+'</option>');
+    mColumn.replaceWith(mSelect);
   },
   'lizmapeditionfeaturemodified':function(e){
     var layerId = e.layerId;

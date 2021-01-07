@@ -1,5 +1,6 @@
 <events xmlns="http://jelix.org/ns/events/1.0">
    <listener name="adresse">
        <event name="getMapAdditions" />
+       <event name="LizmapEditionSaveCheckForm" />
    </listener>
 </events>

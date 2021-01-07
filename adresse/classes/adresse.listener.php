@@ -119,4 +119,86 @@ class adresseListener extends jEventListener
       )
     );
   }
+
+    function onLizmapEditionSaveCheckForm($event) {
+        $form = $event->form;
+        if (!$form) {
+            return;
+        }
+
+        // vérifier que le repository et le project correspondent à un projet lizmap
+        $repository = $event->repository;
+        if (!$repository) {
+            return;
+        }
+        $project = $event->project;
+        if (!$project) {
+            return;
+        }
+
+        if (!jAcl2::check('lizmap.tools.edition.use', $repository->getKey())) {
+            return;
+        }
+
+        // vérifier la couche
+        $layer = $event->layer;
+        if (!$layer) {
+            return;
+        }
+        if (!in_array($layer->getName(), array('point_adresse', 'voie'))) {
+            return;
+        }
+        if (!$layer->isEditable()) {
+          return;
+        }
+
+        // Check if user groups intersects groups allowed by project editor
+        // If user is admin, no need to check for given groups
+        $eLayer = $layer->getEditionCapabilities();
+        if (jAuth::isConnected() and !jAcl2::check('lizmap.admin.repositories.delete') and property_exists($eLayer, 'acl') and $eLayer->acl) {
+            // Check if configured groups white list and authenticated user groups list intersects
+            $editionGroups = $eLayer->acl;
+            $editionGroups = array_map('trim', explode(',', $editionGroups));
+            if (is_array($editionGroups) and count($editionGroups) > 0) {
+                $userGroups = jAcl2DbUserGroup::getGroups();
+                if (!array_intersect($editionGroups, $userGroups)) {
+                    return;
+                }
+            }
+        }
+
+        // User login
+        $juser = jAuth::getUserSession();
+        if (!$juser) {
+            $user_login = '';
+        } else {
+            $user_login = $juser->login;
+        }
+
+        // forcer la valeur du champs createur
+        if ($form->getControl('createur')) {
+            $featureId = $event->featureId;
+            if (!$featureId) {
+                // Creation d'un nouvel objet
+                $form->setData('createur', $user_login);
+            } else {
+                // Mise à jour d'un objet
+                $modifiedControls = $form->getModifiedControls();
+                // Conservation de la valeur du champs createur
+                if (array_key_exists('createur', $modifiedControls) && $modifiedControls['createur']) {
+                    $form->setData('createur', $modifiedControls['createur']);
+                }
+            }
+        }
+        // forcer la valeur du champs modificateur
+        if ($form->getControl('modificateur')) {
+            $form->setData('modificateur', $user_login);
+        }
+
+        $event->add(
+            array(
+                'check' => True
+            )
+        );
+    }
 }
