@@ -4,6 +4,9 @@ github-pages:
 eslint:
 	npx eslint adresse/
 
+eslint-fix:
+	npx eslint --fix adresse/
+
 php-cs-fixer-test:
 	php-cs-fixer fix --config=.php_cs.dist --allow-risky=yes --dry-run --diff
 
