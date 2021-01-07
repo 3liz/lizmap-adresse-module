@@ -1,3 +1,5 @@
+/* global adresseConfig */
+
 lizMap.events.on({
 
     'uicreated': function (e) {

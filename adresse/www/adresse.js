@@ -7,6 +7,8 @@
 * @license    Mozilla Public Licence
 */
 
+/* global adresseConfig */
+
 var lizAdresse = function() {
     var adresseMessageTimeoutId = null;
     function cleanAdresseMessage() {
