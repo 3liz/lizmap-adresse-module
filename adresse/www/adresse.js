@@ -9,7 +9,7 @@
 
 /* global adresseConfig */
 
-var lizAdresse = function () {
+lizAdresse = function () {
     var adresseMessageTimeoutId = null;
     function cleanAdresseMessage() {
         var $AdresseMessage = $('#lizmap-adresse-message');
