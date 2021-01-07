@@ -1,0 +1,30 @@
+{
+  "name": "lizmap-adresse-module",
+  "version": "1.0.0",
+  "description": "Module Lizmap de gestion d'une base adresse",
+  "devDependencies": {
+    "eslint": "^7.17.0"
+  },
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "pretest": "eslint adresse",
+    "pretest-fix": "eslint --fix adresse"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drillinP/lizmap-adresse-module.git"
+  },
+  "keywords": [
+    "qgis",
+    "adresse"
+  ],
+  "author": "3Liz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drillinP/lizmap-adresse-module/issues"
+  },
+  "homepage": "https://github.com/drillinP/lizmap-adresse-module#readme"
+}
