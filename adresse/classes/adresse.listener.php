@@ -1,14 +1,13 @@
 <?php
 
 /**
- * @package   lizmap
- * @subpackage adresse
  * @author    Pierre DRILLIN
  * @copyright 2020 3liz
- * @link      http://3liz.com
+ *
+ * @see      http://3liz.com
+ *
  * @license    Mozilla Public Licence
  */
-
 class adresseListener extends jEventListener
 {
     public function ongetMapAdditions($event)
@@ -17,7 +16,7 @@ class adresseListener extends jEventListener
     // vérifier que le repository et le project correspondent à un projet lizmap
         $repository = $event->repository;
         $project = $event->project;
-        $p = lizmap::getProject($repository . '~' . $project);
+        $p = lizmap::getProject($repository.'~'.$project);
         if (!$p) {
             return;
         }
@@ -38,7 +37,6 @@ class adresseListener extends jEventListener
         if (!$layer->isEditable()) {
             return;
         }
-
 
         if (!$vl) {
             return;
@@ -108,14 +106,14 @@ class adresseListener extends jEventListener
         }
 
         $jscode = array(
-      'var adresseConfig = ' . json_encode($adresseConfig)
-    );
+            'var adresseConfig = '.json_encode($adresseConfig),
+        );
 
         $event->add(
             array(
-        'js' => $js,
-        'jscode' => $jscode
-      )
+                'js' => $js,
+                'jscode' => $jscode,
+            )
         );
     }
 
@@ -197,7 +195,7 @@ class adresseListener extends jEventListener
 
         $event->add(
             array(
-                'check' => true
+                'check' => true,
             )
         );
     }

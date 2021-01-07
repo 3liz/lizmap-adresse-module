@@ -1,14 +1,12 @@
 <?php
 /**
-* @package   lizmap
-* @subpackage adresse
-* @author    your name
-* @copyright 2011-2019 3liz
-* @link      http://3liz.com
-* @license    All rights reserved
-*/
-
-
+ * @author    your name
+ * @copyright 2011-2019 3liz
+ *
+ * @see      http://3liz.com
+ *
+ * @license    All rights reserved
+ */
 class adresseModuleInstaller extends jInstallerModule
 {
     public function install()

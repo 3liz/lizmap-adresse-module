@@ -1,13 +1,12 @@
 <?php
 /**
-* @package   lizmap
-* @subpackage adresse
-* @author    Pierre DRILLIN
-* @copyright 2020 3liz
-* @link      http://3liz.com
-* @license    All rights reserved
-*/
-
+ * @author    Pierre DRILLIN
+ * @copyright 2020 3liz
+ *
+ * @see      http://3liz.com
+ *
+ * @license    All rights reserved
+ */
 class serviceCtrl extends jController
 {
     public function select()
@@ -24,22 +23,26 @@ class serviceCtrl extends jController
         $option = $this->param('opt');
 
         if (!$project) {
-            $rep->data = array('status'=>'error', 'message'=>'Project not find');
+            $rep->data = array('status' => 'error', 'message' => 'Project not find');
+
             return $rep;
         }
 
         if (!$repository) {
-            $rep->data = array('status'=>'error', 'message'=>'Repository not find');
+            $rep->data = array('status' => 'error', 'message' => 'Repository not find');
+
             return $rep;
         }
 
         if (!$geom) {
-            $rep->data = array('status'=>'error', 'message'=>'Geometry not find');
+            $rep->data = array('status' => 'error', 'message' => 'Geometry not find');
+
             return $rep;
         }
 
         if (!$srid) {
-            $rep->data = array('status'=>'error', 'message'=>'SRID not find');
+            $rep->data = array('status' => 'error', 'message' => 'SRID not find');
+
             return $rep;
         }
 
@@ -47,7 +50,8 @@ class serviceCtrl extends jController
         $filterParams[] = $srid;
 
         if (!$option) {
-            $rep->data = array('status'=>'error', 'message'=>'Option not find');
+            $rep->data = array('status' => 'error', 'message' => 'Option not find');
+
             return $rep;
         }
 
@@ -55,12 +59,13 @@ class serviceCtrl extends jController
 
         $p = lizmap::getProject($repository.'~'.$project);
         if (!$p) {
-            $rep->data = array('status'=>'error', 'message'=>'A problem occured while loading project with Lizmap');
+            $rep->data = array('status' => 'error', 'message' => 'A problem occured while loading project with Lizmap');
+
             return $rep;
         }
 
         if (!$p->checkAcl()) {
-            $rep->data = array('status'=>'error', 'message'=>jLocale::get('view~default.repository.access.denied'));
+            $rep->data = array('status' => 'error', 'message' => jLocale::get('view~default.repository.access.denied'));
 
             return $rep;
         }
@@ -69,18 +74,21 @@ class serviceCtrl extends jController
 
         $l = $p->findLayerByName('point_adresse');
         if (!$l) {
-            $rep->data = array('status'=>'error', 'message'=>'Layer '.$l->name.' does not exist');
+            $rep->data = array('status' => 'error', 'message' => 'Layer '.$l->name.' does not exist');
+
             return $rep;
         }
         $layer = $p->getLayer($l->id);
         if (!$layer->isEditable()) {
-            $rep->data = array('status'=>'error', 'message'=>'Layer '.$l->name.' is not Editable');
+            $rep->data = array('status' => 'error', 'message' => 'Layer '.$l->name.' is not Editable');
+
             return $rep;
         }
 
         // demander la voie éditable à proximité de la geom
 
         $autocomplete = jClasses::getService('adresse~search');
+
         try {
             $result = $autocomplete->getData($repository, $project, $l->name, $filterParams, $option);
         } catch (Exception $e) {
@@ -88,6 +96,7 @@ class serviceCtrl extends jController
         }
 
         $rep->data = $result->fetchAll();
+
         return $rep;
     }
 
@@ -103,22 +112,26 @@ class serviceCtrl extends jController
         $option = $this->param('opt');
 
         if (!$project) {
-            $rep->data = array('status'=>'error', 'message'=>'Project not find');
+            $rep->data = array('status' => 'error', 'message' => 'Project not find');
+
             return $rep;
         }
 
         if (!$repository) {
-            $rep->data = array('status'=>'error', 'message'=>'Repository not find');
+            $rep->data = array('status' => 'error', 'message' => 'Repository not find');
+
             return $rep;
         }
 
         if (!$id) {
-            $rep->data = array('status'=>'error', 'message'=>'Id not find');
+            $rep->data = array('status' => 'error', 'message' => 'Id not find');
+
             return $rep;
         }
 
         if (!$option) {
-            $rep->data = array('status'=>'error', 'message'=>'Option not find');
+            $rep->data = array('status' => 'error', 'message' => 'Option not find');
+
             return $rep;
         }
 
@@ -126,12 +139,13 @@ class serviceCtrl extends jController
 
         $p = lizmap::getProject($repository.'~'.$project);
         if (!$p) {
-            $rep->data = array('status'=>'error', 'message'=>'A problem occured while loading project with Lizmap');
+            $rep->data = array('status' => 'error', 'message' => 'A problem occured while loading project with Lizmap');
+
             return $rep;
         }
 
         if (!$p->checkAcl()) {
-            $rep->data = array('status'=>'error', 'message'=>jLocale::get('view~default.repository.access.denied'));
+            $rep->data = array('status' => 'error', 'message' => jLocale::get('view~default.repository.access.denied'));
 
             return $rep;
         }
@@ -140,23 +154,27 @@ class serviceCtrl extends jController
 
         $l = $p->findLayerByName('voie');
         if (!$l) {
-            $rep->data = array('status'=>'error', 'message'=>'Layer voie does not exist');
+            $rep->data = array('status' => 'error', 'message' => 'Layer voie does not exist');
+
             return $rep;
         }
         $layer = $p->getLayer($l->id);
         if (!$layer->isEditable()) {
-            $rep->data = array('status'=>'error', 'message'=>'Layer '.$l->name.' is not Editable');
+            $rep->data = array('status' => 'error', 'message' => 'Layer '.$l->name.' is not Editable');
+
             return $rep;
         }
 
         $pl = $p->findLayerByName('point_adresse');
         if (!$pl) {
-            $rep->data = array('status'=>'error', 'message'=>'Layer point_adresse does not exist');
+            $rep->data = array('status' => 'error', 'message' => 'Layer point_adresse does not exist');
+
             return $rep;
         }
         $player = $p->getLayer($pl->id);
         if (!$player->isEditable()) {
-            $rep->data = array('status'=>'error', 'message'=>'Layer '.$pl->name.' is not Editable');
+            $rep->data = array('status' => 'error', 'message' => 'Layer '.$pl->name.' is not Editable');
+
             return $rep;
         }
 
@@ -165,7 +183,7 @@ class serviceCtrl extends jController
         $autocomplete = jClasses::getService('adresse~search');
         $result = $autocomplete->getData($repository, $project, $l->name, $filterParams = array(), 'version');
         $result = $result->fetchAll();
-        $result = (array)$result[0];
+        $result = (array) $result[0];
         $version = $result['me_version'];
         if ($option == 'validation') {
             if (version_compare($version, '0.3.0', '>=')) {
@@ -173,13 +191,14 @@ class serviceCtrl extends jController
             }
         }
         $autocomplete = jClasses::getService('adresse~update');
+
         try {
             $result = $autocomplete->apply($repository, $project, $l->name, $id, $option);
         } catch (Exception $e) {
             $result = null;
         }
-        $message='';
-        $typeRes='';
+        $message = '';
+        $typeRes = '';
 
         if ($result) {
             $message = 'Update exécuté avec succès';
@@ -189,13 +208,14 @@ class serviceCtrl extends jController
             $typeRes = 'error';
         }
 
-        $rep->data = array('success' => ''.$result, 'type'=>$typeRes, 'message' => $message);
+        $rep->data = array('success' => ''.$result, 'type' => $typeRes, 'message' => $message);
+
         return $rep;
     }
 
     public function export()
     {
-        $test='#^[0-9]{1}[0-9AB]{1}[0-9]{3}$#';
+        $test = '#^[0-9]{1}[0-9AB]{1}[0-9]{3}$#';
         $filterParams = array();
         $project = $this->param('project');
         $repository = $this->param('repository');
@@ -204,27 +224,32 @@ class serviceCtrl extends jController
 
         $rep = $this->getResponse('json');
         if (!$project) {
-            $rep->data = array('status'=>'error', 'message'=>'Project not found');
+            $rep->data = array('status' => 'error', 'message' => 'Project not found');
+
             return $rep;
         }
 
         if (!$repository) {
-            $rep->data = array('status'=>'error', 'message'=>'Repository not found');
+            $rep->data = array('status' => 'error', 'message' => 'Repository not found');
+
             return $rep;
         }
 
         if (!$insee) {
-            $rep->data = array('status'=>'error', 'message'=>'Code insee not found');
+            $rep->data = array('status' => 'error', 'message' => 'Code insee not found');
+
             return $rep;
         }
         if (!preg_match($test, $insee)) {
-            $rep->data = array('status'=>'error', 'message'=>'Code insee not available');
+            $rep->data = array('status' => 'error', 'message' => 'Code insee not available');
+
             return;
         }
         $filterParams[] = $insee;
 
         if (!$option) {
-            $rep->data = array('status'=>'error', 'message'=>'Option not found');
+            $rep->data = array('status' => 'error', 'message' => 'Option not found');
+
             return $rep;
         }
 
@@ -232,12 +257,14 @@ class serviceCtrl extends jController
 
         $p = lizmap::getProject($repository.'~'.$project);
         if (!$p) {
-            $rep->data = array('status'=>'error', 'message'=>'A problem occured while loading project with Lizmap');
+            $rep->data = array('status' => 'error', 'message' => 'A problem occured while loading project with Lizmap');
+
             return $rep;
         }
 
         if (!$p->checkAcl()) {
-            $rep->data = array('status'=>'error', 'message'=>jLocale::get('view~default.repository.access.denied'));
+            $rep->data = array('status' => 'error', 'message' => jLocale::get('view~default.repository.access.denied'));
+
             return $rep;
         }
 
@@ -245,11 +272,13 @@ class serviceCtrl extends jController
 
         $l = $p->findLayerByName('point_adresse');
         if (!$l) {
-            $rep->data = array('status'=>'error', 'message'=>'Layer '.$l->name.' does not exist');
+            $rep->data = array('status' => 'error', 'message' => 'Layer '.$l->name.' does not exist');
+
             return $rep;
         }
 
         $autocomplete = jClasses::getService('adresse~search');
+
         try {
             $result = $autocomplete->getData($repository, $project, 'point_adresse', $filterParams, $option);
         } catch (Exception $e) {
@@ -284,7 +313,8 @@ class serviceCtrl extends jController
                 $name = date(ymd).'_export_SNA_'.$insee.'.zip';
             }
         } else {
-            $rep->data = array('status'=>'error', 'message'=>'Aucun résultat trouvé');
+            $rep->data = array('status' => 'error', 'message' => 'Aucun résultat trouvé');
+
             return $rep;
         }
         $folder = jApp::tempPath('Deliberations');
