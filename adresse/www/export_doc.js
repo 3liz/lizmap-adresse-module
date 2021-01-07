@@ -2,8 +2,8 @@
 
 lizMap.events.on({
 
-    'uicreated': function (e) {
-    // Add Dock
+    'uicreated': function () {
+        // Add Dock
         addBalDock();
 
         // Activate tools
