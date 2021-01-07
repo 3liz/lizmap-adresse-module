@@ -11,116 +11,116 @@
 
 class adresseListener extends jEventListener
 {
-
-  function ongetMapAdditions($event)
-  {
+    public function ongetMapAdditions($event)
+    {
 
     // vérifier que le repository et le project correspondent à un projet lizmap
-    $repository = $event->repository;
-    $project = $event->project;
-    $p = lizmap::getProject($repository . '~' . $project);
-    if (!$p) {
-      return;
-    }
-
-    if (!jAcl2::check('lizmap.tools.edition.use', $repository)) {
-      return;
-    }
-
-    // vérifier que le projet contient la couche point_adresse et la couche voie
-
-    $l = $p->findLayerByName('point_adresse');
-    $vl = $p->findLayerByName('voie');
-    if (!$l) {
-      return;
-    }
-
-    $layer = $p->getLayer($l->id);
-    if (!$layer->isEditable()) {
-      return;
-    }
-
-
-    if (!$vl) {
-      return;
-    }
-
-    $vlayer = $p->getLayer($vl->id);
-    if (!$vlayer->isEditable()) {
-      return;
-    }
-
-    $dLayer = $layer->getEditionCapabilities();
-    $eLayer = $vlayer->getEditionCapabilities();
-
-    // Check if user groups intersects groups allowed by project editor
-    // If user is admin, no need to check for given groups
-    if (jAuth::isConnected() and !jAcl2::check('lizmap.admin.repositories.delete') and property_exists($eLayer, 'acl') and $eLayer->acl) {
-      // Check if configured groups white list and authenticated user groups list intersects
-      $editionGroups = $eLayer->acl;
-      $editionGroups = array_map('trim', explode(',', $editionGroups));
-      if (is_array($editionGroups) and count($editionGroups) > 0) {
-        $userGroups = jAcl2DbUserGroup::getGroups();
-        if (!array_intersect($editionGroups, $userGroups)) {
-          return;
+        $repository = $event->repository;
+        $project = $event->project;
+        $p = lizmap::getProject($repository . '~' . $project);
+        if (!$p) {
+            return;
         }
-      }
-    }
 
-    $juser = jAuth::getUserSession();
-    if (!$juser) {
-      $user_login = '';
-    } else {
-      $user_login = $juser->login;
-    }
+        if (!jAcl2::check('lizmap.tools.edition.use', $repository)) {
+            return;
+        }
 
-    $js = array();
-    $jscode = array();
-    $css = array();
+        // vérifier que le projet contient la couche point_adresse et la couche voie
 
-    $adresseConfig = array();
+        $l = $p->findLayerByName('point_adresse');
+        $vl = $p->findLayerByName('voie');
+        if (!$l) {
+            return;
+        }
 
-    $adresseConfig['user'] = $user_login;
+        $layer = $p->getLayer($l->id);
+        if (!$layer->isEditable()) {
+            return;
+        }
 
-    $adresseConfig['point_adresse'] = array();
-    $adresseConfig['point_adresse']['id'] = $layer->getId();
-    $adresseConfig['point_adresse']['name'] = $layer->getName();
 
-    $adresseConfig['voie'] = array();
-    $adresseConfig['voie']['id'] = $vlayer->getId();
-    $adresseConfig['voie']['name'] = $vlayer->getName();
+        if (!$vl) {
+            return;
+        }
 
-    $adresseConfig['urls'] = array();
-    $adresseConfig['urls']['select'] = jUrl::get('adresse~service:select');
-    $adresseConfig['urls']['update'] = jUrl::get('adresse~service:update');
-    $adresseConfig['urls']['export'] = jUrl::get('adresse~service:export');
+        $vlayer = $p->getLayer($vl->id);
+        if (!$vlayer->isEditable()) {
+            return;
+        }
 
-    $bp = jApp::config()->urlengine['basePath'];
+        $dLayer = $layer->getEditionCapabilities();
+        $eLayer = $vlayer->getEditionCapabilities();
 
-    $js = array();
-    $js[] = jUrl::get('jelix~www:getfile', array('targetmodule' => 'adresse', 'file' => 'adresse.js'));
+        // Check if user groups intersects groups allowed by project editor
+        // If user is admin, no need to check for given groups
+        if (jAuth::isConnected() and !jAcl2::check('lizmap.admin.repositories.delete') and property_exists($eLayer, 'acl') and $eLayer->acl) {
+            // Check if configured groups white list and authenticated user groups list intersects
+            $editionGroups = $eLayer->acl;
+            $editionGroups = array_map('trim', explode(',', $editionGroups));
+            if (is_array($editionGroups) and count($editionGroups) > 0) {
+                $userGroups = jAcl2DbUserGroup::getGroups();
+                if (!array_intersect($editionGroups, $userGroups)) {
+                    return;
+                }
+            }
+        }
 
-    if ($p->findLayerByName('v_commune')) {
-      $js[] = jUrl::get('jelix~www:getfile', array('targetmodule' => 'adresse', 'file' => 'export_doc.js'));
-    }
+        $juser = jAuth::getUserSession();
+        if (!$juser) {
+            $user_login = '';
+        } else {
+            $user_login = $juser->login;
+        }
 
-    if ($p->findLayerByName('v_certificat')) {
-      $js[] = jUrl::get('jelix~www:getfile', array('targetmodule' => 'adresse', 'file' => 'certif_doc.js'));
-    }
+        $js = array();
+        $jscode = array();
+        $css = array();
 
-    $jscode = array(
+        $adresseConfig = array();
+
+        $adresseConfig['user'] = $user_login;
+
+        $adresseConfig['point_adresse'] = array();
+        $adresseConfig['point_adresse']['id'] = $layer->getId();
+        $adresseConfig['point_adresse']['name'] = $layer->getName();
+
+        $adresseConfig['voie'] = array();
+        $adresseConfig['voie']['id'] = $vlayer->getId();
+        $adresseConfig['voie']['name'] = $vlayer->getName();
+
+        $adresseConfig['urls'] = array();
+        $adresseConfig['urls']['select'] = jUrl::get('adresse~service:select');
+        $adresseConfig['urls']['update'] = jUrl::get('adresse~service:update');
+        $adresseConfig['urls']['export'] = jUrl::get('adresse~service:export');
+
+        $bp = jApp::config()->urlengine['basePath'];
+
+        $js = array();
+        $js[] = jUrl::get('jelix~www:getfile', array('targetmodule' => 'adresse', 'file' => 'adresse.js'));
+
+        if ($p->findLayerByName('v_commune')) {
+            $js[] = jUrl::get('jelix~www:getfile', array('targetmodule' => 'adresse', 'file' => 'export_doc.js'));
+        }
+
+        if ($p->findLayerByName('v_certificat')) {
+            $js[] = jUrl::get('jelix~www:getfile', array('targetmodule' => 'adresse', 'file' => 'certif_doc.js'));
+        }
+
+        $jscode = array(
       'var adresseConfig = ' . json_encode($adresseConfig)
     );
 
-    $event->add(
-      array(
+        $event->add(
+            array(
         'js' => $js,
         'jscode' => $jscode
       )
-    );
-  }
+        );
+    }
 
-    function onLizmapEditionSaveCheckForm($event) {
+    public function onLizmapEditionSaveCheckForm($event)
+    {
         $form = $event->form;
         if (!$form) {
             return;
@@ -149,7 +149,7 @@ class adresseListener extends jEventListener
             return;
         }
         if (!$layer->isEditable()) {
-          return;
+            return;
         }
 
         // Check if user groups intersects groups allowed by project editor
@@ -197,7 +197,7 @@ class adresseListener extends jEventListener
 
         $event->add(
             array(
-                'check' => True
+                'check' => true
             )
         );
     }

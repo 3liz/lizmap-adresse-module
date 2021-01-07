@@ -8,7 +8,8 @@
 * @license    Mozilla Public Licence
 */
 
-class adresseProfile {
+class adresseProfile
+{
 
     /**
     * Get the Name of the cadastre DB profile
@@ -18,10 +19,11 @@ class adresseProfile {
     * @param profile The default cadastre DB profile
     * @return Name of the cadastre DB profile
     */
-    public static function get($repository, $project, $layerName, $profile = 'adresse') {
+    public static function get($repository, $project, $layerName, $profile = 'adresse')
+    {
         $p = lizmap::getProject($repository.'~'.$project);
         $layer = $p->findLayerByName($layerName);
-        if($layer){
+        if ($layer) {
             $layerId = $layer->id;
             $qgisLayer = $p->getLayer($layerId);
             if ($qgisLayer) {
@@ -31,5 +33,4 @@ class adresseProfile {
         //jLog::log(json_encode($profile));
         return $profile;
     }
-
 }

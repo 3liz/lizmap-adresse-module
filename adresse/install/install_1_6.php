@@ -9,9 +9,10 @@
 */
 
 
-class adresseModuleInstaller extends jInstallerModule {
-
-    function install() {
+class adresseModuleInstaller extends jInstallerModule
+{
+    public function install()
+    {
         //if ($this->firstDbExec())
         //    $this->execSQLScript('sql/install');
 
