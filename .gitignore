@@ -1,2 +1,5 @@
 .idea/
 .vscode/
+
+# Node, NPM
+node_modules

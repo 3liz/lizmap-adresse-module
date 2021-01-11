@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module xmlns="http://jelix.org/ns/module/1.0">
     <info id="adresse3liz.com" name="adresse" createdate="2020-02-11">
-        <version date="2020-10-06">0.8.0</version>
+        <version date="2021-01-11">0.9.0</version>
         <label lang="en_US">adresse</label>
         <description lang="en_US" />
         <license URL="">All rights reserved</license>
