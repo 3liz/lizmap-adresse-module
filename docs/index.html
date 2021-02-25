@@ -1,74 +1,11 @@
-
-<!DOCTYPE HTML>
-<html>
- <head>
-  <meta charset="utf-8"/>
-  <title>Gestion Adresse</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
-  <link href="https://docs.3liz.org/remarkable.css" rel="stylesheet"/>
-  <link href="icon.png" rel="icon" type="image/png" >
- </head>
- <body>
- <header class="header-container" style="">
-    <h1>Gestion Adresse</h1>
- </header>
- <article>
- <p><a href="../">Up</a></p>
-<div class="toc"><span class="toctitle">Table of content</span><ul>
-<li><a href="#description-des-fonctionnalites-quapporte-le-module">Description des fonctionnalités qu'apporte le module</a><ul>
-<li><a href="#specificite-lors-de-ledition">Spécificité lors de l'édition</a></li>
-<li><a href="#export-de-document">Export de document</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<h1 id="description-des-fonctionnalites-quapporte-le-module">Description des fonctionnalités qu'apporte le module</h1>
-<p>Si vous n'avez pas encore de Projet QGIS pour le module adresse, je vous conseille de vous rendre sur 
-<a href="https://3liz.github.io/qgis-gestion_base_adresse-plugin/index.html">la documentation du Plugin Adresse</a> en 
-premier si vous souhaitez en faire l'utilisation.</p>
-<h2 id="specificite-lors-de-ledition">Spécificité lors de l'édition</h2>
-<p>Pour pouvoir éditer une adresse il y a plusieurs choses à prendre en compte. Tout commence avec la couche 
-<code>voie</code> ou comme le montre l'image ci-dessous il y a deux styles différents. <strong>Bleu</strong> pour une voie 
-<strong>vérouillée</strong> et <strong>Rouge</strong> pour une voie <strong>déverrouillée</strong>.</p>
-<p><img alt="" src="./styles_voie.png"></p>
-<p>Lorsqu'on souhaite créer une adresse et en l'occurrence éditer la couche <code>point_adresse</code> il faut que la voie 
-qui concerne cette adresse soit en mode <strong>déverrouillée</strong>.</p>
-<p>Pour ce faire on entre en mode édition avec la voie concernée par l'adresse et comme on l'aperçoit sur 
-l'image ci-dessous, il y a un paramètre <strong>Statut</strong> en bouton radio où l'on peut lui attribuer la valeur 
-<code>Verrouillée</code> ou bien la valeur <code>Déverrouillée</code>.</p>
-<p><img alt="" src="./edit_voie.png"></p>
-<p>Maintenant que la voie sur laquelle je compte travailler est déverrouillée je peux ajouter l'adresse. Il 
-suffit d'entrer en edition avec la couche <code>point_adresse</code> puis de placer le point la où se situe l'adresse. 
-Après ça une proposition concernant le numéro d'adresse est généreée automatiquement. Cette génération 
-automatique prend en compte le sens de la voie, le côté de la voie ou l'on se situe, le type de numérotation 
-(classique ou métrique),  si l'on a inversé le sens de numérotation ou non et les points déjà présents. La 
-voie que vous avez déverrouillée sera aussi automatiquement prix en compte pour votre adresse.</p>
-<p>Exemple: sur l'image ci-dessous, la voie à laquelle j'ajoute une adresse, son sens va de haut en bas. Sa 
-numérotation est classique et je me situe donc à droite. Son sens de numérotation n'est pas inversé donc il 
-est censé générer un numéro pair. Il n'y a pas d'adresse présente à droite donc il me donne le numéro 2 
-(premier nombre pair). Bien sûr vous pouvez modifier le numéro si vous en avez besoin.</p>
-<p><img alt="add_point" src="./add_point.png"></p>
-<h2 id="export-de-document">Export de document</h2>
-<p>Comme on le voit ci-dessous, le module ajoute un mini-dock. Il est représenté dans le menu par une icône de 
-route (dernier élément du menu). Sur ce dock on y trouve un menu de téléchargement des documents pour la 
-gestion des voie et adresse. Il y a:
-* l'export BAL qui est un export CSV des adresses au format BAL;
-* l'export des voies à délibérer;
-* l'export SNA.</p>
-<p><img alt="icon_minidock" src="./icon_minidock_export.png"> <img alt="minidock" src="./minidock_export.png"></p>
-<p>Sur l'image du minidock ci-dessus on aperçoit une case à cocher <strong>Dernière délibération</strong>. Cela signifie que l'on a la possibilité, dans l'export SNA, d'y intégrer soit la dernière délibération soit toutes les délibérations de la commune.</p>
-<p>Voici un exemple d'export BAL.
-<img alt="file_downloaded" src="./donwload_file.png"></p>
-  </article>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
-  </script>
-  <script>
-   hljs.initHighlightingOnLoad();
-  </script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
-  </script>
-  <script type="text/javascript">
-   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
-  </script>
- </body>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Redirection...</title>
+    <script>var anchor = window.location.hash.substr(1); location.href = "https://docs.3liz.org/qgis-gestion_base_adresse-plugin/"</script>
+</head>
+<body>
+    <p>Redirection</p>
+</body>
 </html>
