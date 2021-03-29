@@ -19,6 +19,13 @@
             "modules": [
                 "adresse/"
             ]
+        },
+        "autoconfig-access-16" : {
+            "lizmap@3liz.com" : {
+                "adresse": {
+                    "__global":2
+                }
+            }
         }
     }
 }
