@@ -4,8 +4,8 @@
         <version date="2021-01-11">0.9.0</version>
         <label lang="en_US">adresse</label>
         <description lang="en_US" />
-        <license URL="">All rights reserved</license>
-        <copyright>2011-2019 3liz</copyright>
+        <license URL="">Mozilla Public Licence (MPL)</license>
+        <copyright>2020-2021 3liz</copyright>
         <creator name="your name" email="your-email@yourwebsite.undefined" />
         <!--<contributor name="hisname" email="hisemail@yoursite.undefined"  since="" role=""/>-->
         <homepageURL>http://3liz.com</homepageURL>

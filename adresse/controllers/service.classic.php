@@ -5,7 +5,7 @@
  *
  * @see      http://3liz.com
  *
- * @license    All rights reserved
+ * @license    Mozilla Public Licence
  */
 class serviceCtrl extends jController
 {

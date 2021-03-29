@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * @author    Pierre DRILLIN
+ * @copyright 2020 3liz
+ *
+ * @see      http://3liz.com
+ *
+ * @license    Mozilla Public Licence
+ */
 class exportDoc
 {
     public function ExportDoc()

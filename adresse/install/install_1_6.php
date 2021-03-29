@@ -1,11 +1,11 @@
 <?php
 /**
- * @author    your name
- * @copyright 2011-2019 3liz
+ * @author    Pierre DRILLIN
+ * @copyright 2020 3liz
  *
  * @see      http://3liz.com
  *
- * @license    All rights reserved
+ * @license    Mozilla Public Licence
  */
 class adresseModuleInstaller extends jInstallerModule
 {
