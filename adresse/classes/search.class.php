@@ -15,7 +15,7 @@ class search
           WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;',
         'classique' => 'SELECT * FROM adresse.calcul_num_adr(ST_geomfromtext($1,$2))',
         'metrique' => 'SELECT * FROM adresse.calcul_num_metrique(ST_geomfromtext($1,$2))',
-        'bal' => 'SELECT cle_interop, uid_adresse, voie_nom, numero, suffixe, commune_nom, position,x, y, long, lat, source, date_der_maj FROM adresse.v_export_bal  WHERE code_insee = $1',
+        'bal' => 'SELECT cle_interop, uid_adresse, voie_nom, numero, suffixe, commune_nom, position,x, y, long, lat, source, date_der_maj FROM adresse.v_export_bal  WHERE commune_insee = $1',
         'version' => 'SELECT me_version FROM adresse.metadata',
         'voie_delib' => 'SELECT DISTINCT v.nom_complet FROM adresse.voie v, adresse.commune c WHERE c.insee_code = $1::text AND ST_intersects(v.geom, c.geom)',
         'commune' => 'SELECT c.commune_nom as cnom, c.insee_code as cinsee, COUNT(v.id_voie) as nbid FROM adresse.commune c, adresse.voie v WHERE c.insee_code = $1::text AND ST_intersects(c.geom, v.geom) AND v.delib = true group by c.commune_nom, c.insee_code',
