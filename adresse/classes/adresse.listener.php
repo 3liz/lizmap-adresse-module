@@ -25,9 +25,9 @@ class adresseListener extends jEventListener
             return;
         }
 
-        // vérifier que le projet contient la couche point_adresse et la couche voie
+        // vérifier que le projet contient la couche v_point_adresse et la couche voie
 
-        $l = $p->findLayerByName('point_adresse');
+        $l = $p->findLayerByName('v_point_adresse');
         $vl = $p->findLayerByName('voie');
         if (!$l) {
             return;
@@ -143,7 +143,7 @@ class adresseListener extends jEventListener
         if (!$layer) {
             return;
         }
-        if (!in_array($layer->getName(), array('point_adresse', 'voie'))) {
+        if (!in_array($layer->getName(), array('v_point_adresse', 'voie'))) {
             return;
         }
         if (!$layer->isEditable()) {
