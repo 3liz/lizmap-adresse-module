@@ -70,9 +70,9 @@ class serviceCtrl extends jController
             return $rep;
         }
 
-        // vérifier que le projet contient la couche point_adresse
+        // vérifier que le projet contient la couche v_point_adresse
 
-        $l = $p->findLayerByName('point_adresse');
+        $l = $p->findLayerByName('v_point_adresse');
         if (!$l) {
             $rep->data = array('status' => 'error', 'message' => 'Layer '.$l->name.' does not exist');
 
@@ -150,7 +150,7 @@ class serviceCtrl extends jController
             return $rep;
         }
 
-        // vérifier que le projet contient la couche voie et  point_adresse
+        // vérifier que le projet contient la couche voie et  v_v_point_adresse
 
         $l = $p->findLayerByName('voie');
         if (!$l) {
@@ -165,9 +165,9 @@ class serviceCtrl extends jController
             return $rep;
         }
 
-        $pl = $p->findLayerByName('point_adresse');
+        $pl = $p->findLayerByName('v_point_adresse');
         if (!$pl) {
-            $rep->data = array('status' => 'error', 'message' => 'Layer point_adresse does not exist');
+            $rep->data = array('status' => 'error', 'message' => 'Layer v_point_adresse does not exist');
 
             return $rep;
         }
@@ -268,9 +268,9 @@ class serviceCtrl extends jController
             return $rep;
         }
 
-        // vérifier que le projet contient la couche point_adresse
+        // vérifier que le projet contient la couche v_point_adresse
 
-        $l = $p->findLayerByName('point_adresse');
+        $l = $p->findLayerByName('v_point_adresse');
         if (!$l) {
             $rep->data = array('status' => 'error', 'message' => 'Layer '.$l->name.' does not exist');
 
@@ -280,7 +280,7 @@ class serviceCtrl extends jController
         $autocomplete = jClasses::getService('adresse~search');
 
         try {
-            $result = $autocomplete->getData($repository, $project, 'point_adresse', $filterParams, $option);
+            $result = $autocomplete->getData($repository, $project, 'v_point_adresse', $filterParams, $option);
         } catch (Exception $e) {
             $result = null;
         }
@@ -301,14 +301,14 @@ class serviceCtrl extends jController
                 $name = date(ymd).'_bal_'.$insee.'.csv';
             } elseif ($option == 'voie_delib') {
                 $type = 'binary';
-                $com = $autocomplete->getData($repository, $project, 'point_adresse', $filterParams, 'commune');
+                $com = $autocomplete->getData($repository, $project, 'v_point_adresse', $filterParams, 'commune');
                 $fileName = tempnam($tempPath, 'voieADelib-');
                 $leDoc->exportVoieADelib($fileName, $repository, $project, $result, $com);
                 $name = 'Voie_A_Delibérer_'.$insee.'.csv';
             } else {
                 $type = 'zip';
                 $fileName = tempnam($tempPath, 'exportbal-');
-                $data = $autocomplete->getData($repository, $project, 'point_adresse', $filterParams, 'bal');
+                $data = $autocomplete->getData($repository, $project, 'v_point_adresse', $filterParams, 'bal');
                 $leDoc->exportBal($fileName, $data);
                 $name = date(ymd).'_export_SNA_'.$insee.'.zip';
             }
