@@ -45,3 +45,9 @@ lizmap 3.3 ou inférieur, passez à la section sur l'installation manuelle.
   il faut y rajouter le niveau d’accès du module : 
   * `adresse.access = 2`
 * lancer la commande : `php install/installer.php`
+
+## Obtenir de l'aide
+* Envoyez un e-mail à la liste de diffusion Lizmap à l'adresse https://lists.osgeo.org/pipermail/lizmap/
+* Rejoignez-nous sur IRC , #lizmap sur https://libera.chat
+* Ouvrez un ticket sur GitHub https://github.com/3liz/lizmap-adresse-module/issues
+* Support commercial via 3liz, [Contactez-nous](mailto:info@3liz.com?subject=CommercialSupportRequest)
