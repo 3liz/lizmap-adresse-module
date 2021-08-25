@@ -3,7 +3,8 @@
 ## Unreleased
 
 ## 0.10.0 - 2021-08-24
-* upgraded the queries for the export of documents according to the database structure upgrade 
+
+* Mise à jour pour suivre la dernière version de l'extension QGIS 0.8.0 concernant l'export des documents
 
 ## 0.9.2 - 2021-04-13
 
