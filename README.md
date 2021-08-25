@@ -1,5 +1,10 @@
 # Module Adresse Lizmap
 
+[![Lint JS 🎳](https://github.com/3liz/lizmap-adresse-module/actions/workflows/test-lint-js.yml/badge.svg)](https://github.com/3liz/lizmap-adresse-module/actions/workflows/test-lint-js.yml)
+[![Lint PHP 🎳](https://github.com/3liz/lizmap-adresse-module/actions/workflows/test-lint-php.yml/badge.svg)](https://github.com/3liz/lizmap-adresse-module/actions/workflows/test-lint-php.yml)
+[![Release 🚀](https://github.com/3liz/lizmap-adresse-module/actions/workflows/release.yml/badge.svg)](https://github.com/3liz/lizmap-adresse-module/actions/workflows/release.yml)
+[![Packagist](https://img.shields.io/packagist/v/lizmap/lizmap-adresse-module)](https://packagist.org/packages/lizmap/lizmap-adresse-module)
+
 Module Lizmap de gestion d'une base adresse
 
 ![demo](demo.png "demo")
@@ -32,7 +37,6 @@ lizmap 3.3 ou inférieur, passez à la section sur l'installation manuelle.
   `composer require "lizmap/lizmap-adresse-module"`
 * puis dans le répertoire `lizmap/install/`, lancer la commande : `php installer.php`
 
-
 ### Installation manuelle dans lizmap 3.3 ou 3.4 sans Composer
 
 * Récupérer le dossier `adresse` dans https://github.com/3liz/lizmap-adresse-module
@@ -41,4 +45,3 @@ lizmap 3.3 ou inférieur, passez à la section sur l'installation manuelle.
   il faut y rajouter le niveau d’accès du module : 
   * `adresse.access = 2`
 * lancer la commande : `php install/installer.php`
-
