@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+## 0.10.0 - 2021-08-24
+* upgraded the queries for the export of documents according to the database structure upgrade 
+
 ## 0.9.2 - 2021-04-13
 
 ## 0.9.1 - 2021-03-29
