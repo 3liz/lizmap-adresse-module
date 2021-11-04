@@ -21,10 +21,33 @@ class exportDoc
         // Adding encode utf8 to the file
         fprintf($fp, chr(0xEF).chr(0xBB).chr(0xBF));
         // Adding first CSV line
-        fputcsv($fp, array('cle_interop', 'uid_adresse', 'voie_nom', 'numero', 'suffixe', 'commune_nom', 'position', 'x', 'y', 'long', 'lat', 'source', 'date_derniere_maj'), ';');
+        fputcsv($fp, array('uid_adresse', 'cle_interop', 'commune_insee', 'commune_nom', 'commune_deleguee_insee', 'commune_deleguee_nom', 'cad_parcelles', 'lieudit_complement_nom', 'numero', 'suffixe', 'position', 'x', 'y', 'long', 'lat', 'source', 'source', 'date_derniere_maj'), ';');
         // Adding the data in the CSV file
         foreach ($result as $value) {
-            fputcsv($fp, array($value->cle_interop, $value->uid_adresse, $value->voie_nom, $value->numero, $value->suffixe, $value->commune_nom, $value->position, $value->x, $value->y, $value->long, $value->lat, $value->commune_nom, $value->date_derniere_maj), ';');
+            fputcsv(
+                $fp,
+                array(
+                    $value->uid_adresse,
+                    $value->cle_interop,
+                    $value->commune_insee,
+                    $value->commune_nom,
+                    $value->commune_deleguee_insee,
+                    $value->commune_deleguee_nom,
+                    $value->voie_nom,
+                    $value->lieudit_complement_nom,
+                    $value->numero,
+                    $value->suffixe,
+                    $value->position,
+                    $value->x,
+                    $value->y,
+                    $value->long,
+                    $value->lat,
+                    $value->cad_parcelles,
+                    $value->source,
+                    $value->date_der_maj,
+                ),
+                ';'
+            );
         }
         fclose($fp);
     }

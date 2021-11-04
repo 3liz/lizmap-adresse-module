@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Ajout de champ pour l'export BAL
+
 ## 0.10.0 - 2021-08-24
 
 * Mise à jour pour suivre la dernière version de l'extension QGIS 0.8.0 concernant l'export des documents
