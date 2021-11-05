@@ -327,7 +327,8 @@ class serviceCtrl extends jController
             $rep->content->addFile($fileName, $fileBalName);
             //$rep->content->addDir($folder.'/', 'Délibérations', true);
             foreach ($result as $value) {
-                $rep->content->addFile($cheminRepo.$value->lien, 'Deliberations/'.$value->nom_doc);
+                $ext = pathinfo($value->lien)['extension'];
+                $rep->content->addFile($cheminRepo.$value->lien, 'Deliberations/'.$value->nom_doc.$ext);
             }
         } elseif ($type == 'binary') {
             $rep->deleteFileAfterSending = true;

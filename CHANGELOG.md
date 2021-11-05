@@ -3,6 +3,7 @@
 ## Unreleased
 
 * Modification de l'export BAL pour correspondre à la version 1.2 de la BAL
+* Correction de l'extension de fichier dans l'export SNA
 
 ## 0.10.0 - 2021-08-24
 
