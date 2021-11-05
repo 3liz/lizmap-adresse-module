@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-* Ajout de champ pour l'export BAL
+* Modification de l'export BAL pour correspondre à la version 1.2 de la BAL
 
 ## 0.10.0 - 2021-08-24
 
