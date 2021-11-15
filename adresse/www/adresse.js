@@ -59,9 +59,13 @@ lizAdresse = function () {
                         options,
                         function (data) {
                             if (data) {
-                                option = data[0]['type_num'].toLowerCase();
+                                if (data['status'] == 'error') {
+                                    addAdresseMessage(data['message'], 'info', true)
+                                    return;
+                                }
+                                option = data['data'][0]['type_num'].toLowerCase();
                                 options['opt'] = option;
-                                voie = data[0]['id_voie'];
+                                voie = data['data'][0]['id_voie'];
                                 vColumn.val(voie);
                                 vColumn.change();
                                 $.getJSON(
@@ -69,8 +73,12 @@ lizAdresse = function () {
                                     options,
                                     function (data) {
                                         if (data) {
-                                            nColumn.val(data[0]['num']);
-                                            sColumn.val(data[0]['suffixe']);
+                                            if (data['status'] == 'error') {
+                                                addAdresseMessage(data['message'], 'info', true)
+                                                return;
+                                            }
+                                            nColumn.val(data['data'][0]['num']);
+                                            sColumn.val(data['data'][0]['suffixe']);
                                             sColumn.change();
                                         }
                                     }
@@ -123,7 +131,7 @@ lizAdresse = function () {
                                     options,
                                     function (data) {
                                         if (data) {
-                                            if (data['type'] == 'success') {
+                                            if (data['status'] == 'success') {
                                                 addAdresseMessage(data['message'], 'info', true);
                                                 $('#dock-close').click();
                                             } else {
@@ -156,7 +164,7 @@ lizAdresse = function () {
                                 options,
                                 function (data) {
                                     if (data) {
-                                        if (data['type'] == 'success') {
+                                        if (data['status'] == 'success') {
                                             addAdresseMessage(data['message'], 'info', true);
                                             $('#dock-close').click();
                                         } else {
