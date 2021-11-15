@@ -3,4 +3,7 @@
        <event name="getMapAdditions" />
        <event name="LizmapEditionSaveCheckForm" />
    </listener>
+   <listener name="adresseDockable">
+        <event name="mapMiniDockable" />
+   </listener>
 </events>

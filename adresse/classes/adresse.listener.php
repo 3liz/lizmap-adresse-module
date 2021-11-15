@@ -12,63 +12,30 @@ class adresseListener extends jEventListener
 {
     public function ongetMapAdditions($event)
     {
-
-    // vérifier que le repository et le project correspondent à un projet lizmap
         $repository = $event->repository;
         $project = $event->project;
-        $p = lizmap::getProject($repository.'~'.$project);
-        if (!$p) {
+
+        $lizmap_project = lizmap::getProject($repository.'~'.$project);
+        if (!$lizmap_project) {
             return;
         }
 
-        if (!jAcl2::check('lizmap.tools.edition.use', $repository)) {
+        \jClasses::inc('adresse~adresseSearch');
+        $utils = new adresseSearch();
+
+        $profile = $utils->getProfile($lizmap_project, 'v_point_adresse');
+        if (!$profile) {
             return;
         }
 
-        // vérifier que le projet contient la couche v_point_adresse et la couche voie
+        \jClasses::inc('adresse~adresseCheck');
+        $adresseCheck = new adresseCheck($utils, $lizmap_project, $profile);
 
-        $l = $p->findLayerByName('v_point_adresse');
-        $vl = $p->findLayerByName('voie');
-        if (!$l) {
+        list($code, $message) = $adresseCheck->allCheck();
+        if ($code == 'error') {
+            \jLog::log($message, 'warning');
+
             return;
-        }
-
-        $layer = $p->getLayer($l->id);
-        if (!$layer->isEditable()) {
-            return;
-        }
-
-        if (!$vl) {
-            return;
-        }
-
-        $vlayer = $p->getLayer($vl->id);
-        if (!$vlayer->isEditable()) {
-            return;
-        }
-
-        if (method_exists($vlayer, 'canCurrentUserEdit')) {
-            // Lizmap 3.5+
-            if (!$vlayer->canCurrentUserEdit()) {
-                return;
-            }
-        } else {
-            // Lizmap 3.4 and lower. DEPRECATED
-            $eLayer = $vlayer->getEditionCapabilities();
-
-            // Check if user groups intersects groups allowed by project editor
-            // If user is admin, no need to check for given groups
-            if (jAuth::isConnected() and !jAcl2::check('lizmap.admin.repositories.delete') and property_exists($eLayer, 'acl') and $eLayer->acl) {
-                // Check if configured groups white list and authenticated user groups list intersects
-                $editionGroups = $eLayer->acl;
-                $editionGroups = array_map('trim', explode(',', $editionGroups));
-                if (is_array($editionGroups) and count($editionGroups) > 0) {
-                    $userGroups = jAcl2DbUserGroup::getGroups();
-                    if (!array_intersect($editionGroups, $userGroups)) {
-                        return;
-                    }
-                }
-            }
         }
 
         $juser = jAuth::getUserSession();
@@ -86,9 +53,12 @@ class adresseListener extends jEventListener
 
         $adresseConfig['user'] = $user_login;
 
+        $player = $utils->getLayer($lizmap_project, 'v_point_adresse');
+        $vlayer = $utils->getLayer($lizmap_project, 'voie');
+
         $adresseConfig['point_adresse'] = array();
-        $adresseConfig['point_adresse']['id'] = $layer->getId();
-        $adresseConfig['point_adresse']['name'] = $layer->getName();
+        $adresseConfig['point_adresse']['id'] = $player->getId();
+        $adresseConfig['point_adresse']['name'] = $player->getName();
 
         $adresseConfig['voie'] = array();
         $adresseConfig['voie']['id'] = $vlayer->getId();
@@ -97,20 +67,10 @@ class adresseListener extends jEventListener
         $adresseConfig['urls'] = array();
         $adresseConfig['urls']['select'] = jUrl::get('adresse~service:select');
         $adresseConfig['urls']['update'] = jUrl::get('adresse~service:update');
-        $adresseConfig['urls']['export'] = jUrl::get('adresse~service:export');
-
-        $bp = jApp::config()->urlengine['basePath'];
 
         $js = array();
+        $css = array();
         $js[] = jUrl::get('jelix~www:getfile', array('targetmodule' => 'adresse', 'file' => 'adresse.js'));
-
-        if ($p->findLayerByName('v_commune')) {
-            $js[] = jUrl::get('jelix~www:getfile', array('targetmodule' => 'adresse', 'file' => 'export_doc.js'));
-        }
-
-        if ($p->findLayerByName('v_certificat')) {
-            $js[] = jUrl::get('jelix~www:getfile', array('targetmodule' => 'adresse', 'file' => 'certif_doc.js'));
-        }
 
         $jscode = array(
             'var adresseConfig = '.json_encode($adresseConfig),
@@ -120,6 +80,7 @@ class adresseListener extends jEventListener
             array(
                 'js' => $js,
                 'jscode' => $jscode,
+                'css' => $css,
             )
         );
     }
