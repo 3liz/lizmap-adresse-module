@@ -2,8 +2,10 @@
 
 ## Unreleased
 
+* Refactorisation du code
 * Modification de l'export BAL pour correspondre à la version 1.2 de la BAL
 * Correction de l'extension de fichier dans l'export SNA
+* Modification des icônes pour la gestion des documents et l'export des certificats de numérotation
 
 ## 0.10.0 - 2021-08-24
 
