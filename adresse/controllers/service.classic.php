@@ -9,30 +9,91 @@
  */
 class serviceCtrl extends jController
 {
+    protected $adresseCheck;
+
+    protected $adresse;
+
+    protected $option;
+
+    protected $repository;
+
+    /**
+     * Method to run all check and instantiate var.
+     *
+     * @return array
+     */
+    private function check()
+    {
+        $project = $this->param('project');
+        if (!$project) {
+            return array('error', 'Project not found');
+        }
+
+        $repository = $this->param('repository');
+        if (!$repository) {
+            return array('error', 'Repository not found');
+        }
+
+        $this->option = $this->param('opt');
+        if (!$this->option) {
+            return array('error', 'Option not found');
+        }
+
+        $lizmap_project = lizmap::getProject($repository.'~'.$project);
+        \jLog::log(gettype($lizmap_project), 'error');
+        if (!$lizmap_project) {
+            return array(
+                'error',
+                'profile not found for this project.',
+            );
+        }
+
+        $this->repository = $repository;
+
+        \jClasses::inc('adresse~adresseSearch');
+        $utils = new adresseSearch();
+
+        $profile = $utils->getProfile($lizmap_project, 'v_point_adresse');
+        if (!$profile) {
+            return array(
+                'error',
+                'profile not found for this project.',
+            );
+        }
+
+        \jClasses::inc('adresse~adresseCheck');
+        $this->adresseCheck = new adresseCheck($utils, $lizmap_project, $profile);
+
+        list($status, $message) = $this->adresseCheck->allCheck();
+        if ($status == false) {
+            return array(
+                'error',
+                $message,
+            );
+        }
+
+        \jClasses::inc('adresse~Adresse');
+        $this->adresse = new Adresse($utils, $profile);
+
+        return array(
+            'success',
+            $message,
+        );
+    }
+
+    /**
+     * Method to get some data in database.
+     *
+     * @return Jsonresponse
+     */
     public function select()
     {
         $rep = $this->getResponse('json');
         $filterParams = array();
 
         // vérifier que les paramètres repository, project, geom, srid sont non null ou vide
-
-        $project = $this->param('project');
-        $repository = $this->param('repository');
         $geom = $this->param('geom');
         $srid = $this->param('srid');
-        $option = $this->param('opt');
-
-        if (!$project) {
-            $rep->data = array('status' => 'error', 'message' => 'Project not find');
-
-            return $rep;
-        }
-
-        if (!$repository) {
-            $rep->data = array('status' => 'error', 'message' => 'Repository not find');
-
-            return $rep;
-        }
 
         if (!$geom) {
             $rep->data = array('status' => 'error', 'message' => 'Geometry not find');
@@ -46,82 +107,39 @@ class serviceCtrl extends jController
             return $rep;
         }
 
+        list($status, $result) = $this->check();
+        if ($status == 'error') {
+            $rep->data = array('status' => $status, 'message' => $result);
+
+            return $rep;
+        }
+
         $filterParams[] = $geom;
         $filterParams[] = $srid;
 
-        if (!$option) {
-            $rep->data = array('status' => 'error', 'message' => 'Option not find');
+        list($status, $result) = $this->adresse->executeMethod($this->option, $filterParams);
+        if ($status == 'error') {
+            $rep->data = array('status' => $status, 'message' => $result);
 
             return $rep;
         }
 
-        // vérifier que le repository et le project correspondent à un projet lizmap
-
-        $p = lizmap::getProject($repository.'~'.$project);
-        if (!$p) {
-            $rep->data = array('status' => 'error', 'message' => 'A problem occured while loading project with Lizmap');
-
-            return $rep;
-        }
-
-        if (!$p->checkAcl()) {
-            $rep->data = array('status' => 'error', 'message' => jLocale::get('view~default.repository.access.denied'));
-
-            return $rep;
-        }
-
-        // vérifier que le projet contient la couche v_point_adresse
-
-        $l = $p->findLayerByName('v_point_adresse');
-        if (!$l) {
-            $rep->data = array('status' => 'error', 'message' => 'Layer '.$l->name.' does not exist');
-
-            return $rep;
-        }
-        $layer = $p->getLayer($l->id);
-        if (!$layer->isEditable()) {
-            $rep->data = array('status' => 'error', 'message' => 'Layer '.$l->name.' is not Editable');
-
-            return $rep;
-        }
-
-        // demander la voie éditable à proximité de la geom
-
-        $autocomplete = jClasses::getService('adresse~search');
-
-        try {
-            $result = $autocomplete->getData($repository, $project, $l->name, $filterParams, $option);
-        } catch (Exception $e) {
-            $result = null;
-        }
-
-        $rep->data = $result->fetchAll();
+        $rep->data = array('status' => $status, 'data' => $result);
 
         return $rep;
     }
 
+    /**
+     * Method to update some data in database.
+     *
+     * @return Jsonresponse
+     */
     public function update()
     {
         $rep = $this->getResponse('json');
 
         // vérifier que les paramètres repository, project, geom, srid sont non null ou vide
-
-        $project = $this->param('project');
-        $repository = $this->param('repository');
         $id = $this->param('id');
-        $option = $this->param('opt');
-
-        if (!$project) {
-            $rep->data = array('status' => 'error', 'message' => 'Project not find');
-
-            return $rep;
-        }
-
-        if (!$repository) {
-            $rep->data = array('status' => 'error', 'message' => 'Repository not find');
-
-            return $rep;
-        }
 
         if (!$id) {
             $rep->data = array('status' => 'error', 'message' => 'Id not find');
@@ -129,111 +147,57 @@ class serviceCtrl extends jController
             return $rep;
         }
 
-        if (!$option) {
-            $rep->data = array('status' => 'error', 'message' => 'Option not find');
-
-            return $rep;
-        }
-
-        // vérifier que le repository et le project correspondent à un projet lizmap
-
-        $p = lizmap::getProject($repository.'~'.$project);
-        if (!$p) {
-            $rep->data = array('status' => 'error', 'message' => 'A problem occured while loading project with Lizmap');
-
-            return $rep;
-        }
-
-        if (!$p->checkAcl()) {
-            $rep->data = array('status' => 'error', 'message' => jLocale::get('view~default.repository.access.denied'));
-
-            return $rep;
-        }
-
-        // vérifier que le projet contient la couche voie et  v_v_point_adresse
-
-        $l = $p->findLayerByName('voie');
-        if (!$l) {
-            $rep->data = array('status' => 'error', 'message' => 'Layer voie does not exist');
-
-            return $rep;
-        }
-        $layer = $p->getLayer($l->id);
-        if (!$layer->isEditable()) {
-            $rep->data = array('status' => 'error', 'message' => 'Layer '.$l->name.' is not Editable');
-
-            return $rep;
-        }
-
-        $pl = $p->findLayerByName('v_point_adresse');
-        if (!$pl) {
-            $rep->data = array('status' => 'error', 'message' => 'Layer v_point_adresse does not exist');
-
-            return $rep;
-        }
-        $player = $p->getLayer($pl->id);
-        if (!$player->isEditable()) {
-            $rep->data = array('status' => 'error', 'message' => 'Layer '.$pl->name.' is not Editable');
+        list($status, $result) = $this->check();
+        if ($status == 'error') {
+            $rep->data = array('status' => $status, 'message' => $result);
 
             return $rep;
         }
 
         // demander la voie éditable à proximité de la geom
-        $version = '';
-        $autocomplete = jClasses::getService('adresse~search');
-        $result = $autocomplete->getData($repository, $project, $l->name, $filterParams = array(), 'version');
-        $result = $result->fetchAll();
-        $result = (array) $result[0];
-        $version = $result['me_version'];
-        if ($option == 'validation') {
+        if ($this->option == 'validation') {
+            list($status, $result) = $this->adresse->executeMethod('version', array());
+            if ($status == 'error') {
+                $rep->data = array('status' => $status, 'message' => $result);
+
+                return $rep;
+            }
+            $result = (array) $result[0];
+            $version = $result['me_version'];
             if (version_compare($version, '0.3.0', '>=')) {
                 $option = 'new_validation';
             }
-        }
-        $autocomplete = jClasses::getService('adresse~update');
-
-        try {
-            $result = $autocomplete->apply($repository, $project, $l->name, $id, $option);
-        } catch (Exception $e) {
-            $result = null;
-        }
-        $message = '';
-        $typeRes = '';
-
-        if ($result) {
-            $message = 'Update exécuté avec succès';
-            $typeRes = 'success';
-        } else {
-            $message = 'Error lors de l\'update';
-            $typeRes = 'error';
+            $message = 'Validation du point adresse effectuée avec succès';
         }
 
-        $rep->data = array('success' => ''.$result, 'type' => $typeRes, 'message' => $message);
+        if ($this->option == 'reverse') {
+            $message = 'Inversion du sens de la voie effectuée avec succès';
+        }
+
+        $filterParams = array();
+        $filterParams[] = $id;
+        list($status, $result) = $this->adresse->executeMethod($this->option, $filterParams);
+        if ($status == 'error') {
+            $rep->data = array('status' => $status, 'message' => $result);
+
+            return $rep;
+        }
+
+        $rep->data = array('status' => $status, 'message' => $message);
 
         return $rep;
     }
 
+    /**
+     * Method to donwload file.
+     *
+     * @return binaryResponse|JsonResponse|zipResponse
+     */
     public function export()
     {
         $test = '#^[0-9]{1}[0-9AB]{1}[0-9]{3}$#';
-        $filterParams = array();
-        $project = $this->param('project');
-        $repository = $this->param('repository');
-        $insee = $this->param('insee');
-        $option = $this->param('opt');
-
         $rep = $this->getResponse('json');
-        if (!$project) {
-            $rep->data = array('status' => 'error', 'message' => 'Project not found');
-
-            return $rep;
-        }
-
-        if (!$repository) {
-            $rep->data = array('status' => 'error', 'message' => 'Repository not found');
-
-            return $rep;
-        }
+        $insee = $this->param('insee');
 
         if (!$insee) {
             $rep->data = array('status' => 'error', 'message' => 'Code insee not found');
@@ -243,47 +207,25 @@ class serviceCtrl extends jController
         if (!preg_match($test, $insee)) {
             $rep->data = array('status' => 'error', 'message' => 'Code insee not available');
 
-            return;
+            return $rep;
         }
-        $filterParams[] = $insee;
 
-        if (!$option) {
-            $rep->data = array('status' => 'error', 'message' => 'Option not found');
+        list($status, $result) = $this->check();
+        if ($status == 'error') {
+            $rep->data = array('status' => $status, 'message' => $result);
 
             return $rep;
         }
 
-        // vérifier que le repository et le project correspondent à un projet lizmap
-
-        $p = lizmap::getProject($repository.'~'.$project);
-        if (!$p) {
-            $rep->data = array('status' => 'error', 'message' => 'A problem occured while loading project with Lizmap');
-
-            return $rep;
-        }
-
-        if (!$p->checkAcl()) {
-            $rep->data = array('status' => 'error', 'message' => jLocale::get('view~default.repository.access.denied'));
+        \jLog::log($this->option, 'error');
+        $params = array($insee);
+        list($status, $result) = $this->adresse->executeMethod($this->option, $params);
+        if ($status == 'error') {
+            $rep->data = array('status' => $status, 'message' => $result);
 
             return $rep;
         }
 
-        // vérifier que le projet contient la couche v_point_adresse
-
-        $l = $p->findLayerByName('v_point_adresse');
-        if (!$l) {
-            $rep->data = array('status' => 'error', 'message' => 'Layer '.$l->name.' does not exist');
-
-            return $rep;
-        }
-
-        $autocomplete = jClasses::getService('adresse~search');
-
-        try {
-            $result = $autocomplete->getData($repository, $project, 'v_point_adresse', $filterParams, $option);
-        } catch (Exception $e) {
-            $result = null;
-        }
         $leDoc = jClasses::getService('adresse~exportDoc');
         $tempPath = jApp::tempPath('export');
 
@@ -293,37 +235,48 @@ class serviceCtrl extends jController
         $name = '';
         $type = '';
 
-        if ($result != null) {
-            if ($option == 'bal') {
-                $type = 'binary';
-                $fileName = tempnam($tempPath, 'exportbal-');
-                $leDoc->exportBal($fileName, $result);
-                $name = date(ymd).'_bal_'.$insee.'.csv';
-            } elseif ($option == 'voie_delib') {
-                $type = 'binary';
-                $com = $autocomplete->getData($repository, $project, 'v_point_adresse', $filterParams, 'commune');
-                $fileName = tempnam($tempPath, 'voieADelib-');
-                $leDoc->exportVoieADelib($fileName, $repository, $project, $result, $com);
-                $name = 'Voie_A_Delibérer_'.$insee.'.csv';
-            } else {
-                $type = 'zip';
-                $fileName = tempnam($tempPath, 'exportbal-');
-                $data = $autocomplete->getData($repository, $project, 'v_point_adresse', $filterParams, 'bal');
-                $leDoc->exportBal($fileName, $data);
-                $name = date(ymd).'_export_SNA_'.$insee.'.zip';
-            }
-        } else {
+        if (!$result) {
             $rep->data = array('status' => 'error', 'message' => 'Aucun résultat trouvé');
 
             return $rep;
         }
-        $folder = jApp::tempPath('Deliberations');
+
+        if ($this->option == 'bal') {
+            $type = 'binary';
+            $fileName = tempnam($tempPath, 'exportbal-');
+            $leDoc->exportBal($fileName, $result);
+            $name = date('Ymd').'_bal_'.$insee.'.csv';
+        } elseif ($this->option == 'voie_delib') {
+            $type = 'binary';
+            list($status, $data) = $this->adresse->executeMethod('commune', $params);
+            if ($status == 'error') {
+                $rep->data = array('status' => $status, 'message' => $data);
+
+                return $rep;
+            }
+            $fileName = tempnam($tempPath, 'voieADelib-');
+            $leDoc->exportVoieADelib($fileName, $result, $data);
+            $name = 'Voie_A_Delibérer_'.$insee.'.csv';
+        } else {
+            $type = 'zip';
+            $fileName = tempnam($tempPath, 'exportbal-');
+            list($status, $data) = $this->adresse->executeMethod('bal', $params);
+            if ($status == 'error') {
+                $rep->data = array('status' => $status, 'message' => $data);
+
+                return $rep;
+            }
+            $leDoc->exportBal($fileName, $data);
+            $name = date('Ymd').'_export_SNA_'.$insee.'.zip';
+        }
+        $repo = lizmap::getRepository($this->repository);  // c'est peut être déjà fait dans ton contrôleur, à toi de voir
+        $cheminRepo = $repo->getPath();
+        $rep = null;
         $rep = $this->getResponse($type);
-        $repo = lizmap::getRepository($repository);  // c'est peut être déjà fait dans ton contrôleur, à toi de voir
         $cheminRepo = $repo->getPath();
         if ($type == 'zip') {
             $rep->zipFilename = $name;
-            $fileBalName = date(ymd).'_bal_'.$insee.'.csv';
+            $fileBalName = date('Ymd').'_bal_'.$insee.'.csv';
             $rep->content->addFile($fileName, $fileBalName);
             //$rep->content->addDir($folder.'/', 'Délibérations', true);
             foreach ($result as $value) {
