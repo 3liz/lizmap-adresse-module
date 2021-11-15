@@ -9,10 +9,12 @@
  */
 class exportDoc
 {
-    public function ExportDoc()
-    {
-    }
-
+    /**
+     * Function to create CSV file for 'BAL'.
+     *
+     * @param mixed $fileName
+     * @param mixed $result
+     */
     public function exportBal($fileName, $result)
     {
         // Opening file
@@ -52,10 +54,16 @@ class exportDoc
         fclose($fp);
     }
 
-    public function exportVoieADelib($fileName, $repository, $project, $result, $com)
+    /**
+     * Function to create CSV file for 'délibérations'.
+     *
+     * @param mixed $fileName
+     * @param mixed $result
+     * @param mixed $com
+     */
+    public function exportVoieADelib($fileName, $result, $com)
     {
         $fp = fopen($fileName, 'w');
-        $list = array();
         fprintf($fp, chr(0xEF).chr(0xBB).chr(0xBF));
         foreach ($com as $value) {
             fputcsv($fp, array($value->cnom.' - '.$value->cinsee.' - Nombre de Voies : '.$value->nbid), ';');
