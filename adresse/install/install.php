@@ -19,5 +19,8 @@ class adresseModuleInstaller extends jInstallerModule
             jAcl2DbManager::addRight('admins', 'my.subject'); // for admin group
         }
         */
+        // Copy CSS and JS assets
+        $this->copyDirectoryContent('../www/css', jApp::wwwPath('assets/adresse/css'));
+        $this->copyDirectoryContent('../www/js', jApp::wwwPath('assets/adresse/js'));
     }
 }
