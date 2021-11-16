@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module xmlns="http://jelix.org/ns/module/1.0">
     <info id="adresse3liz.com" name="adresse" createdate="2020-02-11">
-        <version date="2021-08-24">0.10.0</version>
+        <version date="2021-11-16">1.0.0-rc.1</version>
         <label lang="en_US">adresse</label>
         <description lang="en_US" />
         <license URL="">Mozilla Public Licence (MPL)</license>
