@@ -29,9 +29,6 @@ class adresseDockableListener extends \jEventListener
 
             return;
         }
-        $dockableConfig = array();
-        $dockableConfig['urls'] = array();
-        $dockableConfig['urls']['export'] = jUrl::get('adresse~service:export');
 
         list($code, $message) = $adresseCheck->checkProjectLayer('v_commune');
         if ($code == 'error') {
@@ -50,7 +47,7 @@ class adresseDockableListener extends \jEventListener
                 98,
                 $bp.'assets/adresse/css/export_doc.css',
                 $bp.'assets/adresse/js/export_doc.js',
-                array('type' => 'module', 'var dockableConfig = '.json_encode($dockableConfig))
+                array('type' => 'module')
             );
             $event->add($dock);
         }
