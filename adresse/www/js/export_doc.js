@@ -1,4 +1,3 @@
-import { html, render } from 'https://cdn.jsdelivr.net/npm/lit-html@2.0.1/lit-html.min.js';
 class adresseExportDoc extends HTMLElement {
 
     constructor() {
@@ -6,37 +5,31 @@ class adresseExportDoc extends HTMLElement {
     }
 
     connectedCallback() {
-        // Get locales
-        this._locales = '';
+        var html = '';
+        html += '<div class="mini-dock-close btn-export-doc-close" title="close" style="padding:7px;float:right;cursor:pointer;">';
+        html += '<i class="icon-remove icon-white"></i>';
+        html += '</div >';
+        html += '<div class="adresse-exports">';
+        html += '<h3>';
+        html += '<span class="title">';
+        html += '<i class="icon"></i>';
+        html += '<span class="text"> Gestion des documents</span>';
+        html += '</span>';
+        html += '</h3>';
+        html += '<div class="menu-content">';
+        html += '<div id="bal_form_container" style="">';
+        html += '<select name="liste-com"></select>';
+        html += '</div>';
+        html += '<button id="export_bal">Export BAL</button><br><br>';
+        html += '<button id="delib_voie">Exporter voies à délibérer</button><br><br>';
+        html += '<button id="export_sna">Export SNA</button>';
+        html += '<label>';
+        html += '<input type="checkbox" id="derniereDelib" name="derniereDelib" checked>Dernière délibération>';
+        html += '</label>';
+        html += '</div>';
+        html += '</div>';
 
-        this._mergedRoads = [];
-        this._POIFeatures = [];
-
-        this._mainTemplate = () => html`
-            <div class="mini-dock-close btn-export-doc-close" title="close" style="padding:7px;float:right;cursor:pointer;">
-                <i class="icon-remove icon-white"></i>
-            </div>
-            <div class="adresse-exports">
-                <h3>
-                    <span class="title">
-                        <i class="icon"></i>
-                        <span class="text">Gestion des documents</span>
-                    </span>
-                </h3>
-                <div class="menu-content">
-                    <div id="bal_form_container" style="">
-                        <select name="liste-com"></select>
-                    </div>
-                    <button id="export_bal">Export BAL</button><br><br>
-                    <button id="delib_voie">Exporter voies à délibérer</button><br><br>
-                    <button id="export_sna">Export SNA</button>
-                    <label>
-                        <input type="checkbox" id="derniereDelib" name="derniereDelib" checked>Dernière délibération>
-                    </label>
-                </div>
-            </div>`;
-
-        render(this._mainTemplate(), this);
+        this.innerHTML = html;
 
         lizMap.events.on({
             uicreated: () => {

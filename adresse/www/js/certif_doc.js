@@ -1,5 +1,3 @@
-import { html, render } from 'https://cdn.jsdelivr.net/npm/lit-html@2.0.1/lit-html.min.js';
-
 class adresseCertifNum extends HTMLElement {
 
     constructor() {
@@ -7,62 +5,58 @@ class adresseCertifNum extends HTMLElement {
     }
 
     connectedCallback() {
-        // Get locales
-        this._locales = '';
 
-        this._mergedRoads = [];
-        this._POIFeatures = [];
+        var html = '';
+        html += '<div class="mini-dock-close btn-certif-num-close" title="close" style="padding:7px;float:right;cursor:pointer;">';
+        html += '   <i class="icon-remove icon-white"></i>';
+        html += '</div>';
+        html += '<div class="certif-num">';
+        html += '   <h3>';
+        html += '       <span class="title">';
+        html += '           <i class="icon"></i>';
+        html += '           <span class="text"> Certificats de Numérotation</span>';
+        html += '       </span>';
+        html += '   </h3>';
+        html += '   <div class="menu-content">';
+        html += '       <div id="certif_form_container" style="text-align: right;">';
+        html += '           <div class="tabbable"> <!-- Only required for left/right tabs -->';
+        html += '               <ul class="nav nav-tabs">';
+        html += '                   <li class="active"><a href="#tab1" data-toggle="tab">Par parcelle</a></li>';
+        html += '                   <li><a href="#tab2" data-toggle="tab">Par adresse</a></li>';
+        html += '               </ul>';
+        html += '               <div class="tab-content">';
+        html += '                   <div class="tab-pane active" id="tab1">';
+        html += '                       <br>';
+        html += '                       Commune: <select name="list-com-parcelle" id="list-com-parcelle">';
+        html += '                       </select><br>';
+        html += '                       Section: <select name="list-sec" id="list-sec">';
+        html += '      </select><br>';
+        html += '      Parcelle: <select name="list-parc" id="list-parc">';
+        html += '      </select><br>';
+        html += '      Propriétaire: <select name="list-prop" id="list-prop">';
+        html += '      </select><br>';
+        html += '      <button id="export_certif">Télécharger le Certificat</button>';
+        html += '    </div>';
+        html += '    <div class="tab-pane" id="tab2">';
+        html += '       <br>';
+        html += '      Commune: <select name="list-com-adresse" id="list-com-adresse">';
+        html += '      </select><br>';
+        html += '      Rue: <select id="list-rue" name="list-rue">';
+        html += '      </select><br>';
+        html += '      Numéro: <select id="list-num" name="list-num">';
+        html += '      </select><br>';
+        html += '      Propriétaire: <select id="list-prop2" name="list-prop2">';
+        html += '      </select><br>';
+        html += '      <button id="export_certif2">Télécharger le Certificat</button>';
+        html += '    </div>';
+        html += '  </div>';
+        html += '</div>';
+        html += '</div>';
+        html += '</div >';
+        html += '</div >';
+        html += '</div > ';
 
-        this._mainTemplate = () => html`
-            <div class="mini-dock-close btn-certif-num-close" title="close" style="padding:7px;float:right;cursor:pointer;">
-                <i class="icon-remove icon-white"></i>
-            </div>
-            <div class="certif-num">
-                <h3>
-                    <span class="title">
-                        <i class="icon"></i>
-                        <span class="text">Certificats de Numérotation</span>
-                    </span>
-                </h3>
-                <div class="menu-content">
-                    <div id="certif_form_container" style="text-align: right;">
-                        <div class="tabbable"> 
-                            <ul class="nav nav-tabs">
-                                <li class="active"><a href="#tab1" data-toggle="tab">Par parcelle</a></li>
-                                <li><a href="#tab2" data-toggle="tab">Par adresse</a></li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="tab1">
-                                <br>
-                                Commune: <select name="list-com-parcelle" id="list-com-parcelle">
-                                </select><br>
-                                Section: <select name="list-sec" id="list-sec">
-                                </select><br>
-                                Parcelle: <select name="list-parc" id="list-parc">
-                                </select><br>
-                                Propriétaire: <select name="list-prop" id="list-prop">
-                                </select><br>
-                                <button id="export_certif">Télécharger le Certificat</button>
-                                </div>
-                                <div class="tab-pane" id="tab2">
-                                <br>
-                                Commune: <select name="list-com-adresse" id="list-com-adresse">
-                                </select><br>
-                                Rue: <select id="list-rue" name="list-rue">
-                                </select><br>
-                                Numéro: <select id="list-num" name="list-num">
-                                </select><br>
-                                Propriétaire: <select id="list-prop2" name="list-prop2">
-                                </select><br>
-                                <button id="export_certif2">Télécharger le Certificat</button>
-                                </div>
-                            </div>
-                    </div>
-                    </div>
-                </div>
-            </div>`;
-
-        render(this._mainTemplate(), this);
+        this.innerHTML = html;
 
         lizMap.events.on({
             uicreated: () => {
@@ -225,5 +219,3 @@ class adresseCertifNum extends HTMLElement {
 }
 
 window.customElements.define('adresse-certifcat-num', adresseCertifNum);
-
-
