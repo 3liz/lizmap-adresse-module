@@ -5,3 +5,7 @@
 
 # Node, NPM
 node_modules
+
+tests/lizmap/www
+tests/lizmap/var
+tests/.env
