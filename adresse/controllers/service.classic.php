@@ -39,7 +39,7 @@ class serviceCtrl extends jController
             return array('error', 'Option not found');
         }
 
-        $lizmap_project = lizmap::getProject($repository.'~'.$project);
+        $lizmap_project = lizmap::getProject($repository . '~' . $project);
         \jLog::log(gettype($lizmap_project), 'error');
         if (!$lizmap_project) {
             return array(
@@ -245,7 +245,7 @@ class serviceCtrl extends jController
             $type = 'binary';
             $fileName = tempnam($tempPath, 'exportbal-');
             $leDoc->exportBal($fileName, $result);
-            $name = date('Ymd').'_bal_'.$insee.'.csv';
+            $name = date('Ymd') . '_bal_' . $insee . '.csv';
         } elseif ($this->option == 'voie_delib') {
             $type = 'binary';
             list($status, $data) = $this->adresse->executeMethod('commune', $params);
@@ -256,7 +256,7 @@ class serviceCtrl extends jController
             }
             $fileName = tempnam($tempPath, 'voieADelib-');
             $leDoc->exportVoieADelib($fileName, $result, $data);
-            $name = 'Voie_A_Delibérer_'.$insee.'.csv';
+            $name = 'Voie_A_Delibérer_' . $insee . '.csv';
         } else {
             $type = 'zip';
             $fileName = tempnam($tempPath, 'exportbal-');
@@ -267,7 +267,7 @@ class serviceCtrl extends jController
                 return $rep;
             }
             $leDoc->exportBal($fileName, $data);
-            $name = date('Ymd').'_export_SNA_'.$insee.'.zip';
+            $name = date('Ymd') . '_export_SNA_' . $insee . '.zip';
         }
         $repo = lizmap::getRepository($this->repository);  // c'est peut être déjà fait dans ton contrôleur, à toi de voir
         $cheminRepo = $repo->getPath();
@@ -276,12 +276,12 @@ class serviceCtrl extends jController
         $cheminRepo = $repo->getPath();
         if ($type == 'zip') {
             $rep->zipFilename = $name;
-            $fileBalName = date('Ymd').'_bal_'.$insee.'.csv';
+            $fileBalName = date('Ymd') . '_bal_' . $insee . '.csv';
             $rep->content->addFile($fileName, $fileBalName);
             //$rep->content->addDir($folder.'/', 'Délibérations', true);
             foreach ($result as $value) {
                 $ext = pathinfo($value->lien)['extension'];
-                $rep->content->addFile($cheminRepo.$value->lien, 'Deliberations/'.$value->nom_doc.$ext);
+                $rep->content->addFile($cheminRepo . $value->lien, 'Deliberations/' . $value->nom_doc . $ext);
             }
         } elseif ($type == 'binary') {
             $rep->deleteFileAfterSending = true;

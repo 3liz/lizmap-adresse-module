@@ -15,7 +15,7 @@ class adresseListener extends jEventListener
         $repository = $event->repository;
         $project = $event->project;
 
-        $lizmap_project = lizmap::getProject($repository.'~'.$project);
+        $lizmap_project = lizmap::getProject($repository . '~' . $project);
         if (!$lizmap_project) {
             return;
         }
@@ -73,7 +73,7 @@ class adresseListener extends jEventListener
         $js[] = jUrl::get('jelix~www:getfile', array('targetmodule' => 'adresse', 'file' => 'adresse.js'));
 
         $jscode = array(
-            'var adresseConfig = '.json_encode($adresseConfig),
+            'var adresseConfig = ' . json_encode($adresseConfig),
         );
 
         $event->add(
