@@ -36,7 +36,7 @@ class adresseDockableListener extends \jEventListener
         }
 
         // Project name must contains 'adresse' to enable the module
-        if (strpos($event->project, 'adresse') !== false && $code !== 'error') {
+        if ($code !== 'error') {
             $bp = jApp::config()->urlengine['basePath'];
             // dock
             $content = '<lizmap-adresse></lizmap-adresse>';
@@ -58,7 +58,7 @@ class adresseDockableListener extends \jEventListener
         }
 
         // Project name must contains 'adresse' to enable the module
-        if (strpos($event->project, 'adresse') !== false && $code !== 'error') {
+        if ($code !== 'error') {
             $bp = jApp::config()->urlengine['basePath'];
             // dock
             $content = '<adresse-certifcat-num></adresse-certifcat-num>';
