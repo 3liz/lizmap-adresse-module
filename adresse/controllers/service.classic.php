@@ -256,7 +256,7 @@ class serviceCtrl extends jController
             }
             $fileName = tempnam($tempPath, 'voieADelib-');
             $leDoc->exportVoieADelib($fileName, $result, $data);
-            $name = 'Voie_A_Delibérer_' . $insee . '.csv';
+            $name = 'Voie_A_Deliberer_' . $insee . '.csv';
         } else {
             $type = 'zip';
             $fileName = tempnam($tempPath, 'exportbal-');

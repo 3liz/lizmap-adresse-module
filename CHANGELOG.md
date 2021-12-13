@@ -7,6 +7,7 @@
 * Correction de l'extension de fichier dans l'export SNA
 * Modification des icônes pour la gestion des documents et l'export des certificats de numérotation
 * Suppression de la contrainte sur le nom du projet
+* Suppression de l'accent pour le fichier des voies à délibérer
 
 ## 1.0.0-rc.2 - 2021-11-17
 
