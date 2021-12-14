@@ -28,7 +28,7 @@ class Adresse
             'metrique' => 'SELECT * FROM adresse.calcul_num_metrique(ST_geomfromtext($1,$2))',
             'bal' => 'SELECT * FROM adresse.v_export_bal  WHERE commune_insee = $1',
             'version' => 'SELECT me_version FROM adresse.metadata',
-            'voie_delib' => 'SELECT DISTINCT v.nom_complet FROM adresse.voie v, adresse.commune c WHERE c.insee_code = $1::text AND v.delib = true AND ST_intersects(v.geom, c.geom)',
+            'voie_delib' => 'SELECT DISTINCT v.nom_complet, v.nom_complet_maj FROM adresse.voie v JOIN adresse.commune c ON ST_intersects(v.geom, c.geom) WHERE c.insee_code = $1::text',
             'commune' => 'SELECT c.commune_nom as cnom, c.insee_code as cinsee, COUNT(v.id_voie) as nbid FROM adresse.commune c, adresse.voie v WHERE c.insee_code = $1::text AND ST_intersects(c.geom, v.geom) AND v.delib = true group by c.commune_nom, c.insee_code',
             'zip1' => "SELECT d.lien, d.nom_doc FROM adresse.document d, adresse.commune c WHERE d.id_commune = c.id_com AND c.insee_code = $1 AND d.type_document = 'delib' ORDER BY d.date_doc DESC LIMIT 1;",
             'zipAll' => "SELECT d.lien, d.nom_doc FROM adresse.document d, adresse.commune c WHERE d.id_commune = c.id_com AND c.insee_code = $1 AND d.type_document = 'delib' ORDER BY d.date_doc DESC;",

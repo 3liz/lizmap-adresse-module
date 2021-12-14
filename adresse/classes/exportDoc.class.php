@@ -89,10 +89,14 @@ class exportDoc
         $fp = fopen($fileName, 'w');
         fprintf($fp, chr(0xEF) . chr(0xBB) . chr(0xBF));
         foreach ($com as $value) {
-            fputcsv($fp, array($value->cnom . ' - ' . $value->cinsee . ' - Nombre de Voies : ' . $value->nbid), ';');
+            fputcsv(
+                $fp,
+                array($value->cnom . ' - ' . $value->cinsee . ' - Nombre de Voies : ' . $value->nbid),
+                ';'
+            );
         }
         foreach ($result as $value) {
-            fputcsv($fp, array($value->nom_complet), ';');
+            fputcsv($fp, array($value->nom_complet, $value->nom_complet_maj), ';');
         }
         fclose($fp);
     }
