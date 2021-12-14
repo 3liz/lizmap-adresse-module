@@ -8,6 +8,8 @@
 * Modification des icônes pour la gestion des documents et l'export des certificats de numérotation
 * Suppression de la contrainte sur le nom du projet
 * Suppression de l'accent pour le fichier des voies à délibérer
+* Suppression de la contraintes `delib=true` pour l'export des voies à délibérer
+* Ajout des noms de commune en majuscule pour l'export des voies à délibérer
 
 ## 1.0.0-rc.3 - 2021-12-14
 
