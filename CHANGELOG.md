@@ -9,6 +9,10 @@
 * Suppression de la contrainte sur le nom du projet
 * Suppression de l'accent pour le fichier des voies à délibérer
 
+## 1.0.0-rc.3 - 2021-12-14
+
+* Release Candidate
+
 ## 1.0.0-rc.2 - 2021-11-17
 
 * Release Candidate
