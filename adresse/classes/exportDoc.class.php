@@ -24,27 +24,27 @@ class exportDoc
         fprintf($fp, chr(0xEF) . chr(0xBB) . chr(0xBF));
         // Adding first CSV line
         fputcsv(
-            $fp, 
+            $fp,
             array(
-                'uid_adresse', 
-                'cle_interop', 
-                'commune_insee', 
-                'commune_nom', 
-                'commune_deleguee_insee', 
-                'commune_deleguee_nom', 
-                'voie_nom', 
-                'lieudit_complement_nom', 
-                'numero', 
-                'suffixe', 
-                'position', 
-                'x', 
-                'y', 
-                'long', 
-                'lat', 
-                'cad_parcelles', 
-                'source', 
-                'date_der_maj'
-            ), 
+                'uid_adresse',
+                'cle_interop',
+                'commune_insee',
+                'commune_nom',
+                'commune_deleguee_insee',
+                'commune_deleguee_nom',
+                'voie_nom',
+                'lieudit_complement_nom',
+                'numero',
+                'suffixe',
+                'position',
+                'x',
+                'y',
+                'long',
+                'lat',
+                'cad_parcelles',
+                'source',
+                'date_der_maj',
+            ),
             ';'
         );
         // Adding the data in the CSV file
