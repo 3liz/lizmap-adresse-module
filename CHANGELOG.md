@@ -11,6 +11,10 @@
 * Suppression de la contraintes `delib=true` pour l'export des voies à délibérer
 * Ajout des noms de commune en majuscule pour l'export des voies à délibérer
 
+## 1.0.0-rc.4 - 2021-12-15
+
+* Release Candidate
+
 ## 1.0.0-rc.3 - 2021-12-14
 
 * Release Candidate
