@@ -10,6 +10,7 @@
 * Suppression de l'accent pour le fichier des voies à délibérer
 * Suppression de la contraintes `delib=true` pour l'export des voies à délibérer
 * Ajout des noms de commune en majuscule pour l'export des voies à délibérer
+* Nécessite la version 3.4.8 minimum de lizmap-web-client
 
 ## 1.0.0-rc.4 - 2021-12-15
 
