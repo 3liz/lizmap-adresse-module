@@ -4,6 +4,7 @@
 .php_cs.dist  export-ignore
 .eslintrc.json  export-ignore
 docs  export-ignore
+tests  export-ignore
 Makefile  export-ignore
 package.json  export-ignore
 package-lock.json  export-ignore
