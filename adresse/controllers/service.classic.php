@@ -154,8 +154,11 @@ class serviceCtrl extends jController
             return $rep;
         }
 
+        // récupération de l'option pour définir la bonne méthode
+        $opt = $this->option;
+
         // demander la voie éditable à proximité de la geom
-        if ($this->option == 'validation') {
+        if ($opt == 'validation') {
             list($status, $result) = $this->adresse->executeMethod('version', array());
             if ($status == 'error') {
                 $rep->data = array('status' => $status, 'message' => $result);
@@ -165,18 +168,18 @@ class serviceCtrl extends jController
             $result = (array) $result[0];
             $version = $result['me_version'];
             if (version_compare($version, '0.3.0', '>=')) {
-                $option = 'new_validation';
+                $opt = 'new_validation';
             }
             $message = 'Validation du point adresse effectuée avec succès';
         }
 
-        if ($this->option == 'reverse') {
+        if ($opt == 'reverse') {
             $message = 'Inversion du sens de la voie effectuée avec succès';
         }
 
         $filterParams = array();
         $filterParams[] = $id;
-        list($status, $result) = $this->adresse->executeMethod($this->option, $filterParams);
+        list($status, $result) = $this->adresse->executeMethod($opt, $filterParams);
         if ($status == 'error') {
             $rep->data = array('status' => $status, 'message' => $result);
 
