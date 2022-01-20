@@ -12,6 +12,10 @@
 * Ajout des noms de commune en majuscule pour l'export des voies à délibérer
 * Nécessite la version 3.4.8 minimum de lizmap-web-client
 
+## 1.0.0-rc.6 - 2022-01-20
+
+* Release Candidate
+
 ## 1.0.0-rc.5 - 2022-01-19
 
 * Release Candidate
