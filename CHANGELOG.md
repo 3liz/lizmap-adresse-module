@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.0.0 - 2022-02-22
+
 * Refactorisation du code
 * Modification de l'export BAL pour correspondre à la version 1.2 de la BAL
 * Correction de l'extension de fichier dans l'export SNA
