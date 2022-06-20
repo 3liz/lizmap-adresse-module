@@ -20,7 +20,6 @@ class adresseListener extends jEventListener
             return;
         }
 
-        \jClasses::inc('adresse~adresseSearch');
         $utils = new adresseSearch();
 
         $profile = $utils->getProfile($lizmap_project, 'v_point_adresse');
@@ -28,7 +27,6 @@ class adresseListener extends jEventListener
             return;
         }
 
-        \jClasses::inc('adresse~adresseCheck');
         $adresseCheck = new adresseCheck($utils, $lizmap_project, $profile);
 
         list($code, $message) = $adresseCheck->allCheck();

@@ -5,7 +5,7 @@
         <label lang="en_US">adresse</label>
         <description lang="en_US" />
         <license URL="">Mozilla Public Licence (MPL)</license>
-        <copyright>2020-2021 3liz</copyright>
+        <copyright>2020-2022 3liz</copyright>
         <creator name="your name" email="your-email@yourwebsite.undefined" />
         <!--<contributor name="hisname" email="hisemail@yoursite.undefined"  since="" role=""/>-->
         <homepageURL>http://3liz.com</homepageURL>
@@ -14,4 +14,10 @@
         <jelix minversion="1.6.26" maxversion="1.6.*"/>
         <module name="lizmap" minversion="3.4.8" maxversion="3.*"/>
     </dependencies>
+    <autoload>
+        <class name="adresseSearch" file="lib/adresseSearch.php"/>
+        <class name="adresseCheck" file="lib/adresseCheck.php"/>
+        <class name="Adresse" file="lib/Adresse.php"/>
+        <class name="exportDoc" file="lib/exportDoc.php"/>
+    </autoload>
 </module>

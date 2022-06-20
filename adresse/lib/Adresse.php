@@ -2,10 +2,13 @@
 
 class Adresse
 {
+    /**
+     * @var adresseSearch
+     */
     protected $utils;
     protected $profile;
 
-    public function __construct($utils, $profile)
+    public function __construct(adresseSearch $utils, $profile)
     {
         $this->utils = $utils;
         $this->profile = $profile;

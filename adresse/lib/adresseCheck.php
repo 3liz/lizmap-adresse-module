@@ -17,6 +17,9 @@ class adresseCheck
 
     protected $lizmap_project;
 
+    /**
+     * @var adresseSearch
+     */
     protected $search;
 
     protected $sql = array(
@@ -24,7 +27,7 @@ class adresseCheck
         'check_schema' => "SELECT schema_name FROM information_schema.schemata WHERE schema_name = 'adresse'",
     );
 
-    public function __construct($utils, $lizmap_project, $profile)
+    public function __construct(adresseSearch $utils, $lizmap_project, $profile)
     {
         $this->search = $utils;
         $this->lizmap_project = $lizmap_project;

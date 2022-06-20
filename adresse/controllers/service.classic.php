@@ -50,7 +50,6 @@ class serviceCtrl extends jController
 
         $this->repository = $repository;
 
-        \jClasses::inc('adresse~adresseSearch');
         $utils = new adresseSearch();
 
         $profile = $utils->getProfile($lizmap_project, 'v_point_adresse');
@@ -61,7 +60,6 @@ class serviceCtrl extends jController
             );
         }
 
-        \jClasses::inc('adresse~adresseCheck');
         $this->adresseCheck = new adresseCheck($utils, $lizmap_project, $profile);
 
         list($status, $message) = $this->adresseCheck->allCheck();
@@ -72,7 +70,6 @@ class serviceCtrl extends jController
             );
         }
 
-        \jClasses::inc('adresse~Adresse');
         $this->adresse = new Adresse($utils, $profile);
 
         return array(
@@ -229,7 +226,7 @@ class serviceCtrl extends jController
             return $rep;
         }
 
-        $leDoc = jClasses::getService('adresse~exportDoc');
+        $leDoc = new exportDoc();
         $tempPath = jApp::tempPath('export');
 
         jFile::createDir($tempPath);
