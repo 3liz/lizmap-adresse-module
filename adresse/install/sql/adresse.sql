@@ -1,3 +1,7 @@
+-- WARNING: this script is not up to date. Tables, functions etc are created by
+-- the QGIS plugin, this is why it is not installed by the module.
+
+
 --
 -- CREATE SCHEMA
 --

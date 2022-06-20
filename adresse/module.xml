@@ -11,8 +11,7 @@
         <homepageURL>http://3liz.com</homepageURL>
     </info>
     <dependencies>
-        <jelix minversion="1.6.26" maxversion="1.6.*"/>
-        <module name="lizmap" minversion="3.4.8" maxversion="3.*"/>
+        <module name="lizmap" minversion="3.4.8" maxversion="3.6.*"/>
     </dependencies>
     <autoload>
         <class name="adresseSearch" file="lib/adresseSearch.php"/>

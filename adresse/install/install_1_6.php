@@ -1,15 +1,15 @@
 <?php
 /**
- * @author    Laurent Jouanneau
- * @copyright 2022 3liz
+ * @author    Pierre DRILLIN
+ * @copyright 2020 3liz
  *
  * @see      http://3liz.com
  *
  * @license    Mozilla Public Licence
  */
-class adresseModuleInstaller extends \Jelix\Installer\Module\Installer
+class adresseModuleInstaller extends jInstallerModule
 {
-    public function install(\Jelix\Installer\Module\API\InstallHelpers $helpers)
+    public function install()
     {
         //if ($this->firstDbExec())
         //    $this->execSQLScript('sql/install');
@@ -19,5 +19,8 @@ class adresseModuleInstaller extends \Jelix\Installer\Module\Installer
             jAcl2DbManager::addRight('admins', 'my.subject'); // for admin group
         }
         */
+        // Copy CSS and JS assets
+        $this->copyDirectoryContent('../www/css', jApp::wwwPath('assets/adresse/css'));
+        $this->copyDirectoryContent('../www/js', jApp::wwwPath('assets/adresse/js'));
     }
 }
