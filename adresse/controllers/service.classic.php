@@ -1,7 +1,9 @@
 <?php
 /**
  * @author    Pierre DRILLIN
- * @copyright 2020 3liz
+ * @contributor René-Luc D'Hont
+ * @contributor Laurent Jouanneau
+ * @copyright 2020-2022 3liz
  *
  * @see      http://3liz.com
  *
@@ -9,8 +11,14 @@
  */
 class serviceCtrl extends jController
 {
+    /**
+     * @var adresseCheck
+     */
     protected $adresseCheck;
 
+    /**
+     * @var Adresse
+     */
     protected $adresse;
 
     protected $option;
@@ -40,7 +48,6 @@ class serviceCtrl extends jController
         }
 
         $lizmap_project = lizmap::getProject($repository . '~' . $project);
-        \jLog::log(gettype($lizmap_project), 'error');
         if (!$lizmap_project) {
             return array(
                 'error',
@@ -217,7 +224,6 @@ class serviceCtrl extends jController
             return $rep;
         }
 
-        \jLog::log($this->option, 'error');
         $params = array($insee);
         list($status, $result) = $this->adresse->executeMethod($this->option, $params);
         if ($status == 'error') {
@@ -230,10 +236,6 @@ class serviceCtrl extends jController
         $tempPath = jApp::tempPath('export');
 
         jFile::createDir($tempPath);
-
-        $fileName = '';
-        $name = '';
-        $type = '';
 
         if (!$result) {
             $rep->data = array('status' => 'error', 'message' => 'Aucun résultat trouvé');
@@ -270,7 +272,7 @@ class serviceCtrl extends jController
             $name = date('Ymd') . '_export_SNA_' . $insee . '.zip';
         }
         $repo = lizmap::getRepository($this->repository);  // c'est peut être déjà fait dans ton contrôleur, à toi de voir
-        $cheminRepo = $repo->getPath();
+
         $rep = null;
         $rep = $this->getResponse($type);
         $cheminRepo = $repo->getPath();

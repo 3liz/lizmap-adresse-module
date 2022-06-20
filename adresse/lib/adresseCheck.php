@@ -1,7 +1,8 @@
 <?php
 /**
  * @author    Pierre DRILLIN
- * @copyright 2020 3liz
+ * @contributor Laurent Jouanneau
+ * @copyright 2021-2022 3liz
  *
  * @see      http://3liz.com
  *
@@ -9,12 +10,14 @@
  */
 class adresseCheck
 {
-    protected $array_ext = array('postgis');
 
     protected $layers_required = array('v_point_adresse', 'voie');
 
     protected $profile;
 
+    /**
+     * @var \Lizmap\Project\Project
+     */
     protected $lizmap_project;
 
     /**
@@ -27,6 +30,11 @@ class adresseCheck
         'check_schema' => "SELECT schema_name FROM information_schema.schemata WHERE schema_name = 'adresse'",
     );
 
+    /**
+     * @param adresseSearch $utils
+     * @param \Lizmap\Project\Project $lizmap_project
+     * @param $profile
+     */
     public function __construct(adresseSearch $utils, $lizmap_project, $profile)
     {
         $this->search = $utils;
@@ -230,7 +238,7 @@ class adresseCheck
      */
     public function checkCanUserEdit($layer_name)
     {
-        $qgisLayer = $this->search->getLayer($layer_name);
+        $qgisLayer = $this->search->getLayer($this->lizmap_project, $layer_name);
         if (!$qgisLayer) {
             return array(
                 'error',

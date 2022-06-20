@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * @author    Pierre DRILLIN
+ * @contributor Laurent Jouanneau
+ * @copyright 2021-2022 3liz
+ *
+ * @see      http://3liz.com
+ *
+ * @license    Mozilla Public Licence
+ */
 class Adresse
 {
     /**
@@ -51,7 +59,7 @@ class Adresse
      *
      * @return array
      */
-    protected function runDataBaseAction($option = 'index', $params)
+    protected function runDataBaseAction($option, $params)
     {
         $sql = $this->getSql($option);
         if (!$sql) {

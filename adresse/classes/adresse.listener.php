@@ -2,7 +2,9 @@
 
 /**
  * @author    Pierre DRILLIN
- * @copyright 2020 3liz
+ * @contributor René-Luc D'Hont
+ * @contributor Laurent Jouanneau
+ * @copyright 2020-2022 3liz
  *
  * @see      http://3liz.com
  *
@@ -42,10 +44,6 @@ class adresseListener extends jEventListener
         } else {
             $user_login = $juser->login;
         }
-
-        $js = array();
-        $jscode = array();
-        $css = array();
 
         $adresseConfig = array();
 

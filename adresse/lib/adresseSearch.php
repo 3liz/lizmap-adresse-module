@@ -22,8 +22,6 @@ class adresseSearch
     {
         $cnx = \jDb::getConnection($profile);
         $cnx->beginTransaction();
-        \jLog::log($sql, 'error');
-
         try {
             $resultset = $cnx->prepare($sql);
             $resultset->execute($params);
@@ -72,7 +70,7 @@ class adresseSearch
     /**
      * Get profile from project and layer name.
      *
-     * @param object $lizmap_project Lizmap Project
+     * @param \Lizmap\Project\Project $lizmap_project Lizmap Project
      * @param string $layerName      Layer Name
      *
      * @return string or null
@@ -91,7 +89,7 @@ class adresseSearch
     /**
      * Get layer from project and layer name.
      *
-     * @param object $lizmap_project Lizmap Project
+     * @param \Lizmap\Project\Project $lizmap_project Lizmap Project
      * @param string $layerName      Layer Name
      *
      * @return object or null

@@ -1,5 +1,14 @@
 <?php
-
+/**
+ * @author    Pierre DRILLIN
+ * @contributor René-Luc D'Hont
+ * @contributor Laurent Jouanneau
+ * @copyright 2021-2022 3liz
+ *
+ * @see      http://3liz.com
+ *
+ * @license    Mozilla Public Licence
+ */
 class adresseDockableListener extends \jEventListener
 {
     public function onmapMiniDockable($event)
@@ -35,7 +44,7 @@ class adresseDockableListener extends \jEventListener
 
         // Project name must contains 'adresse' to enable the module
         if ($code !== 'error') {
-            $bp = jApp::config()->urlengine['basePath'];
+            $bp = jApp::urlBasePath();
             // dock
             $content = '<lizmap-adresse></lizmap-adresse>';
             $dock = new lizmapMapDockItem(
@@ -57,7 +66,7 @@ class adresseDockableListener extends \jEventListener
 
         // Project name must contains 'adresse' to enable the module
         if ($code !== 'error') {
-            $bp = jApp::config()->urlengine['basePath'];
+            $bp = jApp::urlBasePath();
             // dock
             $content = '<adresse-certifcat-num></adresse-certifcat-num>';
             $dock = new lizmapMapDockItem(
