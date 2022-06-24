@@ -17,7 +17,7 @@ la gestion de documents et permet une édition de voie et adresse intuitive.
 
 ## Documentation
 
-L'installation et l'utilisation du module se trouve sur 
+L'installation et l'utilisation du plugin se trouve sur 
 [docs.3liz.org](https://docs.3liz.org/qgis-gestion_base_adresse-plugin/)
 
 Le code source de la documentation est sur le dépôt de
@@ -35,7 +35,21 @@ lizmap 3.3 ou inférieur, passez à la section sur l'installation manuelle.
   déjà, en copiant le fichier `composer.json.dist`, qui s'y trouve.
 * en ligne de commande, dans le répertoire `lizmap/my-packages/`, tapez :
   `composer require "lizmap/lizmap-adresse-module"`
-* puis dans le répertoire `lizmap/install/`, lancer la commande : `php installer.php`
+* puis aller dans le répertoire `lizmap/install/` pour lancer l'installateur
+
+Si vous utilisez Lizmap 3.6 ou plus, lancez d'abord la commande
+
+```bash
+php configurator.php adresse
+```
+
+Enfin lancez les scripts d'installation :
+
+```bash
+php installer.php
+./clean_vartmp.sh
+./set_rights.sh
+```
 
 ### Installation manuelle dans lizmap 3.3 ou 3.4 sans Composer
 
