@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 1.1.0 - 2022-11-10
+
+* Compatibility with Lizmap 3.6 + code cleanup
+
 ## 1.0.0 - 2022-02-22
 
 * Refactorisation du code

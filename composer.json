@@ -9,6 +9,14 @@
         {
             "name": "Pierre DRILLIN",
             "email": "pdrillin@3liz.com"
+        },
+        {
+            "name": "René-Luc D'Hont",
+            "email": "rldhont@3liz.com"
+        },
+        {
+            "name": "Laurent Jouanneau",
+            "email": "ljouanneau@3liz.com"
         }
     ],
     "require": {
