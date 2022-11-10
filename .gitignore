@@ -8,4 +8,5 @@ node_modules
 
 tests/lizmap/www
 tests/lizmap/var
+tests/lizmap/qgis-server-plugins
 tests/.env
