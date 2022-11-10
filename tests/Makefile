@@ -9,8 +9,8 @@ LIZMAP_USER_ID:=$(shell id -u)
 LIZMAP_USER_GID:=$(shell id -g)
 
 LIZMAP_VERSION_TAG:=3.4
-QGIS_VERSION_TAG:=3.16
-POSTGIS_VERSION_TAG:=11-2.5
+QGIS_VERSION_TAG:=3.22
+POSTGIS_VERSION_TAG:=13-3
 
 QGIS_MAP_WORKERS:=1
 
@@ -38,6 +38,7 @@ main:
 dirs:
 	@mkdir -p $(LIZMAP_DIR)/var/log/nginx \
 		      $(LIZMAP_DIR)/var/nginx-cache \
+		      $(LIZMAP_DIR)/qgis-server-plugins \
 		      $*
 
 env: dirs
@@ -56,7 +57,7 @@ env: dirs
 		POSTGIS_VERSION_TAG=$(POSTGIS_VERSION_TAG)
 		EOF
 
-run: stop env
+run: stop env install-plugins
 	docker-compose up
 
 stop:
@@ -69,6 +70,24 @@ clean: stop
 
 # Pull images from github 3liz
 pull:
-	docker pull registry.3liz.net:5043/lizmap-web-client:${LIZMAP_VERSION_TAG}
+	docker pull 3liz/lizmap-web-client:${LIZMAP_VERSION_TAG}
 	docker pull 3liz/qgis-map-server:${QGIS_VERSION_TAG}
 	docker pull 3liz/postgis:${POSTGIS_VERSION_TAG}
+
+shell:
+	docker compose exec -u ${LIZMAP_USER_ID} lizmap /bin/sh -l
+
+install-module:
+	docker compose exec -u ${LIZMAP_USER_ID} lizmap php /www/lizmap/install/configurator.php adresse
+	docker compose exec -u ${LIZMAP_USER_ID} lizmap php /www/lizmap/install/installer.php -v
+
+install-plugins:
+	docker run \
+	    -u $(LIZMAP_USER_ID):$(LIZMAP_USER_GID) \
+	    --rm -it \
+	    -e QGSRV_SERVER_PLUGINPATH=/srv/plugins \
+	    -v $(LIZMAP_DIR)/qgis-server-plugins:/srv/plugins \
+	    -v $(shell pwd)/:/src \
+	    --entrypoint /src/add-server-plugins.sh \
+	    3liz/qgis-map-server:${QGIS_VERSION_TAG}
+

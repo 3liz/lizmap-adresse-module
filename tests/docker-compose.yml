@@ -10,7 +10,7 @@ services:
     ports:
       - ${LZMPGPORT}:5432
   lizmap:
-    image: registry.3liz.net:5043/lizmap-web-client:${LIZMAP_VERSION_TAG}
+    image: 3liz/lizmap-web-client:${LIZMAP_VERSION_TAG}
     environment:
       LIZMAP_CACHEREDISDB: '1'
       LIZMAP_CACHEREDISHOST: redis
@@ -28,6 +28,7 @@ services:
       - ${LIZMAP_DIR}/var/lizmap-db:/www/lizmap/var/db
       - ${LIZMAP_DIR}/www:/www/lizmap/www
       - ${LIZMAP_DIR}/var/lizmap-log:/www/lizmap/var/log
+      - ${LIZMAP_DIR}/var/lizmap-temp:/www/temp/lizmap/
       - ${LIZMAP_DIR}/etc:/srv/etc:ro
       - ${ADRESSE_MODULE_SRC}/adresse:/www/lizmap/lizmap-modules/adresse
     command:
@@ -37,6 +38,7 @@ services:
       - pgsql
   map:
     image: 3liz/qgis-map-server:${QGIS_VERSION_TAG}
+    command: qgisserver -c /srv/etc/py-qgis-server.conf
     environment:
       QGSRV_CACHE_ROOTDIR: /srv/projects
       QGSRV_CACHE_SIZE: '20'
@@ -46,9 +48,11 @@ services:
       QGSRV_SERVER_PLUGINPATH: /srv/plugins
       PGSERVICEFILE: /srv/etc/pg_service.conf
       PGSPASSFILE: /srv/etc/pgpass.conf
+      QGIS_SERVER_LIZMAP_REVEAL_SETTINGS: 'yes'
     volumes:
       - ${LIZMAP_DIR}/instances:/srv/projects
       - ${LIZMAP_DIR}/etc:/srv/etc:ro
+      - ${LIZMAP_DIR}/qgis-server-plugins:/srv/plugins
     ports:
       - ${OWS_PORT}:8080
     restart: unless-stopped

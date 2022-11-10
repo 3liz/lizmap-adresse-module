@@ -11,6 +11,12 @@
     make run
     ```
 
+- Si vous utilisez Lizmap 3.6+, installez le module avec
+
+    ```
+    make install-module    
+    ```
+
 - Un simple projet `adresse` est present mais vous devez définir les droits dans l'administration Lizmap afin de le consulter.
 
 - Ouvrez votre navigateur à `http://localhost:9090`
