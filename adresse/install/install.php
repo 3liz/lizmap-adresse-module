@@ -9,12 +9,11 @@
  */
 
 /**
- * Installer for Lizmap 3.6+
+ * Installer for Lizmap 3.6+.
  */
 class adresseModuleInstaller extends \Jelix\Installer\Module\Installer
 {
-    public function install(\Jelix\Installer\Module\API\InstallHelpers $helpers)
+    public function install(Jelix\Installer\Module\API\InstallHelpers $helpers)
     {
-
     }
 }

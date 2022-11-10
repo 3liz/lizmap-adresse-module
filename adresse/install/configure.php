@@ -9,15 +9,16 @@
  */
 
 /**
- * Configurator for Lizmap 3.6+
+ * Configurator for Lizmap 3.6+.
  */
-class adresseModuleConfigurator extends \Jelix\Installer\Module\Configurator {
-
-    public function getDefaultParameters() {
+class adresseModuleConfigurator extends \Jelix\Installer\Module\Configurator
+{
+    public function getDefaultParameters()
+    {
         return array();
     }
 
-    function configure(\Jelix\Installer\Module\API\ConfigurationHelpers $helpers)
+    public function configure(Jelix\Installer\Module\API\ConfigurationHelpers $helpers)
     {
         // Copy CSS and JS assets
         $helpers->copyDirectoryContent('../www/css', jApp::wwwPath('assets/adresse/css'));

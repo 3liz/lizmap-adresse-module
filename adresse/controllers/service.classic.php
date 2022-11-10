@@ -1,8 +1,10 @@
 <?php
 /**
  * @author    Pierre DRILLIN
+ *
  * @contributor René-Luc D'Hont
  * @contributor Laurent Jouanneau
+ *
  * @copyright 2020-2022 3liz
  *
  * @see      http://3liz.com
@@ -280,7 +282,7 @@ class serviceCtrl extends jController
             $rep->zipFilename = $name;
             $fileBalName = date('Ymd') . '_bal_' . $insee . '.csv';
             $rep->content->addFile($fileName, $fileBalName);
-            //$rep->content->addDir($folder.'/', 'Délibérations', true);
+            // $rep->content->addDir($folder.'/', 'Délibérations', true);
             foreach ($result as $value) {
                 $ext = pathinfo($value->lien)['extension'];
                 $rep->content->addFile($cheminRepo . $value->lien, 'Deliberations/' . $value->nom_doc . '.' . $ext);

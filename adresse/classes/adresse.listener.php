@@ -2,8 +2,10 @@
 
 /**
  * @author    Pierre DRILLIN
+ *
  * @contributor René-Luc D'Hont
  * @contributor Laurent Jouanneau
+ *
  * @copyright 2020-2022 3liz
  *
  * @see      http://3liz.com
