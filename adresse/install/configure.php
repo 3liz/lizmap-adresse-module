@@ -8,6 +8,9 @@
  * @license    Mozilla Public Licence
  */
 
+/**
+ * Configurator for Lizmap 3.6+
+ */
 class adresseModuleConfigurator extends \Jelix\Installer\Module\Configurator {
 
     public function getDefaultParameters() {

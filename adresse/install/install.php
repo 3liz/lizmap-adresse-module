@@ -7,17 +7,14 @@
  *
  * @license    Mozilla Public Licence
  */
+
+/**
+ * Installer for Lizmap 3.6+
+ */
 class adresseModuleInstaller extends \Jelix\Installer\Module\Installer
 {
     public function install(\Jelix\Installer\Module\API\InstallHelpers $helpers)
     {
-        //if ($this->firstDbExec())
-        //    $this->execSQLScript('sql/install');
 
-        /*if ($this->firstExec('acl2')) {
-            jAcl2DbManager::addSubject('my.subject', 'adresse~acl.my.subject', 'subject.group.id');
-            jAcl2DbManager::addRight('admins', 'my.subject'); // for admin group
-        }
-        */
     }
 }
