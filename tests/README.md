@@ -9,12 +9,19 @@
 
     # Lancer les différents services
     make run
+
+    # Appliquer des droits par défaut pour lizmap-web-client 3.5
+    make import-lizmap-acl-35
     ```
 
-- Si vous utilisez Lizmap 3.6+, installez le module avec
+- Si vous utilisez Lizmap 3.6+
 
     ```
+    # Installer le module
     make install-module    
+
+    # Appliquer des droits par défaut pour lizmap-web-client 3.6
+    make import-lizmap-acl
     ```
 
 - Un simple projet `adresse` est present mais vous devez définir les droits dans l'administration Lizmap afin de le consulter.

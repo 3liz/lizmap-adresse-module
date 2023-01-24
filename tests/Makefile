@@ -8,7 +8,7 @@ LIZMAP_DIR=$(shell pwd)/lizmap
 LIZMAP_USER_ID:=$(shell id -u)
 LIZMAP_USER_GID:=$(shell id -g)
 
-LIZMAP_VERSION_TAG:=3.4
+LIZMAP_VERSION_TAG:=3.5
 QGIS_VERSION_TAG:=3.22
 POSTGIS_VERSION_TAG:=13-3
 
@@ -58,7 +58,7 @@ env: dirs
 		EOF
 
 run: stop env install-plugins
-	docker-compose up
+	docker-compose up -d
 
 stop:
 	docker-compose down || true
@@ -91,3 +91,49 @@ install-plugins:
 	    --entrypoint /src/add-server-plugins.sh \
 	    3liz/qgis-map-server:${QGIS_VERSION_TAG}
 
+
+import-lizmap-acl-35:
+	@echo "Set repositories and users rights if needed"
+	@echo "Set view project"
+	docker compose exec -u $(LIZMAP_USER_ID) lizmap /bin/sh -c ' \
+		php lizmap/cmd.php acl2right add __anonymous "lizmap.repositories.view" adresse ; \
+		php lizmap/cmd.php acl2right add users "lizmap.repositories.view" adresse ; \
+		php lizmap/cmd.php acl2right add admins "lizmap.repositories.view" adresse'
+	@echo "Display WMS links"
+	docker compose exec -u $(LIZMAP_USER_ID) lizmap /bin/sh -c ' \
+		php lizmap/cmd.php acl2right add __anonymous "lizmap.tools.displayGetCapabilitiesLinks" adresse ; \
+		php lizmap/cmd.php acl2right add users "lizmap.tools.displayGetCapabilitiesLinks" adresse ; \
+		php lizmap/cmd.php acl2right add admins "lizmap.tools.displayGetCapabilitiesLinks" adresse'
+	@echo "Edition"
+	docker compose exec -u $(LIZMAP_USER_ID) lizmap /bin/sh -c ' \
+		php lizmap/cmd.php acl2right add __anonymous "lizmap.tools.edition.use" adresse ; \
+		php lizmap/cmd.php acl2right add users "lizmap.tools.edition.use" adresse ; \
+		php lizmap/cmd.php acl2right add admins "lizmap.tools.edition.use" adresse'
+	@echo "Export layers"
+	docker compose exec -u $(LIZMAP_USER_ID) lizmap /bin/sh -c ' \
+		php lizmap/cmd.php acl2right add __anonymous "lizmap.tools.layer.export" adresse ; \
+		php lizmap/cmd.php acl2right add users "lizmap.tools.layer.export" adresse ; \
+		php lizmap/cmd.php acl2right add admins "lizmap.tools.layer.export" adresse'
+
+import-lizmap-acl:
+	@echo "Set repositories and users rights if needed"
+	@echo "Set view project"
+	docker compose exec -u $(LIZMAP_USER_ID) lizmap /bin/sh -c ' \
+		php lizmap/console.php acl2:add __anonymous "lizmap.repositories.view" adresse ; \
+		php lizmap/console.php acl2:add users "lizmap.repositories.view" adresse ; \
+		php lizmap/console.php acl2:add admins "lizmap.repositories.view" adresse'
+	@echo "Display WMS links"
+	docker compose exec -u $(LIZMAP_USER_ID) lizmap /bin/sh -c ' \
+		php lizmap/console.php acl2:add __anonymous "lizmap.tools.displayGetCapabilitiesLinks" adresse ; \
+		php lizmap/console.php acl2:add users "lizmap.tools.displayGetCapabilitiesLinks" adresse ; \
+		php lizmap/console.php acl2:add admins "lizmap.tools.displayGetCapabilitiesLinks" adresse'
+	@echo "Edition"
+	docker compose exec -u $(LIZMAP_USER_ID) lizmap /bin/sh -c ' \
+		php lizmap/console.php acl2:add __anonymous "lizmap.tools.edition.use" adresse ; \
+		php lizmap/console.php acl2:add users "lizmap.tools.edition.use" adresse ; \
+		php lizmap/console.php acl2:add admins "lizmap.tools.edition.use" adresse'
+	@echo "Export layers"
+	docker compose exec -u $(LIZMAP_USER_ID) lizmap /bin/sh -c ' \
+		php lizmap/console.php acl2:add __anonymous "lizmap.tools.layer.export" adresse ; \
+		php lizmap/console.php acl2:add users "lizmap.tools.layer.export" adresse ; \
+		php lizmap/console.php acl2:add admins "lizmap.tools.layer.export" adresse'
