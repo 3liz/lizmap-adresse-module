@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 1.1.1 - 2023-02-27
+
+* Increase required lizmap version to 3.7
+* few improvements into tests and CI scripts
+
 ## 1.1.0 - 2022-11-10
 
 * Compatibility with Lizmap 3.6 + code cleanup
