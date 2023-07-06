@@ -52,8 +52,8 @@ class adresseDockableListener extends \jEventListener
                 'Gestion des documents',
                 $content,
                 98,
-                $bp . 'assets/adresse/css/export_doc.css',
-                $bp . 'assets/adresse/js/export_doc.js',
+                $bp . 'adresse/css/export_doc.css',
+                $bp . 'adresse/js/export_doc.js',
                 array('type' => 'module')
             );
             $event->add($dock);
@@ -74,8 +74,8 @@ class adresseDockableListener extends \jEventListener
                 'Certificats de Numérotation',
                 $content,
                 99,
-                $bp . 'assets/adresse/css/certif_doc.css',
-                $bp . 'assets/adresse/js/certif_doc.js',
+                $bp . 'adresse/css/certif_doc.css',
+                $bp . 'adresse/js/certif_doc.js',
                 array('type' => 'module')
             );
             $event->add($dock);

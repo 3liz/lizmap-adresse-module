@@ -20,7 +20,7 @@ class adresseModuleConfigurator extends \Jelix\Installer\Module\Configurator {
     function configure(\Jelix\Installer\Module\API\ConfigurationHelpers $helpers)
     {
         // Copy CSS and JS assets
-        $helpers->copyDirectoryContent('../www/css', jApp::wwwPath('assets/adresse/css'));
-        $helpers->copyDirectoryContent('../www/js', jApp::wwwPath('assets/adresse/js'));
+        $helpers->copyDirectoryContent('../www/css', jApp::wwwPath('adresse/css'), true);
+        $helpers->copyDirectoryContent('../www/js', jApp::wwwPath('adresse/js'), true);
     }
 }
