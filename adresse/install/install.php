@@ -13,7 +13,5 @@
  */
 class adresseModuleInstaller extends \Jelix\Installer\Module\Installer
 {
-    public function install(Jelix\Installer\Module\API\InstallHelpers $helpers)
-    {
-    }
+    public function install(Jelix\Installer\Module\API\InstallHelpers $helpers) {}
 }

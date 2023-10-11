@@ -83,6 +83,7 @@ class adresseSearch
         if (!$qgisLayer) {
             return null;
         }
+
         // get profile
         return $qgisLayer->getDatasourceProfile(32);
     }
