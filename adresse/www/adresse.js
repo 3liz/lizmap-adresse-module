@@ -104,7 +104,7 @@ lizAdresse = function () {
 
                 var layerName = getLayerConfig[0];
                 if (layerName != adresseConfig['voie']['name']
-                    && layerName == adresseConfig['point_adresse']['name']) {
+                    && layerName != adresseConfig['point_adresse']['name']) {
                     return;
                 }
 

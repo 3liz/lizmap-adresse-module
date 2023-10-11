@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Fix: Check feature restricted edition for adresse toolbar
+
 ## 1.1.2 - 2023-10-11
 
 * Fix: Check feature restricted edition for adresse toolbar
