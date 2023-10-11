@@ -97,68 +97,49 @@ lizAdresse = function () {
                 var fid = val.split('.').pop();
                 var layerId = val.replace('.' + fid, '');
                 var getLayerConfig = lizMap.getLayerConfigById(layerId);
-                if (getLayerConfig) {
-                    var layerName = getLayerConfig[0];
-                    var btnBar = self.next('span.popupButtonBar');
-                    if (btnBar.length == 0) {
-                        var eHtml = '<span class="popupButtonBar"></span></br>';
-                        self.after(eHtml);
-                        btnBar = self.next('span.popupButtonBar');
-                    }
-                    var btn = $('<button></button>');
-                    btn.addClass("btn btn-mini popup-adresse-reverse");
-                    var icon = $('<i></i>');
-                    var url = adresseConfig['urls']['update'];
-                    var options = {};
 
-                    if (layerName == adresseConfig['voie']['name']) {
-                        icon.addClass('icon-refresh');
-                        btn.append(icon);
-                        btnBar.append(btn);
-                        options = {
-                            repository: lizUrls.params.repository,
-                            project: lizUrls.params.project,
-                            id: '',
-                            opt: 'reverse'
-                        };
-                        btn.click(function () {
-                            var featId = self.val();
-                            var leid = featId.split('.');
-                            options['id'] = leid[1];
-                            if (confirm('Êtes-vous sûr de vouloir inverser la géométrie de la voie ?')) {
-                                $.getJSON(
-                                    url,
-                                    options,
-                                    function (data) {
-                                        if (data) {
-                                            if (data['status'] == 'success') {
-                                                addAdresseMessage(data['message'], 'info', true);
-                                                $('#dock-close').click();
-                                            } else {
-                                                addAdresseMessage(data['message'], 'error', true);
-                                            }
-                                        }
-                                    }
-                                );
-                            }
-                            return false;
-                        });
+                if (!getLayerConfig) {
+                    return;
+                }
 
-                    }
-                    if (layerName == adresseConfig['point_adresse']['name']) {
-                        icon.addClass('icon-thumbs-up');
-                        btn.append(icon);
-                        btnBar.append(btn);
-                        options = {
-                            repository: lizUrls.params.repository,
-                            project: lizUrls.params.project,
-                            id: '',
-                            opt: 'validation'
-                        };
-                        btn.click(function () {
-                            var featId = self.val();
-                            var leid = featId.split('.');
-                            options['id'] = leid[1];
+                var layerName = getLayerConfig[0];
+                if (layerName != adresseConfig['voie']['name']
+                    && layerName == adresseConfig['point_adresse']['name']) {
+                    return;
+                }
+
+                var featToolbar = self.next('lizmap-feature-toolbar');
+                if (featToolbar.length == 1 && featToolbar.attr('edition-restricted') == 'true') {
+                    return;
+                }
+
+                var btnBar = self.next('span.popupButtonBar');
+                if (btnBar.length == 0) {
+                    var eHtml = '<span class="popupButtonBar"></span></br>';
+                    self.after(eHtml);
+                    btnBar = self.next('span.popupButtonBar');
+                }
+                var btn = $('<button></button>');
+                btn.addClass("btn btn-mini popup-adresse-reverse");
+                var icon = $('<i></i>');
+                var url = adresseConfig['urls']['update'];
+                var options = {};
+
+                if (layerName == adresseConfig['voie']['name']) {
+                    icon.addClass('icon-refresh');
+                    btn.append(icon);
+                    btnBar.append(btn);
+                    options = {
+                        repository: lizUrls.params.repository,
+                        project: lizUrls.params.project,
+                        id: '',
+                        opt: 'reverse'
+                    };
+                    btn.click(function () {
+                        var featId = self.val();
+                        var leid = featId.split('.');
+                        options['id'] = leid[1];
+                        if (confirm('Êtes-vous sûr de vouloir inverser la géométrie de la voie ?')) {
                             $.getJSON(
                                 url,
                                 options,
@@ -173,9 +154,41 @@ lizAdresse = function () {
                                     }
                                 }
                             );
-                        });
+                        }
+                        return false;
+                    });
 
-                    }
+                }
+                if (layerName == adresseConfig['point_adresse']['name']) {
+                    icon.addClass('icon-thumbs-up');
+                    btn.append(icon);
+                    btnBar.append(btn);
+                    options = {
+                        repository: lizUrls.params.repository,
+                        project: lizUrls.params.project,
+                        id: '',
+                        opt: 'validation'
+                    };
+                    btn.click(function () {
+                        var featId = self.val();
+                        var leid = featId.split('.');
+                        options['id'] = leid[1];
+                        $.getJSON(
+                            url,
+                            options,
+                            function (data) {
+                                if (data) {
+                                    if (data['status'] == 'success') {
+                                        addAdresseMessage(data['message'], 'info', true);
+                                        $('#dock-close').click();
+                                    } else {
+                                        addAdresseMessage(data['message'], 'error', true);
+                                    }
+                                }
+                            }
+                        );
+                    });
+
                 }
             });
         },
