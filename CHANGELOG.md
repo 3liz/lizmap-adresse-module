@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## 1.1.2 - 2023-10-11
+
+* Fix: Check feature restricted edition for adresse toolbar
+* few improvements into PHP-CS-Fixer tests
+* Don't install assets into assets/ 
+
 ## 1.1.1 - 2023-02-27
 
 * Increase required lizmap version to 3.7
