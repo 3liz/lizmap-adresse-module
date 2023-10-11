@@ -1,7 +1,9 @@
 <?php
 /**
  * @author    Pierre DRILLIN
+ *
  * @contributor Laurent Jouanneau
+ *
  * @copyright 2021-2022 3liz
  *
  * @see      http://3liz.com

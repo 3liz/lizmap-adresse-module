@@ -1,7 +1,9 @@
 <?php
 /**
  * @author    Pierre DRILLIN
+ *
  * @contributor Laurent Jouanneau
+ *
  * @copyright 2021-2022 3liz
  *
  * @see      http://3liz.com
@@ -10,7 +12,6 @@
  */
 class adresseCheck
 {
-
     protected $layers_required = array('v_point_adresse', 'voie');
 
     protected $profile;
@@ -31,9 +32,8 @@ class adresseCheck
     );
 
     /**
-     * @param adresseSearch $utils
      * @param \Lizmap\Project\Project $lizmap_project
-     * @param $profile
+     * @param mixed                   $profile
      */
     public function __construct(adresseSearch $utils, $lizmap_project, $profile)
     {

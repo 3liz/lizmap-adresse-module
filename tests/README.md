@@ -2,7 +2,7 @@
 
 Étapes:
 
-- Démarrer Lizmap + adtresse with docker-compose
+- Démarrer Lizmap + adresse with docker-compose
     ```
     # Supprimer les versions précédentes (optionnel)
     make clean

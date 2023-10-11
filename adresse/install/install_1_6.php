@@ -9,7 +9,7 @@
  */
 
 /**
- * Installer for lizmap <=3.5
+ * Installer for lizmap <=3.5.
  */
 class adresseModuleInstaller extends jInstallerModule
 {
