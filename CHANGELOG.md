@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 1.1.4 - 2024-01-19
+
+* Max version dependencies - Lizmap 3.6.*
+
 ## 1.1.3 - 2023-10-11
 
 * Fix: Check feature restricted edition for adresse toolbar
