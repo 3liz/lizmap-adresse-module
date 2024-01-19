@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 1.2.0 - 2024-01-19
+
+* Fix compatibilité for lizmap Web Client 3.7
+* Min version dependencies - Lizmap 3.7.0
+
 ## 1.1.4 - 2024-01-19
 
 * Max version dependencies - Lizmap 3.6.*
