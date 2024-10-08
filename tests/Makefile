@@ -8,8 +8,8 @@ LIZMAP_DIR=$(shell pwd)/lizmap
 LIZMAP_USER_ID:=$(shell id -u)
 LIZMAP_USER_GID:=$(shell id -g)
 
-LIZMAP_VERSION_TAG:=3.5
-QGIS_VERSION_TAG:=3.22
+LIZMAP_VERSION_TAG:=3.7
+QGIS_VERSION_TAG:=3.28
 POSTGIS_VERSION_TAG:=13-3
 
 QGIS_MAP_WORKERS:=1
@@ -58,13 +58,13 @@ env: dirs
 		EOF
 
 run: stop env install-plugins
-	docker-compose up -d
+	docker compose up -d
 
 stop:
-	docker-compose down || true
+	docker compose down || true
 
 clean: stop
-	docker-compose down -v
+	docker compose down -v
 	rm -rf $(LIZMAP_DIR)/www/*
 	rm -rf $(LIZMAP_DIR)/var/*
 
