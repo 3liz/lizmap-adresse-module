@@ -47,37 +47,35 @@ class adresseListener extends jEventListener
             $user_login = $juser->login;
         }
 
-        $adresseConfig = array();
-
-        $adresseConfig['user'] = $user_login;
-
         $player = $utils->getLayer($lizmap_project, 'v_point_adresse');
         $vlayer = $utils->getLayer($lizmap_project, 'voie');
 
-        $adresseConfig['point_adresse'] = array();
-        $adresseConfig['point_adresse']['id'] = $player->getId();
-        $adresseConfig['point_adresse']['name'] = $player->getName();
-
-        $adresseConfig['voie'] = array();
-        $adresseConfig['voie']['id'] = $vlayer->getId();
-        $adresseConfig['voie']['name'] = $vlayer->getName();
-
-        $adresseConfig['urls'] = array();
-        $adresseConfig['urls']['select'] = jUrl::get('adresse~service:select');
-        $adresseConfig['urls']['update'] = jUrl::get('adresse~service:update');
+        $jsvars = array(
+            'adresseConfig' => array(
+                'user' => $user_login,
+                'point_adresse' => array(
+                    'id' => $player->getId(),
+                    'name' => $player->getName()
+                ),
+                'voie' => array(
+                    'id' => $vlayer->getId(),
+                    'name' => $vlayer->getName()
+                ),
+                'urls' => array(
+                    'select' => jUrl::get('adresse~service:select'),
+                    'update' => jUrl::get('adresse~service:update')
+                )
+            )
+        );
 
         $js = array();
         $css = array();
         $js[] = jUrl::get('jelix~www:getfile', array('targetmodule' => 'adresse', 'file' => 'adresse.js'));
 
-        $jscode = array(
-            'var adresseConfig = ' . json_encode($adresseConfig),
-        );
-
         $event->add(
             array(
                 'js' => $js,
-                'jscode' => $jscode,
+                'jsvars' => $jsvars,
                 'css' => $css,
             )
         );
