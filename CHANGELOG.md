@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 1.3.0 - 2024-10-08
+
+* Fix compatibility for lizmap Web Client 3.8
+* Fix docker compose for testing
+
 ## 1.2.0 - 2024-01-19
 
 * Fix compatibilité for lizmap Web Client 3.7
