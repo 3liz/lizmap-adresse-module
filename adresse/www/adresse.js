@@ -31,7 +31,7 @@ lizAdresse = function () {
         adresseMessageTimeoutId = window.setTimeout(cleanAdresseMessage, 5000);
     }
     function redrawPointAdresseLayer() {
-        lizMap.mainLizmap.baseLayersMap.getLayerByName('v_point_adresse').getSource().changed();
+        lizMap.mainLizmap.map.getLayerByName('v_point_adresse').getSource().changed();
     }
     lizMap.events.on({
         'lizmapeditiongeometryupdated': function (e) {
