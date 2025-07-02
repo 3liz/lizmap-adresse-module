@@ -19,19 +19,10 @@ jobs:
 
       - name: Changelog
         id: changelog
-        uses: 3liz/changelog-release@0.3.0
+        uses: 3liz/changelog-release@0.4.0
 
       - name: Create release on GitHub
-        uses: ncipollo/release-action@v1.14.0
+        uses: ncipollo/release-action@v1.18.0
         with:
           body: ${{ steps.changelog.outputs.markdown }}
           token: ${{ secrets.BOT_HUB_TOKEN }}
-
-      - name: Tweet
-        uses: mugi111/tweet-trigger-release@v1.2
-        with:
-          consumer_key: ${{ secrets.TWITTER_CONSUMER_KEY }}
-          consumer_secret: ${{ secrets.TWITTER_CONSUMER_SECRET }}
-          access_token_key: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }}
-          access_token_secret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
-          tweet_body: "Nouvelle version du module Adresse ${{ env.RELEASE_VERSION }} ✉ pour @LizmapForQgis https://github.com/3liz/lizmap-adresse-module/releases"
