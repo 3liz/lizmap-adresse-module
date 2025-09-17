@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Module Lizmap de gestion d'une base adresse",
   "devDependencies": {
-    "eslint": "^7.26.0"
+    "eslint": "^9.35.0"
   },
   "main": "index.js",
   "directories": {
