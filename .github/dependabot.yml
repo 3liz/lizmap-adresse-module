@@ -6,8 +6,6 @@ updates:
     schedule:
       interval: "cron"
       cronjob: "0 6 5 7 *"
-    assignees:
-      - Gustry
 
   - package-ecosystem: "composer"
     directory: "/"
@@ -26,5 +24,3 @@ updates:
     schedule:
       interval: "cron"
       cronjob: "0 6 5 7 *"
-    assignees:
-      - Gustry
