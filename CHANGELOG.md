@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 1.4.0 - 2025-10-25
+
+* Max version to lizmap Web Client 3.9
+
 ## 1.3.1 - 2025-01-23
 
 * Fix compatibility for lizmap Web Client 3.8 : replace mainLizmap.baseLayersMap by mainLizmap.map
