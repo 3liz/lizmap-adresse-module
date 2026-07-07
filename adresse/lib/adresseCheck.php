@@ -219,7 +219,7 @@ class adresseCheck
         if (!$layer) {
             return array(
                 'error',
-                "Adresse module error: Layer ${layer_name} missing in project",
+                "Adresse module error: Layer {$layer_name} missing in project",
             );
         }
 
@@ -242,7 +242,7 @@ class adresseCheck
         if (!$qgisLayer) {
             return array(
                 'error',
-                "Layer ${layer_name} not found to check profile",
+                "Layer {$layer_name} not found to check profile",
             );
         }
         if (method_exists($qgisLayer, 'canCurrentUserEdit')) {
