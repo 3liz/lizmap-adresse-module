@@ -1,0 +1,7 @@
+parameters:
+  scanDirectories:
+    - adresse/
+  level: 0
+  ignoreErrors:
+  paths:
+    - adresse/
